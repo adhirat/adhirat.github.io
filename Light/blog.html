@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Adhirat Technologies - Insights</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563eb",
+                        "primary-dark": "#1e40af",
+                        "background-light": "#ffffff",
+                        "surface-light": "#f8fafc",
+                        "card-light": "#ffffff",
+                        "border-light": "#e2e8f0",
+                        "text-primary": "#0f172a",
+                        "text-secondary": "#64748b",
+                        "accent-blue": "#eff6ff"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    backgroundImage: {
+                        'light-gradient': 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)',
+                        'card-gradient': 'linear-gradient(to bottom right, #ffffff, #f8fafc)',
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-surface-light font-body text-text-primary antialiased overflow-x-hidden selection:bg-primary/20 selection:text-primary">
+<div class="relative flex min-h-screen w-full flex-col group/design-root bg-gradient-to-br from-white via-slate-50 to-blue-50">
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-border-light bg-white/80 backdrop-blur-md px-6 py-3 lg:px-10 shadow-sm">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-text-primary">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-text-primary text-xl font-bold leading-tight tracking-[-0.015em] font-display">Adhirat Technologies</h2>
+</div>
+<nav class="hidden lg:flex items-center gap-9">
+<a class="text-text-secondary hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Home</a>
+<a class="text-text-secondary hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Services</a>
+<a class="text-text-secondary hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Portfolio</a>
+<a class="text-primary text-sm font-semibold leading-normal" href="#">Insights</a>
+<a class="text-text-secondary hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">About</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 lg:gap-8">
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64 group/search">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-border-light bg-surface-light group-focus-within/search:border-primary group-focus-within/search:ring-2 group-focus-within/search:ring-primary/20 transition-all">
+<div class="text-text-secondary flex border-none items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined" style="font-size: 20px;">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-text-primary focus:outline-0 focus:ring-0 border-none bg-transparent focus:border-none h-full placeholder:text-text-secondary px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Search insights..." value=""/>
+</div>
+</label>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-6 bg-primary hover:bg-primary-dark transition-colors text-white text-sm font-bold leading-normal tracking-[0.015em] shadow-lg shadow-blue-500/20">
+<span class="truncate">Contact Us</span>
+</button>
+</div>
+</header>
+<main class="flex flex-col items-center w-full">
+<div class="layout-content-container flex flex-col max-w-[1200px] w-full px-4 md:px-10 pb-20">
+<section class="@container mt-8 mb-12">
+<div class="flex flex-col gap-6 lg:flex-row lg:items-center bg-white rounded-3xl overflow-hidden shadow-xl shadow-slate-200/50 border border-slate-100 p-6 lg:p-8 transform transition-transform duration-500 hover:shadow-2xl hover:shadow-blue-100">
+<div class="w-full lg:w-3/5 bg-center bg-no-repeat aspect-video bg-cover rounded-2xl shadow-lg relative overflow-hidden group cursor-pointer" data-alt="Abstract digital network visualization with blue glowing nodes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBLQb9050y3kW9gzjvtRHAf5maMzEs67a88wPHVYokPqSj1fc7MjbDVmxPX10IcivMaBjf5UjwchVNEhEhZM-b7r12cZBDLaDhJyd4g-bozQ3LKKMgKLeUwuax_1hAz6E_Ye0imxyhebpQvZzUdO4JGktjvqu13CX0G0XHDpzmGtpM0M42H-fi1ZA98PGlM28x0MwmRx9TcJbZj21pW_2JgzN70wA_idumRjq-Drzh6_48veE0saRY0kcQLb0280tldbjolRfxw6rg");'>
+<div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500"></div>
+</div>
+<div class="flex flex-col gap-6 lg:w-2/5 justify-center">
+<div class="flex flex-col gap-3 text-left">
+<span class="inline-flex w-fit items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-primary border border-blue-100">Featured Insight</span>
+<h1 class="text-slate-900 text-3xl md:text-4xl lg:text-5xl font-black leading-tight tracking-[-0.033em] font-display">
+                                    Revolutionizing AI: How Adhirat is changing the landscape
+                                </h1>
+<p class="text-slate-600 text-base md:text-lg font-normal leading-relaxed">
+                                    Exploring the future of technology with Adhirat. We dive deep into neural networks, ethical AI, and the next generation of automation tools.
+                                </p>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded-lg h-12 px-6 bg-slate-900 hover:bg-slate-800 transition-all duration-200 text-white text-base font-bold leading-normal shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+<span class="truncate">Read Article</span>
+</button>
+<span class="text-slate-500 text-sm font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">schedule</span>
+                                    5 min read
+                                </span>
+</div>
+</div>
+</div>
+</section>
+<div class="w-full overflow-x-auto pb-6 -mx-4 px-4 md:mx-0 md:px-0 scrollbar-hide">
+<div class="flex gap-3 min-w-max">
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-full bg-primary pl-4 pr-5 hover:bg-primary-dark transition-colors cursor-pointer group shadow-md shadow-blue-500/20">
+<span class="material-symbols-outlined text-white" style="font-size: 20px;">check</span>
+<span class="text-white text-sm font-bold">All</span>
+</button>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-full bg-white border border-border-light pl-4 pr-5 hover:border-primary/50 hover:bg-slate-50 hover:text-primary transition-all cursor-pointer group shadow-sm text-text-secondary">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" style="font-size: 20px;">code</span>
+<span class="group-hover:text-primary transition-colors text-sm font-medium">Technical Insights</span>
+</button>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-full bg-white border border-border-light pl-4 pr-5 hover:border-primary/50 hover:bg-slate-50 hover:text-primary transition-all cursor-pointer group shadow-sm text-text-secondary">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" style="font-size: 20px;">trending_up</span>
+<span class="group-hover:text-primary transition-colors text-sm font-medium">Industry Trends</span>
+</button>
+<button class="flex h-10 items-center justify-center gap-x-2 rounded-full bg-white border border-border-light pl-4 pr-5 hover:border-primary/50 hover:bg-slate-50 hover:text-primary transition-all cursor-pointer group shadow-sm text-text-secondary">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors" style="font-size: 20px;">domain</span>
+<span class="group-hover:text-primary transition-colors text-sm font-medium">Company Updates</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col gap-8 mb-16">
+<div class="flex items-center justify-between pb-4 border-b border-slate-200">
+<h2 class="text-slate-900 text-3xl font-bold leading-tight tracking-[-0.015em] font-display">Latest Articles</h2>
+<a class="text-primary text-sm font-bold hover:text-primary-dark hover:underline flex items-center gap-1 group" href="#">
+                            View All <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<article class="flex flex-col gap-4 group cursor-pointer bg-white rounded-2xl p-4 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300">
+<div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden shadow-inner relative">
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Quantum computer processor glowing blue" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBnK3bcT_sUBQ5d1T3PZmjFhK92u1uqsBh2OOGbaxvei6NhixI3nFNQdW6cH5_q-wTmXvQlwdBMq7DfnYB8Nf77zgenLIWZeW7lNzOce6dMU_-eAxe76WssWXErxxioS83L8D0qy_IjgBuf1swHbw75iLp2s-zrltvt5-oQ08_jymuahvacru-MmI6tarkq1JtXStbu-PnK_rr2l7kV1rOCdNy0kzzhWoCjLADNOP8eiIQoA5yMjhh8DRFTGRZ9OOE0kPPeQCTRPLo");'></div>
+</div>
+<div class="flex flex-col gap-2 px-1 pb-2">
+<div class="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
+<span class="bg-blue-50 px-2 py-1 rounded-md">Tech</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span class="text-slate-400 font-medium normal-case">Oct 12, 2023</span>
+</div>
+<h3 class="text-slate-900 text-xl font-bold leading-snug font-display group-hover:text-primary transition-colors mt-1">The Future of Quantum Computing</h3>
+<p class="text-slate-500 text-sm leading-relaxed line-clamp-2">Exploring new frontiers in processing power and what it means for encryption standards globally.</p>
+</div>
+</article>
+<article class="flex flex-col gap-4 group cursor-pointer bg-white rounded-2xl p-4 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300">
+<div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden shadow-inner relative">
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="React code snippet on a monitor screen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB22bFFxFnp_uPBE8elztb7sAY9xAQ6oW67CtiqyMpYN3F6pTGhZzXFvIx6uyc3Vy3WE9qFyOB3K_1aBI3AAYME0hUgcGNBSz2CYdojmLcaPlpmOrv28kZevZwcOkq5HKA7pKD-twie4pZN9Gp5tr1-A6fVpSuhsnSg3abAQZY8z5dj8uqfbRusMUQqwuZV3jen0nQxcXSs2ssWhpF2O9YfIM8e3nALa3rvbnrcrF8n-VlC_LsnPm7VDVKt_A-glDsroBx7mJMr4Bk");'></div>
+</div>
+<div class="flex flex-col gap-2 px-1 pb-2">
+<div class="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
+<span class="bg-blue-50 px-2 py-1 rounded-md">Dev</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span class="text-slate-400 font-medium normal-case">Oct 10, 2023</span>
+</div>
+<h3 class="text-slate-900 text-xl font-bold leading-snug font-display group-hover:text-primary transition-colors mt-1">Optimizing React Performance</h3>
+<p class="text-slate-500 text-sm leading-relaxed line-clamp-2">Best practices for smoother UI rendering, memoization techniques, and reducing bundle size.</p>
+</div>
+</article>
+<article class="flex flex-col gap-4 group cursor-pointer bg-white rounded-2xl p-4 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300">
+<div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden shadow-inner relative">
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Cybersecurity lock icon on digital background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBvLNcdKhMwDT47DMvdZLodDSRigP4n0mq51h0jRH1xjJ43uQSDQkWJGqheTMl7ZncrdA4AEFyACURowNPNJ4c4ewORu31mgtpSs7GKt9P729TFRNq3uRLd5xyD7CEx-sTjdQ9XC3N1HU4drnuDx6pHTokCA4lVmgWqE0mzcHc4aRpihWu8oP_qJ-aEX2diHhN27_2QOWjo6urcv5E9shVoZcpGiuA_3eJVXRGf73LLOG0zBxtQuQb_djfVL19oxawdfWbwiIeTbcg");'></div>
+</div>
+<div class="flex flex-col gap-2 px-1 pb-2">
+<div class="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
+<span class="bg-blue-50 px-2 py-1 rounded-md">Security</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span class="text-slate-400 font-medium normal-case">Oct 05, 2023</span>
+</div>
+<h3 class="text-slate-900 text-xl font-bold leading-snug font-display group-hover:text-primary transition-colors mt-1">Cybersecurity in 2024</h3>
+<p class="text-slate-500 text-sm leading-relaxed line-clamp-2">Protecting assets in a digital-first world. Why Zero Trust architecture is becoming the standard.</p>
+</div>
+</article>
+<article class="flex flex-col gap-4 group cursor-pointer bg-white rounded-2xl p-4 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300">
+<div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden shadow-inner relative">
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Modern office building architecture glass facade" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADELBLSkIwDedDNpm3gYxT7tNXViwJFcRmB4TJbMh1qlmszaxnVtWVIlKS9g7h46qGe6UfczIvAt14miMFKQ8O1lMlOQI0_h181lHW6XD8lzKOenYZZobt1ypgh35ELV2Utjcd-tH1Vrou4QmsW9Cu47jZ5MTF_wFMX2HwLAhiBQFEWe9c_CITLBtk1teS7U_1cbgrQszQHknsknuhDWmyVeozp050UA0iL5c1S3fNo-JLqd4U1eeS-7wz1NfvKh02PPJts5m0Y7A");'></div>
+</div>
+<div class="flex flex-col gap-2 px-1 pb-2">
+<div class="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
+<span class="bg-blue-50 px-2 py-1 rounded-md">Company</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span class="text-slate-400 font-medium normal-case">Sep 28, 2023</span>
+</div>
+<h3 class="text-slate-900 text-xl font-bold leading-snug font-display group-hover:text-primary transition-colors mt-1">Adhirat Expands to Singapore</h3>
+<p class="text-slate-500 text-sm leading-relaxed line-clamp-2">We are thrilled to announce our new APAC headquarters to better serve our Asian market clients.</p>
+</div>
+</article>
+<article class="flex flex-col gap-4 group cursor-pointer bg-white rounded-2xl p-4 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300">
+<div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden shadow-inner relative">
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Abstract colorful data cloud visualization" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAmGt35wqzx1U0orYLfhr_ijutnbeYTxkbucV3QRwYY3tCetQ7m8UWId3OUC1tzud2_eKgmvYKWXNMY_88EY6GSKKkMCTlPFKInECvWDHdqkQSCEN1oLUnzkRCCcBMXDjGTTYdJf6-SUWUd36gaORi6epruJ38XXX8uuH5Eb9P1CBQMtkD6HJ0IPr8PtmcfXYGqyDrEBaDo5v6t3WraviPg-2yGoZoYFwpsydTIPQ-IX01PsgJw6Kbmpt8Vd9YIcFKa2zgn8zXcvo");'></div>
+</div>
+<div class="flex flex-col gap-2 px-1 pb-2">
+<div class="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
+<span class="bg-blue-50 px-2 py-1 rounded-md">Cloud</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span class="text-slate-400 font-medium normal-case">Sep 15, 2023</span>
+</div>
+<h3 class="text-slate-900 text-xl font-bold leading-snug font-display group-hover:text-primary transition-colors mt-1">Serverless Architecture Patterns</h3>
+<p class="text-slate-500 text-sm leading-relaxed line-clamp-2">Moving beyond the monolith. How to effectively implement lambda functions for scalable microservices.</p>
+</div>
+</article>
+<article class="flex flex-col gap-4 group cursor-pointer bg-white rounded-2xl p-4 shadow-sm border border-slate-100 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300">
+<div class="w-full aspect-video bg-cover bg-center rounded-xl overflow-hidden shadow-inner relative">
+<div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10"></div>
+<div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110" data-alt="Virtual reality headset on a dark background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAPvfNOzFBZdktMcAvrXsgrQGK_9GkLW2Z7OT57og3kJc1pL0s1oi9rrR6qu7d0bpMjv24lIyjPenOPr89rYe_ACvmGs8BidzR0ETR3nFrrCT6Hqf2SakuLKYjQ8_OvY6dz-ESL3ixDNmHG5S4Hil7jCHioqDGdQW5fifLr1774Jdocbe5i96MKFrA1XSBGY7kKhmqvfCpYS8cAPk1eju2jhvyJhdisa4jHgLKmM2aPVkJt8al96SL2-AQfJ9XigN0KeYI0C3iZ2ZM");'></div>
+</div>
+<div class="flex flex-col gap-2 px-1 pb-2">
+<div class="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider">
+<span class="bg-blue-50 px-2 py-1 rounded-md">Trends</span>
+<span class="w-1 h-1 rounded-full bg-slate-300"></span>
+<span class="text-slate-400 font-medium normal-case">Sep 10, 2023</span>
+</div>
+<h3 class="text-slate-900 text-xl font-bold leading-snug font-display group-hover:text-primary transition-colors mt-1">The State of VR in Enterprise</h3>
+<p class="text-slate-500 text-sm leading-relaxed line-clamp-2">Is Virtual Reality finally ready for mass corporate adoption? We analyze the latest hardware releases.</p>
+</div>
+</article>
+</div>
+</div>
+<div class="w-full relative overflow-hidden bg-white border border-slate-100 shadow-xl shadow-blue-500/5 rounded-3xl p-8 md:p-12 mb-16">
+<div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-100 rounded-full blur-3xl pointer-events-none opacity-60"></div>
+<div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-sky-100 rounded-full blur-3xl pointer-events-none opacity-60"></div>
+<div class="relative z-10 flex flex-col items-center text-center max-w-2xl mx-auto">
+<div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-primary" style="font-size: 32px;">mail</span>
+</div>
+<h2 class="text-slate-900 text-3xl font-bold font-display mb-3">Stay ahead of the curve</h2>
+<p class="text-slate-600 mb-8 max-w-lg">Join 15,000+ tech leaders. Get our latest insights, industry trends, and company updates delivered directly to your inbox.</p>
+<form class="flex flex-col sm:flex-row gap-3 w-full max-w-md shadow-sm">
+<input class="flex-1 bg-white border border-slate-200 focus:border-primary text-slate-900 placeholder:text-slate-400 rounded-lg px-4 py-3 focus:outline-none focus:ring-1 focus:ring-primary transition-all" placeholder="Enter your email address" type="email"/>
+<button class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-lg shadow-blue-500/30" type="button">
+                                Subscribe
+                            </button>
+</form>
+<p class="text-slate-400 text-xs mt-4">We care about your data in our <a class="underline hover:text-primary" href="#">privacy policy</a>.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 flex flex-col gap-6">
+<div class="flex items-center justify-between pb-2 border-b border-slate-200 mb-2">
+<h2 class="text-slate-900 text-2xl font-bold font-display">Technical Insights</h2>
+</div>
+<div class="group flex flex-col md:flex-row gap-5 bg-white border border-slate-100 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:shadow-blue-500/5 hover:-translate-y-0.5 transition-all cursor-pointer">
+<div class="w-full md:w-56 aspect-video md:aspect-auto rounded-xl bg-cover bg-center shrink-0 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Close up of a motherboard circuit" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDAdj6ZnsvZe2oCw5zgbgk0qCLPu-7aIl8ujDzqWXWEa3JA4x_G3XEKQ1VtcaES5lSRpqWM8kz-UNBfhAhXPnwlanx4Je15KKnfTXcteV53rerxeuWEEqTGIDtPK429_Xyz-7ZT_WVfARDjR8cTLocPMVzZmvNF55dITXglYfTgit4pvSQSckXFBPxZZjzJV_ZGzpN1d9mJ3UM8HZnOqx05LtYyz2w1ONqYu4eplODRGuZnX7j5RDp-iROBTslfwtmcgcVD5a-_Blc");'></div>
+</div>
+<div class="flex flex-col justify-center py-2 pr-2">
+<span class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Hardware</span>
+<h3 class="text-slate-900 font-bold text-lg mb-2 group-hover:text-primary transition-colors font-display">Understanding Chip Architecture in 2024</h3>
+<p class="text-slate-500 text-sm line-clamp-2">A comprehensive breakdown of the new 3nm process nodes and what they mean for efficiency.</p>
+</div>
+</div>
+<div class="group flex flex-col md:flex-row gap-5 bg-white border border-slate-100 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:shadow-blue-500/5 hover:-translate-y-0.5 transition-all cursor-pointer">
+<div class="w-full md:w-56 aspect-video md:aspect-auto rounded-xl bg-cover bg-center shrink-0 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Person typing on laptop with code on screen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAokRlZletNN57VHb9uhb2rtYccOmSitXsbKLBCxEqjGNwFc25kjkPB9E72KGF2P6fAOaNH3R19yYxlucNSd0ODrUBRRFUgC3hfUezWMbC0qmixK9S7XwnF6ox7I_7EbJRxpxS_FWtyheFeGAuKb6GknMUtwib8D4WZJKprJS6jx8zczQEOU0TMBCJB-fXDFGTGku_mlr4iUdgzJqUkqz3GyyrhK5UoaYmzoXeU2Xq7bMZUHt4GrBe_od689Ww5AIFa2iz2OpG5Dq8");'></div>
+</div>
+<div class="flex flex-col justify-center py-2 pr-2">
+<span class="text-primary text-xs font-bold uppercase tracking-wider mb-2">DevOps</span>
+<h3 class="text-slate-900 font-bold text-lg mb-2 group-hover:text-primary transition-colors font-display">CI/CD Pipelines: A Modern Approach</h3>
+<p class="text-slate-500 text-sm line-clamp-2">Streamlining deployment workflows using GitHub Actions and containerized environments.</p>
+</div>
+</div>
+<div class="group flex flex-col md:flex-row gap-5 bg-white border border-slate-100 rounded-2xl p-4 shadow-sm hover:shadow-lg hover:shadow-blue-500/5 hover:-translate-y-0.5 transition-all cursor-pointer">
+<div class="w-full md:w-56 aspect-video md:aspect-auto rounded-xl bg-cover bg-center shrink-0 overflow-hidden">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Smartphone displaying blockchain graphic" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDF1KFSoZPCwxrde3SRJ7JTB9PJzfl93gITHojV1dl6hxuZo5qnZdkdmEtV39Mj1yi9gGShVKmZvr4I0m1piqCYcNy_mCrTDSbnqBcE0aBJqEgjIjLb0hpMclFyqtQQO8wesLHBN9hN0e-fVkKirf2omfYCI5wQDdMam5-baG76qPwT-mC0H_5B9QE4W3gx6Miyhya9F_PoqjXiG5du14OO0Taz8r3SWp3FQrHLE3AjcjS3tdVJldUOEYh_wpOMO9QimuVvqtCFaUM");'></div>
+</div>
+<div class="flex flex-col justify-center py-2 pr-2">
+<span class="text-primary text-xs font-bold uppercase tracking-wider mb-2">Blockchain</span>
+<h3 class="text-slate-900 font-bold text-lg mb-2 group-hover:text-primary transition-colors font-display">Smart Contracts Security Audit</h3>
+<p class="text-slate-500 text-sm line-clamp-2">Common vulnerabilities in solidity contracts and how to prevent them before deployment.</p>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between pb-2 border-b border-slate-200 mb-2">
+<h2 class="text-slate-900 text-2xl font-bold font-display">Company Updates</h2>
+</div>
+<div class="bg-white border border-slate-100 shadow-sm rounded-2xl p-6 flex flex-col gap-6">
+<div class="flex flex-col gap-2 group cursor-pointer">
+<span class="text-slate-400 text-xs font-medium bg-slate-50 w-fit px-2 py-1 rounded">Nov 14, 2023</span>
+<h4 class="text-slate-900 font-bold group-hover:text-primary transition-colors leading-snug">Adhirat ranked #1 in Innovation Awards</h4>
+<a class="text-sm text-primary font-semibold flex items-center gap-1 group-hover:underline mt-1" href="#">Read more <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+</div>
+<hr class="border-slate-100"/>
+<div class="flex flex-col gap-2 group cursor-pointer">
+<span class="text-slate-400 text-xs font-medium bg-slate-50 w-fit px-2 py-1 rounded">Oct 29, 2023</span>
+<h4 class="text-slate-900 font-bold group-hover:text-primary transition-colors leading-snug">Welcome our new CTO, Sarah Jenkins</h4>
+<a class="text-sm text-primary font-semibold flex items-center gap-1 group-hover:underline mt-1" href="#">Read more <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+</div>
+<hr class="border-slate-100"/>
+<div class="flex flex-col gap-2 group cursor-pointer">
+<span class="text-slate-400 text-xs font-medium bg-slate-50 w-fit px-2 py-1 rounded">Sep 12, 2023</span>
+<h4 class="text-slate-900 font-bold group-hover:text-primary transition-colors leading-snug">Q3 Financial Results exceeded expectations</h4>
+<a class="text-sm text-primary font-semibold flex items-center gap-1 group-hover:underline mt-1" href="#">Read more <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+</div>
+</div>
+<div class="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-2xl p-6 relative overflow-hidden group cursor-pointer shadow-xl">
+<div class="relative z-10">
+<span class="inline-block px-2 py-1 rounded bg-white/20 text-white text-[10px] uppercase font-bold tracking-wider mb-3">Careers</span>
+<h3 class="text-white font-display font-bold text-xl mb-2">Hiring: Senior Product Designer</h3>
+<p class="text-slate-300 text-sm mb-4">Join our remote-first team and build the future.</p>
+<button class="text-slate-900 bg-white hover:bg-slate-100 px-4 py-2 rounded-lg text-sm font-bold transition-colors">Apply Now</button>
+</div>
+<div class="absolute -bottom-4 -right-4 text-white/5 rotate-12 group-hover:scale-110 transition-transform duration-500">
+<span class="material-symbols-outlined" style="font-size: 140px;">work</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="w-full border-t border-slate-200 bg-white py-12">
+<div class="max-w-[1200px] mx-auto px-6 lg:px-10 grid grid-cols-1 md:grid-cols-4 gap-10">
+<div class="col-span-1 md:col-span-2 flex flex-col gap-4">
+<div class="flex items-center gap-2 text-slate-900">
+<div class="size-6 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold font-display">Adhirat Technologies</h2>
+</div>
+<p class="text-slate-500 text-sm max-w-sm leading-relaxed">Pioneering the future of digital innovation. We build technologies that empower businesses to scale securely and efficiently.</p>
+</div>
+<div>
+<h4 class="text-slate-900 font-bold mb-4">Company</h4>
+<ul class="flex flex-col gap-3 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Press</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contact</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-slate-900 font-bold mb-4">Resources</h4>
+<ul class="flex flex-col gap-3 text-sm text-slate-500">
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Whitepapers</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Case Studies</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Documentation</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-[1200px] mx-auto px-6 lg:px-10 mt-12 pt-8 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-400 text-xs">© 2024 Adhirat Technologies. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-slate-500 hover:text-primary transition-colors text-xs" href="#">Privacy Policy</a>
+<a class="text-slate-500 hover:text-primary transition-colors text-xs" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</div>
+
+</body></html>
