@@ -1,0 +1,70 @@
+<div class="fixed inset-0 z-[60] bg-white dark:bg-dark-bg/95 backdrop-blur-xl transform transition-transform duration-500 translate-x-full overflow-y-auto"
+    id="mobile-menu">
+    <div class="min-h-screen flex flex-col p-6">
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center gap-3">
+                <div class="size-8 text-primary">
+                    <svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z"
+                            fill="currentColor"></path>
+                    </svg>
+                </div>
+                <h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">Adhirat<span
+                        class="text-primary">.Tech</span></h2>
+            </div>
+            <button class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                onclick="toggleMobileMenu()">
+                <span class="material-symbols-outlined text-slate-600 dark:text-slate-300">close</span>
+            </button>
+        </div>
+        <div class="flex flex-col gap-6 flex-grow">
+            <a class="text-2xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors" href="#"
+                onclick="toggleMobileMenu()">Home</a>
+            <div class="flex flex-col gap-4">
+                <span class="text-2xl font-bold text-primary">Services</span>
+                <div class="pl-4 flex flex-col gap-4 border-l-2 border-slate-100 dark:border-slate-800 ml-1">
+                    <a class="text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors"
+                        href="#services" onclick="toggleMobileMenu()">Web Development</a>
+                    <a class="text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors"
+                        href="#services" onclick="toggleMobileMenu()">Mobile Apps</a>
+                    <div class="flex flex-col gap-3">
+                        <span class="text-lg font-medium text-slate-900 dark:text-white">Cloud Solutions</span>
+                        <div class="pl-4 flex flex-col gap-3">
+                            <a class="text-base text-slate-500 dark:text-slate-400 hover:text-primary transition-colors"
+                                href="#" onclick="toggleMobileMenu()">AWS Infrastructure</a>
+                            <a class="text-base text-slate-500 dark:text-slate-400 hover:text-primary transition-colors"
+                                href="#" onclick="toggleMobileMenu()">Azure Migration</a>
+                            <a class="text-base text-slate-500 dark:text-slate-400 hover:text-primary transition-colors"
+                                href="#" onclick="toggleMobileMenu()">Google Cloud</a>
+                        </div>
+                    </div>
+                    <a class="text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors"
+                        href="#services" onclick="toggleMobileMenu()">AI &amp; ML</a>
+                </div>
+            </div>
+            <a class="text-2xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors"
+                href="#work" onclick="toggleMobileMenu()">Work</a>
+            <a class="text-2xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors"
+                href="#about" onclick="toggleMobileMenu()">About</a>
+        </div>
+        <div class="pt-8 mt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Appearance</span>
+            <button aria-label="Toggle Dark Mode"
+                class="p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-primary transition-all duration-300 focus:outline-none ring-1 ring-slate-200 dark:ring-slate-700"
+                onclick="toggleTheme()">
+                <div class="theme-toggle-icon relative w-5 h-5">
+                    <span
+                        class="material-symbols-outlined absolute inset-0 transform transition-transform duration-500 rotate-90 scale-0 dark:rotate-0 dark:scale-100">light_mode</span>
+                    <span
+                        class="material-symbols-outlined absolute inset-0 transform transition-transform duration-500 rotate-0 dark:rotate-90 dark:scale-0">dark_mode</span>
+                </div>
+            </button>
+        </div>
+        <button
+            class="w-full mt-6 bg-primary hover:bg-primary/90 text-white text-lg font-bold h-14 rounded-xl flex items-center justify-center transition-all shadow-lg"
+            onclick="toggleMobileMenu()">
+            Let's Talk
+        </button>
+    </div>
+</div>

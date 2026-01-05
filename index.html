@@ -2,24 +2,494 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Adhirat Technologies - Innovating the Future</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link rel="stylesheet" href="assets/css/styles.css">
-    <base href="./">
+    <script src="assets/js/app.js"></script>
 </head>
 
-<body>
-
+<body
+    class="bg-background-light dark:bg-dark-bg text-slate-800 dark:text-slate-200 font-display overflow-x-hidden antialiased selection:bg-primary selection:text-white transition-colors duration-300">
     <div id="header"></div>
-
-    <main class="content">
-        <h1>Home Page</h1>
-        <p>Welcome to the homepage.</p>
-    </main>
-
+    <div id="mobile-menu-container"></div>
+    <section
+        class="relative min-h-screen flex items-center pt-20 overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50/50 dark:from-dark-bg dark:via-dark-bg dark:to-slate-900 transition-colors duration-500">
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-[url('https://placeholder.pics/svg/300')] opacity-[0.03] dark:opacity-[0.05] bg-cover bg-center transition-opacity"
+                data-alt="Abstract geometric dark wireframe mesh pattern"></div>
+            <div
+                class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-400/10 dark:bg-blue-500/10 rounded-full blur-[100px] pointer-events-none transition-colors">
+            </div>
+            <div
+                class="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-indigo-300/10 dark:bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none transition-colors">
+            </div>
+        </div>
+        <div class="relative z-10 container mx-auto px-4 md:px-8 flex flex-col items-center text-center">
+            <div
+                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm mb-8 backdrop-blur-sm animate-fade-in-up transition-colors">
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                <span class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Defining The
+                    Future</span>
+            </div>
+            <h1
+                class="text-5xl md:text-7xl lg:text-8xl font-bold leading-[1.1] tracking-tighter text-slate-900 dark:text-white max-w-4xl mb-6 transition-colors">
+                Innovating the <br /><span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-indigo-600 dark:from-primary dark:to-indigo-400">Digital
+                    Future</span>
+            </h1>
+            <p
+                class="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mb-10 leading-relaxed font-body transition-colors">
+                We build scalable, high-performance technology solutions designed to accelerate your business growth
+                through cutting-edge design and robust engineering.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
+                <button
+                    class="h-14 px-8 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary/25 hover:translate-y-[-2px]">
+                    Get Started
+                    <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+                </button>
+                <button
+                    class="h-14 px-8 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-white font-bold text-lg flex items-center justify-center transition-all hover:translate-y-[-2px] shadow-sm hover:shadow">
+                    View Portfolio
+                </button>
+            </div>
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60">
+                <span class="text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500">Scroll</span>
+                <span
+                    class="material-symbols-outlined animate-bounce text-slate-400 dark:text-slate-500">expand_more</span>
+            </div>
+        </div>
+    </section>
+    <section
+        class="py-24 bg-white dark:bg-dark-card relative border-t border-slate-100 dark:border-slate-800 transition-colors duration-300"
+        id="about">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="flex-1 space-y-8">
+                    <h2
+                        class="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white transition-colors">
+                        Who We Are</h2>
+                    <p class="text-lg text-slate-600 dark:text-slate-400 font-body leading-relaxed transition-colors">
+                        Adhirat Technologies is a team of visionaries and engineers dedicated to crafting the next
+                        generation of digital experiences. We blend aesthetic perfection with technical robustness to
+                        deliver products that stand the test of time.
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-6 pt-4">
+                        <div
+                            class="p-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 transition-colors">
+                            <div class="text-primary mb-2">
+                                <span class="material-symbols-outlined text-[32px]">rocket_launch</span>
+                            </div>
+                            <h3 class="text-3xl font-bold text-slate-900 dark:text-white transition-colors">50+</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 transition-colors">Projects Delivered
+                            </p>
+                        </div>
+                        <div
+                            class="p-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 transition-colors">
+                            <div class="text-primary mb-2">
+                                <span class="material-symbols-outlined text-[32px]">handshake</span>
+                            </div>
+                            <h3 class="text-3xl font-bold text-slate-900 dark:text-white transition-colors">98%</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 transition-colors">Client Satisfaction
+                            </p>
+                        </div>
+                        <div
+                            class="p-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 transition-colors">
+                            <div class="text-primary mb-2">
+                                <span class="material-symbols-outlined text-[32px]">trophy</span>
+                            </div>
+                            <h3 class="text-3xl font-bold text-slate-900 dark:text-white transition-colors">10+</h3>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 transition-colors">Years Experience</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 w-full">
+                    <div
+                        class="relative rounded-2xl overflow-hidden aspect-video border border-slate-200 dark:border-slate-700 group shadow-lg shadow-slate-200/50 dark:shadow-black/30 transition-all">
+                        <div
+                            class="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500 z-10">
+                        </div>
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            data-alt="Modern office workspace with team collaborating on screens"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuARqzWeTW2e1-JYhihReV9VXguoWLBrFZNQRHWqQqm4QSVqQ2hYV1QK9wFNoHylAnbPCwgYh5Jq8SNSBYDVwdvapK79FBVSIH4kI_1Jbj194c3AZ6b22EkOVPBqOq0iAlA2MSYfrtY0TM4X0pzopZjc6jT4nQ3KDtAp-GCOcSpksJcVwQs5eFuBDurhMhzF_1VbT9RjyMVkXMImAS0vZdkcH0oLVb6B5Z9lj8do6dFQoOlhzRApTIFvJw4ckd9ovIkavtu8nGsYQX0');">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 bg-background-subtle dark:bg-dark-bg transition-colors duration-300" id="services">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex justify-between items-end mb-16">
+                <div>
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest mb-2 block">Our
+                        Expertise</span>
+                    <h2
+                        class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 dark:text-white transition-colors">
+                        Services &amp; Solutions</h2>
+                </div>
+                <a class="hidden md:flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors"
+                    href="#">
+                    View all services <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                </a>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div
+                    class="group relative p-8 rounded-xl bg-white dark:bg-dark-card border border-slate-100 dark:border-slate-700 hover-glow transition-all duration-300 shadow-sm">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[28px]">language</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white transition-colors">Web Development
+                    </h3>
+                    <p
+                        class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6 font-body transition-colors">
+                        Scalable full-stack web applications built with modern frameworks like React and Next.js.</p>
+                    <a class="inline-flex items-center text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all"
+                        href="#">
+                        Learn more <span class="material-symbols-outlined text-xs ml-1">arrow_forward</span>
+                    </a>
+                </div>
+                <div
+                    class="group relative p-8 rounded-xl bg-white dark:bg-dark-card border border-slate-100 dark:border-slate-700 hover-glow transition-all duration-300 shadow-sm">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[28px]">psychology</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white transition-colors">AI/ML Solutions
+                    </h3>
+                    <p
+                        class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6 font-body transition-colors">
+                        Intelligent algorithms and machine learning models to drive data-backed business insights.</p>
+                    <a class="inline-flex items-center text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all"
+                        href="#">
+                        Learn more <span class="material-symbols-outlined text-xs ml-1">arrow_forward</span>
+                    </a>
+                </div>
+                <div
+                    class="group relative p-8 rounded-xl bg-white dark:bg-dark-card border border-slate-100 dark:border-slate-700 hover-glow transition-all duration-300 shadow-sm">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[28px]">smartphone</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white transition-colors">Mobile Apps</h3>
+                    <p
+                        class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6 font-body transition-colors">
+                        Native and cross-platform mobile experiences for iOS and Android that users love.</p>
+                    <a class="inline-flex items-center text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all"
+                        href="#">
+                        Learn more <span class="material-symbols-outlined text-xs ml-1">arrow_forward</span>
+                    </a>
+                </div>
+                <div
+                    class="group relative p-8 rounded-xl bg-white dark:bg-dark-card border border-slate-100 dark:border-slate-700 hover-glow transition-all duration-300 shadow-sm">
+                    <div
+                        class="w-12 h-12 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                        <span class="material-symbols-outlined text-[28px]">cloud_queue</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white transition-colors">Cloud
+                        Engineering</h3>
+                    <p
+                        class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6 font-body transition-colors">
+                        Robust cloud infrastructure design, migration, and management on AWS, Azure, and GCP.</p>
+                    <a class="inline-flex items-center text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all"
+                        href="#">
+                        Learn more <span class="material-symbols-outlined text-xs ml-1">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section
+        class="py-16 bg-white dark:bg-dark-card border-y border-slate-100 dark:border-slate-800 transition-colors duration-300">
+        <div class="container mx-auto px-4 md:px-8">
+            <h3
+                class="text-center text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest text-sm mb-10 transition-colors">
+                Trusted by leaders in various industries</h3>
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-100">
+                <div class="flex flex-col items-center gap-3 group cursor-pointer">
+                    <div
+                        class="p-4 rounded-full bg-slate-50 dark:bg-slate-800 group-hover:bg-primary/10 transition-colors">
+                        <span
+                            class="material-symbols-outlined text-[32px] text-slate-600 dark:text-slate-400 group-hover:text-primary dark:group-hover:text-primary transition-colors">account_balance</span>
+                    </div>
+                    <span
+                        class="text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors">Fintech</span>
+                </div>
+                <div class="flex flex-col items-center gap-3 group cursor-pointer">
+                    <div
+                        class="p-4 rounded-full bg-slate-50 dark:bg-slate-800 group-hover:bg-primary/10 transition-colors">
+                        <span
+                            class="material-symbols-outlined text-[32px] text-slate-600 dark:text-slate-400 group-hover:text-primary dark:group-hover:text-primary transition-colors">medical_services</span>
+                    </div>
+                    <span
+                        class="text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors">Healthcare</span>
+                </div>
+                <div class="flex flex-col items-center gap-3 group cursor-pointer">
+                    <div
+                        class="p-4 rounded-full bg-slate-50 dark:bg-slate-800 group-hover:bg-primary/10 transition-colors">
+                        <span
+                            class="material-symbols-outlined text-[32px] text-slate-600 dark:text-slate-400 group-hover:text-primary dark:group-hover:text-primary transition-colors">shopping_cart</span>
+                    </div>
+                    <span
+                        class="text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors">E-Commerce</span>
+                </div>
+                <div class="flex flex-col items-center gap-3 group cursor-pointer">
+                    <div
+                        class="p-4 rounded-full bg-slate-50 dark:bg-slate-800 group-hover:bg-primary/10 transition-colors">
+                        <span
+                            class="material-symbols-outlined text-[32px] text-slate-600 dark:text-slate-400 group-hover:text-primary dark:group-hover:text-primary transition-colors">local_shipping</span>
+                    </div>
+                    <span
+                        class="text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors">Logistics</span>
+                </div>
+                <div class="flex flex-col items-center gap-3 group cursor-pointer">
+                    <div
+                        class="p-4 rounded-full bg-slate-50 dark:bg-slate-800 group-hover:bg-primary/10 transition-colors">
+                        <span
+                            class="material-symbols-outlined text-[32px] text-slate-600 dark:text-slate-400 group-hover:text-primary dark:group-hover:text-primary transition-colors">school</span>
+                    </div>
+                    <span class="text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors">EdTech</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 bg-background-subtle dark:bg-dark-bg transition-colors duration-300" id="work">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-primary text-sm font-bold uppercase tracking-widest mb-2 block">Our Portfolio</span>
+                <h2
+                    class="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-slate-900 dark:text-white transition-colors">
+                    Featured Projects</h2>
+                <p class="text-slate-600 dark:text-slate-400 font-body transition-colors">We don't just write code; we
+                    build products that transform businesses. Explore some of our recent success stories.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div
+                    class="group relative rounded-xl overflow-hidden aspect-[4/3] cursor-pointer shadow-lg shadow-slate-200/50 dark:shadow-black/50 transition-all">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="Interface dashboard of a fintech banking application"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCElwgfw1MY8rquy76BdXs46HMQxUbTZ3h4ocwEPu3jgESUAJ_xnnDgONjwVQA2A54Ni8ZDBgYmXD5YmXrHqeejBcXfM45qtxnXvZgRG50ef2gxEc7aUL9m3sYRs2iE5SQP8ej4MMF2_m4q0Cz2f2ZeETGyakUjms5ZgXZV9zqAhAvjFASlFgKfyyc3Cy55nLak4Gy0fwD_o6cuA26kvqGbKb4uNbwQX9rchHLv1gTdSVbAU_s2zsqukvy1OW8U2tjhwUjm2TB0C_k');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <div class="text-primary text-sm font-bold uppercase mb-2">Fintech</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">NeoBank Mobile App</h3>
+                        <p
+                            class="text-slate-200 text-sm font-body opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
+                            A complete redesign of a banking experience focusing on user retention and seamless
+                            transactions.
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="group relative rounded-xl overflow-hidden aspect-[4/3] cursor-pointer shadow-lg shadow-slate-200/50 dark:shadow-black/50 transition-all">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="Data visualization dashboard for healthcare analytics"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCCMerMYuY4Y3fXQm9auDCTSmxpqwqgtTZuo80qQ_qL_VvWDkBhv9nDfaXIRUg_oZaDfoi0WWvAOEWe_iVD6_GrBmHDL8IeoacrgoIMx-1O2YM_KB2W6elBkjLx25hBZJK9dfQDV5cgCiFsf3o6rOAFH5Eccm172fLj_D-TAQtuPdORILcjDtu5gCXOD2R1iSXQTE22FhSO0UJP9Srnhfh3y0jfvTurkPh2qcT51iIgYmYLf8mDG8Mw5mzM5x2LFeSnJbQxgcJ8rqg');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <div class="text-primary text-sm font-bold uppercase mb-2">Healthcare AI</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">MediPredict Analytics</h3>
+                        <p
+                            class="text-slate-200 text-sm font-body opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
+                            AI-powered dashboard helping doctors predict patient outcomes with 95% accuracy.
+                        </p>
+                    </div>
+                </div>
+                <div
+                    class="group relative rounded-xl overflow-hidden aspect-[4/3] md:aspect-[2/1] md:col-span-2 cursor-pointer shadow-lg shadow-slate-200/50 dark:shadow-black/50 transition-all">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        data-alt="E-commerce website layout on laptop and mobile device mockup"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD8BmxNYYXMGXX6xBM4zJl4RXdycnWM1VHeHXUz1An-8-MUiU_ZLCRwkNxro7QlEnYqU4hYnhp5f_mM1VT1we2Yqm-_BPjt7CFFu8tGaJP-ZBdGQ8mkQWxg_Psgj4_FF_Uqlqrlpm5g99LozgmFcDO2yBEJgLM6Yv3lFR-ePNDB0baBZ-zu6evNj3iLq9ZwNoQkrWQy2G9e937vB2XzGuvxuuIsMzoOU0ujA5bqEaGixVCpX3XGl--CTBUZfmsvthaNTiTVq9DDnCQ');">
+                    </div>
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 transition-opacity">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <div class="text-primary text-sm font-bold uppercase mb-2">E-Commerce</div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Global Retail Platform</h3>
+                        <p
+                            class="text-slate-200 text-sm font-body max-w-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
+                            Scaling a local retailer to a global brand with a high-performance headless commerce
+                            architecture.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center mt-12">
+                <button
+                    class="bg-transparent border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 px-8 py-3 rounded-lg font-bold transition-colors">
+                    View All Case Studies
+                </button>
+            </div>
+        </div>
+    </section>
+    <section
+        class="py-24 bg-white dark:bg-dark-card border-t border-slate-100 dark:border-slate-800 transition-colors duration-300">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="flex-1 space-y-8">
+                    <span class="text-primary text-sm font-bold uppercase tracking-widest">Why Choose Us</span>
+                    <h2 class="text-4xl font-bold tracking-tight text-slate-900 dark:text-white transition-colors">
+                        Engineered for Excellence, Designed for Impact.</h2>
+                    <p class="text-slate-600 dark:text-slate-400 font-body transition-colors">We don't believe in
+                        shortcuts. Every line of code and pixel is crafted with intention.</p>
+                    <ul class="space-y-6 pt-4">
+                        <li class="flex items-start gap-4">
+                            <div
+                                class="size-6 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1 shrink-0">
+                                <span class="material-symbols-outlined text-sm font-bold">check</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1 text-slate-900 dark:text-white transition-colors">
+                                    Agile Methodology</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400 font-body transition-colors">Rapid
+                                    iterations and constant feedback loops ensure we build exactly what you need.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div
+                                class="size-6 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1 shrink-0">
+                                <span class="material-symbols-outlined text-sm font-bold">check</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1 text-slate-900 dark:text-white transition-colors">Top
+                                    1% Talent</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400 font-body transition-colors">Our
+                                    team consists of industry veterans and award-winning designers.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div
+                                class="size-6 rounded-full bg-primary/10 flex items-center justify-center text-primary mt-1 shrink-0">
+                                <span class="material-symbols-outlined text-sm font-bold">check</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold mb-1 text-slate-900 dark:text-white transition-colors">
+                                    Future-Proof Tech</h4>
+                                <p class="text-sm text-slate-600 dark:text-slate-400 font-body transition-colors">We use
+                                    scalable, modern stacks that grow with your business.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex-1 w-full">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4 mt-8">
+                            <div
+                                class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm h-48 flex flex-col justify-end transition-colors">
+                                <span class="material-symbols-outlined text-primary text-4xl mb-2">bolt</span>
+                                <div class="font-bold text-lg text-slate-900 dark:text-white transition-colors">
+                                    Lightning Fast</div>
+                            </div>
+                            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm h-64 flex flex-col justify-end transition-colors"
+                                style="background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(19,127,236,0.1) 100%);">
+                                <span class="material-symbols-outlined text-primary text-4xl mb-2">security</span>
+                                <div class="font-bold text-lg text-slate-900 dark:text-white transition-colors">
+                                    Enterprise Security</div>
+                            </div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm h-64 flex flex-col justify-end transition-colors"
+                                style="background: linear-gradient(180deg, rgba(19,127,236,0.1) 0%, rgba(255,255,255,0.05) 100%);">
+                                <span class="material-symbols-outlined text-primary text-4xl mb-2">auto_awesome</span>
+                                <div class="font-bold text-lg text-slate-900 dark:text-white transition-colors">Stunning
+                                    UX</div>
+                            </div>
+                            <div
+                                class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm h-48 flex flex-col justify-end transition-colors">
+                                <span class="material-symbols-outlined text-primary text-4xl mb-2">support_agent</span>
+                                <div class="font-bold text-lg text-slate-900 dark:text-white transition-colors">24/7
+                                    Support</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 bg-background-subtle dark:bg-dark-bg relative overflow-hidden transition-colors duration-300">
+        <div
+            class="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-50 to-transparent dark:from-blue-900/10 dark:to-transparent pointer-events-none transition-colors">
+        </div>
+        <div class="container mx-auto px-4 md:px-8 relative z-10">
+            <div class="flex flex-col items-center text-center">
+                <div class="text-primary mb-6">
+                    <span class="material-symbols-outlined text-6xl">format_quote</span>
+                </div>
+                <h3
+                    class="text-2xl md:text-4xl font-bold leading-tight max-w-4xl mb-8 text-slate-800 dark:text-slate-100 transition-colors">
+                    "Adhirat Technologies didn't just build a website; they transformed our entire digital presence. The
+                    attention to detail and technical expertise is unmatched."
+                </h3>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-full bg-slate-200 overflow-hidden">
+                        <div class="w-full h-full bg-cover bg-center" data-alt="Portrait of Sarah Jenkins, CEO"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAr03xJr-PpirxnKg2QI_HgLwKqaxtxNTWbVQKtFveK8NttMqujGqXZLeBg3bZR7bg6fXtb2ySNZk-IijV7LOEFkRzVyQ_e42tHrOIxDYsZ7MvjP8yEXN8e_nhOoovNTHo8xvz3QjCpbipNP6_jESZ7WIzj7f5JXSUFmIui8u84PAkhme0jj-QQUu0pS6Gg-FvXbHDd9mkfRHgdN2QJdkntjEkom6-gR2mBeGyu2_fYPh-13UVPjh__IlxquPhTM2hUQN5alQPE5tk');">
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <div class="font-bold text-slate-900 dark:text-white transition-colors">Sarah Jenkins</div>
+                        <div class="text-sm text-slate-500 dark:text-slate-400 transition-colors">CTO, FinStream</div>
+                    </div>
+                </div>
+                <div class="flex gap-2 mt-8">
+                    <button class="w-3 h-3 rounded-full bg-primary"></button>
+                    <button
+                        class="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"></button>
+                    <button
+                        class="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600 hover:bg-slate-400 dark:hover:bg-slate-500"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 relative overflow-hidden bg-white dark:bg-dark-card transition-colors duration-300">
+        <div class="absolute inset-0 bg-blue-50/50 dark:bg-blue-900/10 transition-colors"></div>
+        <div
+            class="absolute inset-0 bg-gradient-to-b from-white via-transparent to-white dark:from-dark-card dark:via-transparent dark:to-dark-card transition-colors">
+        </div>
+        <div class="container mx-auto px-4 md:px-8 relative z-10">
+            <div
+                class="max-w-4xl mx-auto glass-panel rounded-2xl p-12 text-center border border-white dark:border-slate-700 shadow-xl shadow-blue-50 dark:shadow-black/20 transition-all">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-slate-900 dark:text-white transition-colors">Ready
+                    to Innovate?</h2>
+                <p
+                    class="text-lg text-slate-600 dark:text-slate-300 mb-8 max-w-2xl mx-auto font-body transition-colors">
+                    Let's discuss how we can help you achieve your business goals with technology that sets you apart.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button
+                        class="bg-primary hover:bg-primary/90 text-white font-bold h-12 px-8 rounded-lg transition-all shadow-lg hover:shadow-primary/40">
+                        Start Your Project
+                    </button>
+                    <button
+                        class="bg-transparent border border-slate-300 dark:border-slate-600 text-slate-800 dark:text-slate-200 hover:bg-white dark:hover:bg-slate-700 h-12 px-8 rounded-lg font-bold transition-colors">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
     <div id="footer"></div>
-
-    <script src="assets/js/includes.js"></script>
 </body>
 
 </html>
