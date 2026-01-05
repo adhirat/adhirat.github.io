@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  padding-top: 5rem;
+  /* 80px header height */
   font-family: Arial, sans-serif;
 }
 
@@ -114,6 +116,7 @@ body {
 .card-hover:hover {
   transform: translateY(-5px);
 }
+
 .card-hover {
   transition: all 0.3s ease;
 }
@@ -134,8 +137,15 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
@@ -143,7 +153,7 @@ body {
 }
 
 .shadow-input {
-  box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
 }
 
 .shadow-glow {
@@ -155,34 +165,42 @@ body {
 }
 
 .no-scrollbar::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
+
 .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .mask-linear-gradient {
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 /* Services Page Styles */
 .service-card:hover .icon-box {
-    background-color: #3b82f6;
-    color: white;
-    transform: scale(1.1);
+  background-color: #3b82f6;
+  color: white;
+  transform: scale(1.1);
 }
+
 .service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
 }
 
 /* Technologies Page Styles */
 @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
 }
+
 .animate-shimmer {
-    animation: shimmer 2.5s infinite;
+  animation: shimmer 2.5s infinite;
 }
