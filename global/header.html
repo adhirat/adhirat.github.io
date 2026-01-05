@@ -12,7 +12,7 @@
             </div>
             <nav class="hidden md:flex items-center gap-1">
                 <a class="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors duration-200"
-                    href="#">Home</a>
+                    href="index.html">Home</a>
                 <div class="relative group">
                     <button
                         class="flex items-center gap-1 px-4 py-6 text-sm font-medium text-slate-600 dark:text-slate-300 group-hover:text-primary dark:group-hover:text-primary transition-colors duration-200 outline-none">
@@ -20,76 +20,140 @@
                             class="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover:-rotate-180">expand_more</span>
                     </button>
                     <div
-                        class="absolute top-[80%] left-0 w-64 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 pointer-events-none group-hover:pointer-events-auto">
+                        class="absolute top-[80%] left-1/2 -translate-x-1/2 w-[640px] pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 pointer-events-none group-hover:pointer-events-auto">
                         <div
-                            class="bg-white dark:bg-dark-card border border-slate-100 dark:border-slate-700 rounded-xl shadow-xl shadow-blue-500/5 dark:shadow-black/20 p-2 overflow-hidden ring-1 ring-black/5">
-                            <a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
-                                href="#services">
-                                <span
-                                    class="material-symbols-outlined text-primary group-hover/item:scale-110 transition-transform">language</span>
-                                <div>
-                                    <div class="text-sm font-bold text-slate-800 dark:text-slate-200">Web
-                                        Development</div>
-                                    <div class="text-xs text-slate-500 dark:text-slate-400">Full stack applications
-                                    </div>
-                                </div>
-                            </a>
-                            <a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
-                                href="#services">
-                                <span
-                                    class="material-symbols-outlined text-primary group-hover/item:scale-110 transition-transform">smartphone</span>
-                                <div>
-                                    <div class="text-sm font-bold text-slate-800 dark:text-slate-200">Mobile Apps
-                                    </div>
-                                    <div class="text-xs text-slate-500 dark:text-slate-400">iOS &amp; Android</div>
-                                </div>
-                            </a>
-                            <div class="relative group/sub">
-                                <button
-                                    class="w-full flex items-center justify-between px-4 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors text-left group/item">
-                                    <div class="flex items-center gap-3">
-                                        <span
-                                            class="material-symbols-outlined text-primary group-hover/item:scale-110 transition-transform">cloud</span>
-                                        <div>
-                                            <div class="text-sm font-bold text-slate-800 dark:text-slate-200">Cloud
-                                                Solutions</div>
-                                            <div class="text-xs text-slate-500 dark:text-slate-400">Infrastructure
-                                            </div>
+                            class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl shadow-blue-500/5 dark:shadow-black/20 border border-slate-100 dark:border-slate-700/50 overflow-hidden p-6 ring-1 ring-black/5 dark:ring-white/5">
+                            <div class="grid grid-cols-2 gap-8">
+                                <div class="space-y-4">
+                                    <div class="text-xs font-bold text-slate-500 uppercase tracking-widest px-2 mb-2">
+                                        Capabilities</div>
+                                    <a class="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
+                                        href="services.html">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-slate-800 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-all duration-300 border border-blue-100 dark:border-slate-700/50 group-hover/item:border-primary">
+                                            <span class="material-symbols-outlined">language</span>
                                         </div>
-                                    </div>
-                                    <span
-                                        class="material-symbols-outlined text-[18px] text-slate-400 -rotate-90">expand_more</span>
-                                </button>
-                                <div
-                                    class="absolute top-0 left-full pl-2 w-56 opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 transform group-hover/sub:translate-x-0 -translate-x-2">
-                                    <div
-                                        class="bg-white dark:bg-dark-card border border-slate-100 dark:border-slate-700 rounded-xl shadow-xl shadow-blue-500/5 dark:shadow-black/20 p-2 ring-1 ring-black/5">
-                                        <a class="block px-4 py-2.5 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                                            href="#">AWS Infrastructure</a>
-                                        <a class="block px-4 py-2.5 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                                            href="#">Azure Migration</a>
-                                        <a class="block px-4 py-2.5 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
-                                            href="#">Google Cloud</a>
-                                    </div>
+                                        <div>
+                                            <div class="text-sm font-bold text-slate-900 dark:text-slate-100 mb-1">Web
+                                                Development</div>
+                                            <p
+                                                class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-body">
+                                                Modern, scalable web apps</p>
+                                        </div>
+                                    </a>
+                                    <a class="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
+                                        href="services.html">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-slate-800 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-all duration-300 border border-blue-100 dark:border-slate-700/50 group-hover/item:border-primary">
+                                            <span class="material-symbols-outlined">smartphone</span>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-bold text-slate-900 dark:text-slate-100 mb-1">
+                                                Mobile
+                                                Apps</div>
+                                            <p
+                                                class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-body">
+                                                iOS &amp; Android excellence</p>
+                                        </div>
+                                    </a>
+                                    <a class="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
+                                        href="services.html">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-slate-800 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-all duration-300 border border-blue-100 dark:border-slate-700/50 group-hover/item:border-primary">
+                                            <span class="material-symbols-outlined">palette</span>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-bold text-slate-900 dark:text-slate-100 mb-1">UI/UX
+                                                Design</div>
+                                            <p
+                                                class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-body">
+                                                Compelling user experiences</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="space-y-4">
+                                    <div class="text-xs font-bold text-slate-500 uppercase tracking-widest px-2 mb-2">
+                                        Innovation</div>
+                                    <a class="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
+                                        href="aiml.html">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-slate-800 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-all duration-300 border border-blue-100 dark:border-slate-700/50 group-hover/item:border-primary">
+                                            <span class="material-symbols-outlined">psychology</span>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-bold text-slate-900 dark:text-slate-100 mb-1">AI
+                                                Solutions</div>
+                                            <p
+                                                class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-body">
+                                                Data-driven intelligence</p>
+                                        </div>
+                                    </a>
+                                    <a class="flex items-start gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
+                                        href="services.html">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-blue-50 dark:bg-slate-800 text-primary flex items-center justify-center shrink-0 group-hover/item:bg-primary group-hover/item:text-white transition-all duration-300 border border-blue-100 dark:border-slate-700/50 group-hover/item:border-primary">
+                                            <span class="material-symbols-outlined">cloud_queue</span>
+                                        </div>
+                                        <div>
+                                            <div class="text-sm font-bold text-slate-900 dark:text-slate-100 mb-1">Cloud
+                                                Engineering</div>
+                                            <p
+                                                class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-body">
+                                                Robust infrastructure</p>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
-                            <a class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors group/item"
-                                href="#services">
-                                <span
-                                    class="material-symbols-outlined text-primary group-hover/item:scale-110 transition-transform">psychology</span>
-                                <div>
-                                    <div class="text-sm font-bold text-slate-800 dark:text-slate-200">AI &amp; ML
-                                    </div>
-                                    <div class="text-xs text-slate-500 dark:text-slate-400">Data Intelligence</div>
-                                </div>
-                            </a>
+                            <div
+                                class="mt-6 pt-5 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50 dark:bg-slate-950/30 -mx-6 -mb-6 px-6 py-4 flex items-center justify-between">
+                                <div class="text-xs font-medium text-slate-500">Need a custom solution?</div>
+                                <a class="text-xs font-bold text-primary flex items-center gap-1 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                                    href="contact.html">
+                                    Consult our experts <span
+                                        class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <a class="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors duration-200"
                     href="#work">Work</a>
-                <a class="px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors duration-200"
-                    href="#about">About</a>
+                <div class="relative group">
+                    <button
+                        class="flex items-center gap-1 px-4 py-6 text-sm font-medium text-slate-600 dark:text-slate-300 group-hover:text-primary dark:group-hover:text-primary transition-colors duration-200 outline-none">
+                        Company
+                        <span
+                            class="material-symbols-outlined text-[18px] transition-transform duration-300 group-hover:-rotate-180">expand_more</span>
+                    </button>
+                    <div
+                        class="absolute top-[80%] right-0 w-60 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 translate-y-2 pointer-events-none group-hover:pointer-events-auto">
+                        <div
+                            class="bg-white dark:bg-slate-900 rounded-xl shadow-xl shadow-blue-500/5 dark:shadow-black/20 border border-slate-100 dark:border-slate-700/50 overflow-hidden py-2 ring-1 ring-black/5 dark:ring-white/5">
+                            <a class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary transition-colors"
+                                href="about.html">
+                                <span class="material-symbols-outlined text-[20px]">business</span>
+                                About Us
+                            </a>
+                            <a class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary transition-colors"
+                                href="careers.html">
+                                <span class="material-symbols-outlined text-[20px]">diversity_3</span>
+                                Careers
+                                <span
+                                    class="ml-auto text-[10px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full border border-primary/20">Hiring</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary transition-colors"
+                                href="blog.html">
+                                <span class="material-symbols-outlined text-[20px]">rss_feed</span>
+                                Blog
+                            </a>
+                            <a class="flex items-center gap-3 px-4 py-3 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-primary dark:hover:text-primary transition-colors"
+                                href="contact.html">
+                                <span class="material-symbols-outlined text-[20px]">mail</span>
+                                Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </nav>
             <div class="flex items-center gap-4">
                 <button aria-label="Toggle Dark Mode"

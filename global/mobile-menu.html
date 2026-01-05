@@ -16,34 +16,58 @@
             </button>
         </div>
         <div class="flex flex-col gap-6 flex-grow">
-            <a class="text-2xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors" href="#"
-                onclick="toggleMobileMenu()">Home</a>
-            <div class="flex flex-col gap-4">
-                <span class="text-2xl font-bold text-primary">Services</span>
-                <div class="pl-4 flex flex-col gap-4 border-l-2 border-slate-100 dark:border-slate-800 ml-1">
-                    <a class="text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors"
-                        href="#services" onclick="toggleMobileMenu()">Web Development</a>
-                    <a class="text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors"
-                        href="#services" onclick="toggleMobileMenu()">Mobile Apps</a>
-                    <div class="flex flex-col gap-3">
-                        <span class="text-lg font-medium text-slate-900 dark:text-white">Cloud Solutions</span>
-                        <div class="pl-4 flex flex-col gap-3">
-                            <a class="text-base text-slate-500 dark:text-slate-400 hover:text-primary transition-colors"
-                                href="#" onclick="toggleMobileMenu()">AWS Infrastructure</a>
-                            <a class="text-base text-slate-500 dark:text-slate-400 hover:text-primary transition-colors"
-                                href="#" onclick="toggleMobileMenu()">Azure Migration</a>
-                            <a class="text-base text-slate-500 dark:text-slate-400 hover:text-primary transition-colors"
-                                href="#" onclick="toggleMobileMenu()">Google Cloud</a>
-                        </div>
+            <a class="text-2xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors"
+                href="index.html">Home</a>
+
+            <details class="group/item">
+                <summary
+                    class="flex items-center justify-between text-2xl font-bold text-slate-900 dark:text-white cursor-pointer list-none hover:text-primary transition-colors tracking-tight">
+                    Services
+                    <span
+                        class="material-symbols-outlined text-3xl transition-transform duration-300 group-open/item:rotate-180 text-slate-500 group-hover:text-primary">expand_more</span>
+                </summary>
+                <div class="pl-0 mt-6 space-y-6 border-l-2 border-slate-100 dark:border-slate-800 ml-1.5 pl-6">
+                    <div class="space-y-3">
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Capabilities</div>
+                        <a class="block text-lg text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                            href="services.html">Web Development</a>
+                        <a class="block text-lg text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                            href="services.html">Mobile Apps</a>
+                        <a class="block text-lg text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                            href="services.html">UI/UX Design</a>
                     </div>
-                    <a class="text-lg font-medium text-slate-700 dark:text-slate-300 hover:text-primary transition-colors"
-                        href="#services" onclick="toggleMobileMenu()">AI &amp; ML</a>
+                    <div class="space-y-3">
+                        <div class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Innovation</div>
+                        <a class="block text-lg text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                            href="aiml.html">AI Solutions</a>
+                        <a class="block text-lg text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                            href="services.html">Cloud Engineering</a>
+                    </div>
                 </div>
-            </div>
+            </details>
+
             <a class="text-2xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors"
-                href="#work" onclick="toggleMobileMenu()">Work</a>
-            <a class="text-2xl font-bold text-slate-900 dark:text-white hover:text-primary transition-colors"
-                href="#about" onclick="toggleMobileMenu()">About</a>
+                href="#work">Work</a>
+
+            <details class="group/item">
+                <summary
+                    class="flex items-center justify-between text-2xl font-bold text-slate-900 dark:text-white cursor-pointer list-none hover:text-primary transition-colors tracking-tight">
+                    Company
+                    <span
+                        class="material-symbols-outlined text-3xl transition-transform duration-300 group-open/item:rotate-180 text-slate-500 group-hover:text-primary">expand_more</span>
+                </summary>
+                <div class="pl-0 mt-6 space-y-4 border-l-2 border-slate-100 dark:border-slate-800 ml-1.5 pl-6">
+                    <a class="block text-lg text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                        href="about.html">About Us</a>
+                    <a class="block text-lg text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                        href="careers.html">Careers <span
+                            class="inline-block text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full ml-2 align-middle border border-primary/20">Hiring</span></a>
+                    <a class="block text-lg text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                        href="blog.html">Blog</a>
+                    <a class="block text-lg text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-white transition-colors"
+                        href="contact.html">Contact</a>
+                </div>
+            </details>
         </div>
         <div class="pt-8 mt-8 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
             <span class="text-sm font-medium text-slate-500 dark:text-slate-400">Appearance</span>
