@@ -96,15 +96,34 @@ function afterLoad() {
 function highlightActiveNav() {
     const page = window.location.pathname.split("/").pop() || "index.html";
 
-    document.querySelectorAll(".nav a").forEach(link => {
-        if (link.getAttribute("href") === page) {
+    // Standardize page name for home
+    const activePage = (page === "" || page === "/") ? "index.html" : page;
+
+    document.querySelectorAll("nav a").forEach(link => {
+        const href = link.getAttribute("href");
+        if (href === activePage) {
             link.classList.add("active");
+            // Also add a visible indicator class for Tailwind-based styles if needed
+            link.classList.add("text-primary");
+        } else {
+            link.classList.remove("active", "text-primary");
         }
     });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    loadHTML("header", "global/header.html");
-    loadHTML("footer", "global/footer.html");
-    loadHTML("mobile-menu-container", "global/mobile-menu.html");
+    // Initial load of global components
+    const components = [
+        { id: "header", file: "global/header.html" },
+        { id: "footer", file: "global/footer.html" },
+        { id: "mobile-menu-container", file: "global/mobile-menu.html" }
+    ];
+
+    let loadedCount = 0;
+    components.forEach(comp => {
+        const el = document.getElementById(comp.id);
+        if (el) {
+            loadHTML(comp.id, comp.file);
+        }
+    });
 });
