@@ -91,6 +91,7 @@ function loadHTML(id, file) {
 
 function afterLoad() {
     highlightActiveNav();
+    initScrollAnimations();
 }
 
 function highlightActiveNav() {
@@ -111,6 +112,29 @@ function highlightActiveNav() {
     });
 }
 
+function initScrollAnimations() {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Once visible, we can stop observing this element
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('.reveal');
+    revealElements.forEach(el => {
+        observer.observe(el);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // Initial load of global components
     const components = [
@@ -126,4 +150,57 @@ document.addEventListener("DOMContentLoaded", () => {
             loadHTML(comp.id, comp.file);
         }
     });
+
+    // Also initialize animations for static content
+    initScrollAnimations();
+
+    // Cookie Consent Logic
+    initCookieConsent();
 });
+
+function initCookieConsent() {
+    if (localStorage.getItem('cookieConsent')) return;
+
+    // Create container
+    const container = document.createElement('div');
+    container.id = 'cookie-consent-container';
+    document.body.appendChild(container);
+
+    // Load content
+    fetch('global/cookie-consent.html')
+        .then(response => response.text())
+        .then(html => {
+            container.innerHTML = html;
+
+            const banner = document.getElementById('cookie-banner');
+
+            // Show with slight delay
+            setTimeout(() => {
+                banner.classList.remove('translate-y-[150%]');
+            }, 1000);
+
+            // Event Listeners
+            document.getElementById('accept-cookies').addEventListener('click', () => {
+                handleCookieChoice('accepted');
+            });
+
+            document.getElementById('decline-cookies').addEventListener('click', () => {
+                handleCookieChoice('declined');
+            });
+
+            document.getElementById('cookie-settings').addEventListener('click', () => {
+                window.location.href = 'legal.html#cookies';
+            });
+        });
+}
+
+function handleCookieChoice(choice) {
+    localStorage.setItem('cookieConsent', choice);
+    const banner = document.getElementById('cookie-banner');
+    banner.classList.add('translate-y-[150%]');
+
+    // Remove from DOM after transition
+    setTimeout(() => {
+        document.getElementById('cookie-consent-container').remove();
+    }, 700);
+}
