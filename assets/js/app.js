@@ -65,14 +65,25 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
     document.documentElement.classList.remove('dark');
 }
 
+// Cache version - increment this when you update header/footer/mobile-menu
+const CACHE_VERSION = 'v7';
+
 function loadHTML(id, file) {
-    const cached = sessionStorage.getItem(file);
+    const cacheKey = `${file}_${CACHE_VERSION}`;
+    const cached = sessionStorage.getItem(cacheKey);
 
     if (cached) {
         document.getElementById(id).innerHTML = cached;
         afterLoad();
         return;
     }
+
+    // Clear old cached versions of this file
+    Object.keys(sessionStorage).forEach(key => {
+        if (key.startsWith(file)) {
+            sessionStorage.removeItem(key);
+        }
+    });
 
     fetch(file)
         .then(response => {
@@ -82,7 +93,7 @@ function loadHTML(id, file) {
             return response.text();
         })
         .then(html => {
-            sessionStorage.setItem(file, html);
+            sessionStorage.setItem(cacheKey, html);
             document.getElementById(id).innerHTML = html;
             afterLoad();
         })
@@ -323,7 +334,7 @@ function initScrollSpy() {
         });
     }
 
-    const observerOptions = { root: null, rootMargin: '-20% 0px -70% 0px', threshold: 0 };
+    const observerOptions = { root: null, rootMargin: '-120px 0px -70% 0px', threshold: 0 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) setActive(entry.target.getAttribute('id'));

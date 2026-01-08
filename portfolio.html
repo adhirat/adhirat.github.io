@@ -82,11 +82,12 @@
                         </p>
                         <div class="mt-4 flex flex-wrap justify-center gap-4">
                             <button
+                                onclick="document.getElementById('case-studies').scrollIntoView({behavior: 'smooth'})"
                                 class="flex items-center gap-2 justify-center rounded-xl h-12 px-8 bg-white text-primary font-bold transition-all hover:bg-blue-50 shadow-lg hover:shadow-xl hover:-translate-y-1">
                                 Explore Case Studies
                                 <span class="material-symbols-outlined text-sm">arrow_downward</span>
                             </button>
-                            <button
+                            <button onclick="window.location.href='contact.html'"
                                 class="flex items-center gap-2 justify-center rounded-xl h-12 px-8 bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 text-white font-bold transition-all">
                                 Watch Showreel
                                 <span class="material-symbols-outlined text-sm">play_circle</span>
@@ -95,7 +96,8 @@
                     </div>
                 </div>
             </section>
-            <section class="w-full max-w-[1280px] px-4 md:px-10 pb-8 sticky top-[80px] z-40 pointer-events-none">
+            <section id="case-studies"
+                class="w-full max-w-[1280px] px-4 md:px-10 pb-8 sticky top-[80px] z-40 pointer-events-none">
                 <div
                     class="flex gap-3 overflow-x-auto pb-4 pt-2 pointer-events-auto no-scrollbar mask-linear-gradient justify-start md:justify-center reveal reveal-up">
                     <button data-filter="all" data-icon="all_inclusive"
@@ -128,7 +130,7 @@
             </section>
             <section class="w-full max-w-[1280px] px-4 md:px-10 pb-20">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[300px] reveal reveal-up">
-                    <div data-category="web"
+                    <div data-category="web" onclick="window.location.href='contact.html'"
                         class="group relative md:col-span-2 md:row-span-2 rounded-[1.5rem] overflow-hidden cursor-pointer bg-white dark:bg-slate-800 shadow-xl shadow-slate-200/60 dark:shadow-black/20 ring-1 ring-slate-100 dark:ring-slate-700 visible">
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                             data-alt="Modern fintech dashboard interface on laptop screen"
@@ -162,7 +164,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-category="mobile"
+                    <div data-category="mobile" onclick="window.location.href='contact.html'"
                         class="group relative rounded-[1.5rem] overflow-hidden cursor-pointer bg-white dark:bg-slate-800 shadow-lg shadow-slate-200/60 dark:shadow-black/20 ring-1 ring-slate-100 dark:ring-slate-700 visible">
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                             data-alt="Healthcare application showing patient vitals"
@@ -180,7 +182,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-category="blockchain"
+                    <div data-category="blockchain" onclick="window.location.href='contact.html'"
                         class="group relative rounded-[1.5rem] overflow-hidden cursor-pointer bg-white dark:bg-slate-800 shadow-lg shadow-slate-200/60 dark:shadow-black/20 ring-1 ring-slate-100 dark:ring-slate-700 visible">
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                             data-alt="Cryptocurrency visual representation with blockchain nodes"
@@ -198,7 +200,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-category="ai"
+                    <div data-category="ai" onclick="window.location.href='contact.html'"
                         class="group relative md:row-span-2 rounded-[1.5rem] overflow-hidden cursor-pointer bg-white dark:bg-slate-800 shadow-lg shadow-slate-200/60 dark:shadow-black/20 ring-1 ring-slate-100 dark:ring-slate-700 visible">
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                             data-alt="E-commerce logistics dashboard on tablet"
@@ -221,7 +223,7 @@
                                 Story</span>
                         </div>
                     </div>
-                    <div data-category="mobile"
+                    <div data-category="mobile" onclick="window.location.href='contact.html'"
                         class="group relative rounded-[1.5rem] overflow-hidden cursor-pointer bg-white dark:bg-slate-800 shadow-lg shadow-slate-200/60 dark:shadow-black/20 ring-1 ring-slate-100 dark:ring-slate-700 visible">
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                             data-alt="Educational tablet app interface for kids"
@@ -238,7 +240,7 @@
                             </div>
                         </div>
                     </div>
-                    <div data-category="ai"
+                    <div data-category="ai" onclick="window.location.href='contact.html'"
                         class="group relative rounded-[1.5rem] overflow-hidden cursor-pointer bg-white dark:bg-slate-800 shadow-lg shadow-slate-200/60 dark:shadow-black/20 ring-1 ring-slate-100 dark:ring-slate-700 visible">
                         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                             data-alt="Virtual reality headset user experience"
@@ -368,7 +370,7 @@
                                 </div>
                                 <div
                                     class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300 backdrop-blur-[2px]">
-                                    <button
+                                    <button onclick="window.location.href='contact.html'"
                                         class="bg-white text-slate-900 px-8 py-4 rounded-full font-bold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300 shadow-xl">
                                         Read Full Case Study <span
                                             class="material-symbols-outlined">arrow_outward</span>
@@ -400,11 +402,11 @@
                             a
                             digital reality. Our team is ready to engineer your next breakthrough.</p>
                         <div class="flex flex-col sm:flex-row gap-4 mt-6">
-                            <button
+                            <button onclick="window.location.href='contact.html'"
                                 class="flex items-center justify-center h-14 px-10 rounded-full bg-white text-primary text-base font-bold hover:bg-slate-50 transition-all hover:scale-105 shadow-xl">
                                 Start Your Project
                             </button>
-                            <button
+                            <button onclick="window.location.href='services.html'"
                                 class="flex items-center justify-center h-14 px-10 rounded-full bg-blue-800/40 backdrop-blur-sm text-white text-base font-bold border border-white/20 hover:bg-blue-800/60 transition-all hover:scale-105">
                                 View Services
                             </button>
