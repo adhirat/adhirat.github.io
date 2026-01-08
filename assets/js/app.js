@@ -156,6 +156,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cookie Consent Logic
     initCookieConsent();
+
+    // New Feature initializations
+    initBackToTop();
+    initNewsletterFeedback();
+    initScrollSpy();
+    initContentFilters();
 });
 
 function initCookieConsent() {
@@ -203,4 +209,166 @@ function handleCookieChoice(choice) {
     setTimeout(() => {
         document.getElementById('cookie-consent-container').remove();
     }, 700);
+}
+
+// Back to Top Logic
+function initBackToTop() {
+    const btn = document.createElement('button');
+    btn.className = 'back-to-top p-3 rounded-full bg-primary text-white shadow-2xl hover:bg-primary/90 hover:-translate-y-1 active:scale-95 transition-all focus:outline-none focus:ring-4 focus:ring-primary/20';
+    btn.innerHTML = '<span class="material-symbols-outlined">arrow_upward</span>';
+    btn.setAttribute('aria-label', 'Back to top');
+    document.body.appendChild(btn);
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    });
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// Toast Notification System
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = 'glass-toast flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-2xl';
+
+    const icon = type === 'success' ? 'check_circle' : 'info';
+    const iconColor = type === 'success' ? 'text-green-500' : 'text-blue-500';
+
+    toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor}">${icon}</span>
+        <span class="text-sm font-bold text-slate-800 dark:text-white">${message}</span>
+    `;
+
+    document.body.appendChild(toast);
+
+    // Show
+    setTimeout(() => toast.classList.add('visible'), 100);
+
+    // Hide and Remove
+    setTimeout(() => {
+        toast.classList.remove('visible');
+        setTimeout(() => toast.remove(), 500);
+    }, 4000);
+}
+
+// Newsletter Simulation
+function initNewsletterFeedback() {
+    // We use event delegation since footers are loaded dynamically
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (btn && btn.closest('div')?.querySelector('input[type="email"]')) {
+            e.preventDefault();
+            const emailInput = btn.closest('div').querySelector('input[type="email"]');
+            if (emailInput.value && emailInput.checkValidity()) {
+                showToast('Success! You have been subscribed to our newsletter.');
+                emailInput.value = '';
+            } else {
+                showToast('Please enter a valid email address.', 'info');
+            }
+        }
+    });
+}
+
+// Unified Scroll-Spy Logic (for Legal & Solutions pages)
+function initScrollSpy() {
+    const sidebarLinks = document.querySelectorAll('aside nav a[href^="#"], aside div.flex a[href^="#"], .lg\\:hidden a[href^="#"]');
+    if (sidebarLinks.length === 0) return;
+
+    const sections = Array.from(new Set(Array.from(sidebarLinks)
+        .map(link => {
+            const href = link.getAttribute('href');
+            return (href && href.length > 1) ? document.querySelector(href) : null;
+        })
+        .filter(s => s !== null)));
+
+    const activeClasses = ['bg-primary', 'text-white', 'shadow-md', 'shadow-primary/20'];
+    const mobileActiveClasses = ['bg-primary', 'text-white', 'shadow-md', 'shadow-primary/20'];
+    const inactiveClasses = ['text-slate-600', 'dark:text-slate-400', 'hover:bg-slate-100', 'dark:hover:bg-slate-800', 'hover:text-slate-900', 'dark:hover:text-white'];
+    const mobileInactiveClasses = ['text-slate-500', 'dark:text-gray-300', 'hover:bg-gray-50', 'dark:hover:bg-[#1a2538]'];
+
+    function setActive(id) {
+        sidebarLinks.forEach(link => {
+            const isTarget = link.getAttribute('href') === `#${id}`;
+            const isMobile = link.closest('.lg\\:hidden');
+
+            if (isTarget) {
+                link.classList.add(...(isMobile ? mobileActiveClasses : activeClasses));
+                link.classList.remove(...(isMobile ? mobileInactiveClasses : inactiveClasses));
+                if (!isMobile) {
+                    const textSpan = link.querySelector('span:not(.material-symbols-outlined)');
+                    if (textSpan) { textSpan.classList.add('font-bold'); textSpan.classList.remove('font-medium'); }
+                    const icon = link.querySelector('.material-symbols-outlined');
+                    if (icon) icon.setAttribute('data-weight', 'fill');
+                }
+            } else {
+                link.classList.remove(...activeClasses, ...mobileActiveClasses);
+                link.classList.add(...(isMobile ? mobileInactiveClasses : inactiveClasses));
+                if (!isMobile) {
+                    const textSpan = link.querySelector('span:not(.material-symbols-outlined)');
+                    if (textSpan) { textSpan.classList.remove('font-bold'); textSpan.classList.add('font-medium'); }
+                    const icon = link.querySelector('.material-symbols-outlined');
+                    if (icon) icon.removeAttribute('data-weight');
+                }
+            }
+        });
+    }
+
+    const observerOptions = { root: null, rootMargin: '-20% 0px -70% 0px', threshold: 0 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) setActive(entry.target.getAttribute('id'));
+        });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+}
+
+// Content Filtering Logic (for Portfolio & Blog pages)
+function initContentFilters() {
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const filterItems = document.querySelectorAll('[data-category]');
+    if (filterButtons.length === 0) return;
+
+    const activeClasses = ['bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/20', 'ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-slate-50', 'dark:ring-offset-slate-900'];
+    const inactiveClasses = ['bg-white', 'dark:bg-slate-800', 'border', 'border-slate-200', 'dark:border-slate-700', 'text-slate-600', 'dark:text-slate-300', 'hover:text-primary', 'hover:border-primary'];
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filterValue = btn.getAttribute('data-filter');
+
+            // Update button states
+            filterButtons.forEach(b => {
+                b.classList.remove(...activeClasses);
+                b.classList.add(...inactiveClasses);
+                const checkIcon = b.querySelector('.material-symbols-outlined');
+                if (checkIcon) checkIcon.textContent = b.getAttribute('data-icon') || '';
+            });
+
+            btn.classList.add(...activeClasses);
+            btn.classList.remove(...inactiveClasses);
+            const activeIcon = btn.querySelector('.material-symbols-outlined');
+            if (activeIcon) activeIcon.textContent = 'check';
+
+            // Filter items
+            filterItems.forEach(item => {
+                const category = item.getAttribute('data-category');
+                if (filterValue === 'all' || category === filterValue) {
+                    item.style.display = '';
+                    setTimeout(() => item.classList.add('visible'), 10);
+                } else {
+                    item.classList.remove('visible');
+                    setTimeout(() => item.style.display = 'none', 500);
+                }
+            });
+        });
+    });
 }
