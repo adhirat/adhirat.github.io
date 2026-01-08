@@ -91,6 +91,7 @@ function loadHTML(id, file) {
 
 function afterLoad() {
     highlightActiveNav();
+    initScrollAnimations();
 }
 
 function highlightActiveNav() {
@@ -111,6 +112,29 @@ function highlightActiveNav() {
     });
 }
 
+function initScrollAnimations() {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                // Once visible, we can stop observing this element
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('.reveal');
+    revealElements.forEach(el => {
+        observer.observe(el);
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // Initial load of global components
     const components = [
@@ -126,4 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loadHTML(comp.id, comp.file);
         }
     });
+
+    // Also initialize animations for static content
+    initScrollAnimations();
 });
