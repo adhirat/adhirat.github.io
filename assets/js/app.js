@@ -162,6 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initNewsletterFeedback();
     initScrollSpy();
     initContentFilters();
+    initReviewsSlider();
 });
 
 function initCookieConsent() {
@@ -371,4 +372,58 @@ function initContentFilters() {
             });
         });
     });
+}
+
+// Reviews Slider (for Testimonials section)
+function initReviewsSlider() {
+    const slider = document.getElementById('reviews-slider');
+    const dots = document.querySelectorAll('.review-dot');
+    if (!slider || dots.length === 0) return;
+
+    let currentIndex = 0;
+    const totalSlides = dots.length;
+    let interval;
+
+    function updateSlider(index) {
+        currentIndex = index;
+        const offset = -index * 100;
+        slider.style.transform = `translateX(${offset}%)`;
+
+        // Update dots
+        dots.forEach((dot, i) => {
+            if (i === index) {
+                dot.classList.add('bg-primary');
+                dot.classList.remove('bg-slate-300', 'dark:bg-slate-600');
+            } else {
+                dot.classList.remove('bg-primary');
+                dot.classList.add('bg-slate-300', 'dark:bg-slate-600');
+            }
+        });
+    }
+
+    function startAutoSlide() {
+        stopAutoSlide();
+        interval = setInterval(() => {
+            let nextIndex = (currentIndex + 1) % totalSlides;
+            updateSlider(nextIndex);
+        }, 5000);
+    }
+
+    function stopAutoSlide() {
+        if (interval) clearInterval(interval);
+    }
+
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            updateSlider(index);
+            startAutoSlide(); // Reset interval on manual click
+        });
+    });
+
+    // Start auto slide
+    startAutoSlide();
+
+    // Pause on hover
+    slider.addEventListener('mouseenter', stopAutoSlide);
+    slider.addEventListener('mouseleave', startAutoSlide);
 }
