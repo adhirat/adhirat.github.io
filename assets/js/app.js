@@ -156,6 +156,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cookie Consent Logic
     initCookieConsent();
+
+    // New Feature initializations
+    initBackToTop();
+    initNewsletterFeedback();
 });
 
 function initCookieConsent() {
@@ -203,4 +207,71 @@ function handleCookieChoice(choice) {
     setTimeout(() => {
         document.getElementById('cookie-consent-container').remove();
     }, 700);
+}
+
+// Back to Top Logic
+function initBackToTop() {
+    const btn = document.createElement('button');
+    btn.className = 'back-to-top p-3 rounded-full bg-primary text-white shadow-2xl hover:bg-primary/90 hover:-translate-y-1 active:scale-95 transition-all focus:outline-none focus:ring-4 focus:ring-primary/20';
+    btn.innerHTML = '<span class="material-symbols-outlined">arrow_upward</span>';
+    btn.setAttribute('aria-label', 'Back to top');
+    document.body.appendChild(btn);
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    });
+
+    btn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// Toast Notification System
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = 'glass-toast flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-2xl';
+
+    const icon = type === 'success' ? 'check_circle' : 'info';
+    const iconColor = type === 'success' ? 'text-green-500' : 'text-blue-500';
+
+    toast.innerHTML = `
+        <span class="material-symbols-outlined ${iconColor}">${icon}</span>
+        <span class="text-sm font-bold text-slate-800 dark:text-white">${message}</span>
+    `;
+
+    document.body.appendChild(toast);
+
+    // Show
+    setTimeout(() => toast.classList.add('visible'), 100);
+
+    // Hide and Remove
+    setTimeout(() => {
+        toast.classList.remove('visible');
+        setTimeout(() => toast.remove(), 500);
+    }, 4000);
+}
+
+// Newsletter Simulation
+function initNewsletterFeedback() {
+    // We use event delegation since footers are loaded dynamically
+    document.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (btn && btn.closest('div')?.querySelector('input[type="email"]')) {
+            e.preventDefault();
+            const emailInput = btn.closest('div').querySelector('input[type="email"]');
+            if (emailInput.value && emailInput.checkValidity()) {
+                showToast('Success! You have been subscribed to our newsletter.');
+                emailInput.value = '';
+            } else {
+                showToast('Please enter a valid email address.', 'info');
+            }
+        }
+    });
 }
