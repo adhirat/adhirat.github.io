@@ -160,6 +160,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // New Feature initializations
     initBackToTop();
     initNewsletterFeedback();
+    initScrollSpy();
+    initContentFilters();
 });
 
 function initCookieConsent() {
@@ -273,5 +275,100 @@ function initNewsletterFeedback() {
                 showToast('Please enter a valid email address.', 'info');
             }
         }
+    });
+}
+
+// Unified Scroll-Spy Logic (for Legal & Solutions pages)
+function initScrollSpy() {
+    const sidebarLinks = document.querySelectorAll('aside nav a[href^="#"], aside div.flex a[href^="#"], .lg\\:hidden a[href^="#"]');
+    if (sidebarLinks.length === 0) return;
+
+    const sections = Array.from(new Set(Array.from(sidebarLinks)
+        .map(link => {
+            const href = link.getAttribute('href');
+            return (href && href.length > 1) ? document.querySelector(href) : null;
+        })
+        .filter(s => s !== null)));
+
+    const activeClasses = ['bg-primary', 'text-white', 'shadow-md', 'shadow-primary/20'];
+    const mobileActiveClasses = ['bg-primary', 'text-white', 'shadow-md', 'shadow-primary/20'];
+    const inactiveClasses = ['text-slate-600', 'dark:text-slate-400', 'hover:bg-slate-100', 'dark:hover:bg-slate-800', 'hover:text-slate-900', 'dark:hover:text-white'];
+    const mobileInactiveClasses = ['text-slate-500', 'dark:text-gray-300', 'hover:bg-gray-50', 'dark:hover:bg-[#1a2538]'];
+
+    function setActive(id) {
+        sidebarLinks.forEach(link => {
+            const isTarget = link.getAttribute('href') === `#${id}`;
+            const isMobile = link.closest('.lg\\:hidden');
+
+            if (isTarget) {
+                link.classList.add(...(isMobile ? mobileActiveClasses : activeClasses));
+                link.classList.remove(...(isMobile ? mobileInactiveClasses : inactiveClasses));
+                if (!isMobile) {
+                    const textSpan = link.querySelector('span:not(.material-symbols-outlined)');
+                    if (textSpan) { textSpan.classList.add('font-bold'); textSpan.classList.remove('font-medium'); }
+                    const icon = link.querySelector('.material-symbols-outlined');
+                    if (icon) icon.setAttribute('data-weight', 'fill');
+                }
+            } else {
+                link.classList.remove(...activeClasses, ...mobileActiveClasses);
+                link.classList.add(...(isMobile ? mobileInactiveClasses : inactiveClasses));
+                if (!isMobile) {
+                    const textSpan = link.querySelector('span:not(.material-symbols-outlined)');
+                    if (textSpan) { textSpan.classList.remove('font-bold'); textSpan.classList.add('font-medium'); }
+                    const icon = link.querySelector('.material-symbols-outlined');
+                    if (icon) icon.removeAttribute('data-weight');
+                }
+            }
+        });
+    }
+
+    const observerOptions = { root: null, rootMargin: '-20% 0px -70% 0px', threshold: 0 };
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) setActive(entry.target.getAttribute('id'));
+        });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+}
+
+// Content Filtering Logic (for Portfolio & Blog pages)
+function initContentFilters() {
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const filterItems = document.querySelectorAll('[data-category]');
+    if (filterButtons.length === 0) return;
+
+    const activeClasses = ['bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/20', 'ring-2', 'ring-primary', 'ring-offset-2', 'ring-offset-slate-50', 'dark:ring-offset-slate-900'];
+    const inactiveClasses = ['bg-white', 'dark:bg-slate-800', 'border', 'border-slate-200', 'dark:border-slate-700', 'text-slate-600', 'dark:text-slate-300', 'hover:text-primary', 'hover:border-primary'];
+
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const filterValue = btn.getAttribute('data-filter');
+
+            // Update button states
+            filterButtons.forEach(b => {
+                b.classList.remove(...activeClasses);
+                b.classList.add(...inactiveClasses);
+                const checkIcon = b.querySelector('.material-symbols-outlined');
+                if (checkIcon) checkIcon.textContent = b.getAttribute('data-icon') || '';
+            });
+
+            btn.classList.add(...activeClasses);
+            btn.classList.remove(...inactiveClasses);
+            const activeIcon = btn.querySelector('.material-symbols-outlined');
+            if (activeIcon) activeIcon.textContent = 'check';
+
+            // Filter items
+            filterItems.forEach(item => {
+                const category = item.getAttribute('data-category');
+                if (filterValue === 'all' || category === filterValue) {
+                    item.style.display = '';
+                    setTimeout(() => item.classList.add('visible'), 10);
+                } else {
+                    item.classList.remove('visible');
+                    setTimeout(() => item.style.display = 'none', 500);
+                }
+            });
+        });
     });
 }
