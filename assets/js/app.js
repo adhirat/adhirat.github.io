@@ -304,12 +304,20 @@ function initGridStagger() {
 
 document.addEventListener("DOMContentLoaded", () => {
     // Initial load of global components
+    // Create Chat Container if not exists
+    if (!document.getElementById("chat-widget-container")) {
+        const chatContainer = document.createElement("div");
+        chatContainer.id = "chat-widget-container";
+        chatContainer.className = "contents";
+        document.body.appendChild(chatContainer);
+    }
     const components = [
         { id: "header", file: "global/header.html" },
         { id: "footer", file: "global/footer.html" },
         { id: "mobile-menu-container", file: "global/mobile-menu.html" },
         { id: "portal-header", file: "partials/header.html" },
-        { id: "portal-sidebar", file: "partials/sidebar.html" }
+        { id: "portal-sidebar", file: "partials/sidebar.html" },
+        { id: "chat-widget-container", file: "partials/chat.html" }
     ];
 
     let loadedCount = 0;
@@ -360,7 +368,6 @@ function initTiltEffect() {
                 el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
             });
         });
-
         el.addEventListener('mouseleave', () => {
             el.style.transition = 'transform 0.5s ease-out';
             el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
@@ -368,6 +375,91 @@ function initTiltEffect() {
     });
 }
 
+// Chat Widget Logic
+function toggleChat() {
+    const chatWindow = document.getElementById("chat-window");
+    const chatFab = document.getElementById("chat-fab");
+    const chatIcon = document.getElementById("chat-icon");
+
+    if (chatWindow && chatFab && chatIcon) {
+        chatWindow.classList.toggle("visible");
+        chatFab.classList.toggle("active");
+
+        if (chatFab.classList.contains("active")) {
+            chatIcon.textContent = "close";
+        } else {
+            chatIcon.textContent = "chat_bubble";
+        }
+    }
+}
+
+function handleChatSubmit(e) {
+    e.preventDefault();
+    const input = document.getElementById("chat-input");
+    const messages = document.getElementById("chat-messages");
+
+    if (input && input.value.trim() !== "") {
+        // User Message
+        const userMsg = document.createElement("div");
+        userMsg.className = "flex gap-3 max-w-[85%] self-end flex-row-reverse animate-fade-in-up";
+        userMsg.innerHTML = `
+            <div class="size-8 rounded-full bg-primary flex items-center justify-center text-white shrink-0 mt-1 shadow-sm">
+                <span class="material-symbols-outlined text-[16px]">person</span>
+            </div>
+            <div class="flex flex-col gap-1 items-end">
+                 <div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none shadow-md text-sm">
+                    ${input.value}
+                </div>
+            </div>
+        `;
+        messages.appendChild(userMsg);
+        messages.scrollTop = messages.scrollHeight;
+        input.value = "";
+
+        setTimeout(() => {
+            const botMsg = document.createElement("div");
+            botMsg.className = "flex gap-3 max-w-[85%] animate-fade-in-up";
+            botMsg.innerHTML = `
+                <div class="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-1">
+                    <span class="material-symbols-outlined text-[16px]">smart_toy</span>
+                </div>
+                 <div class="flex flex-col gap-1">
+                    <div class="bg-white dark:bg-[#1e293b] p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-200">
+                        Thanks for your message! I am a demo bot, but I heard you! 🤖
+                    </div>
+                </div>
+            `;
+            messages.appendChild(botMsg);
+            messages.scrollTop = messages.scrollHeight;
+        }, 1000);
+    }
+}
+
+// Notification Dropdown Logic
+function toggleNotifications() {
+    const dropdown = document.getElementById("notification-dropdown");
+    if (dropdown) {
+        if (dropdown.classList.contains("hidden")) {
+            dropdown.classList.remove("hidden");
+            dropdown.classList.add("animate-fade-in-up");
+        } else {
+            dropdown.classList.add("hidden");
+            dropdown.classList.remove("animate-fade-in-up");
+        }
+    }
+}
+
+// Close notifications when clicking outside
+document.addEventListener("click", (e) => {
+    const dropdown = document.getElementById("notification-dropdown");
+    const btn = document.getElementById("notification-btn");
+
+    if (dropdown && !dropdown.classList.contains("hidden")) {
+        if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+            dropdown.classList.add("hidden");
+        }
+    }
+});
 function initCookieConsent() {
     if (localStorage.getItem('cookieConsent')) return;
 

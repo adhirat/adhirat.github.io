@@ -21,7 +21,8 @@
     <script src="../assets/js/app.js"></script>
 </head>
 
-<body class="pt-0 bg-background-light dark:bg-dark-bg font-display antialiased text-[#111418] dark:text-white transition-colors duration-200">
+<body
+    class="pt-0 bg-background-light dark:bg-dark-bg font-display antialiased text-[#111418] dark:text-white transition-colors duration-200">
     <!-- Main Container -->
     <div class="flex h-screen w-full overflow-hidden">
         <!-- Global Sidebar -->
@@ -33,12 +34,12 @@
             <div id="portal-header" class="contents"></div>
 
             <!-- Scrollable Content -->
-            <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 animate-fade-in-up">
                 <div class="flex flex-col items-center pb-8">
                     <div class="flex flex-col max-w-[800px] w-full gap-8">
                         <!-- Job Summary Card -->
                         <div
-                            class="flex flex-col gap-2 p-6 bg-white dark:bg-[#1a2632] rounded-xl border border-[#e5e7eb] dark:border-[#2a3642] shadow-sm">
+                            class="flex flex-col gap-2 p-6 bg-white dark:bg-[#1a2632] rounded-xl border border-[#e5e7eb] dark:border-[#2a3642] shadow-sm reveal reveal-up">
                             <div class="flex flex-wrap justify-between items-start gap-4">
                                 <div class="flex flex-col gap-2">
                                     <h1 class="text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
@@ -75,7 +76,7 @@
                             </p>
                         </div>
                         <!-- Application Form -->
-                        <form class="flex flex-col gap-6"
+                        <form class="flex flex-col gap-6 reveal reveal-up delay-100"
                             onsubmit="event.preventDefault(); document.getElementById('success-modal').classList.remove('hidden');">
                             <!-- LinkedIn Import -->
                             <div class="flex justify-start">
@@ -197,7 +198,7 @@
                             <div
                                 class="mt-4 pt-4 border-t border-[#e5e7eb] dark:border-[#2a3642] flex flex-col items-center gap-3">
                                 <button
-                                    class="w-full sm:w-auto min-w-[320px] rounded-lg bg-primary px-8 py-3.5 text-base font-bold text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200"
+                                    class="w-full sm:w-auto min-w-[320px] rounded-lg bg-primary px-8 py-3.5 text-base font-bold text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200 btn-primary"
                                     type="submit">
                                     Submit Application
                                 </button>

@@ -56,7 +56,7 @@
             <!-- Global Header -->
             <div id="portal-header" class="contents"></div>
             <!-- Dashboard Content Scrollable Area -->
-            <div class="flex-1 overflow-y-auto p-4 sm:p-8">
+            <div class="flex-1 overflow-y-auto p-4 sm:p-8 animate-fade-in-up">
                 <div class="max-w-[1280px] mx-auto flex flex-col gap-8">
                     <!-- Breadcrumbs & Heading -->
                     <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
@@ -77,7 +77,7 @@
                                 Run Payroll
                             </button>
                             <button
-                                class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-blue-600 transition-colors shadow-lg shadow-primary/25">
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-blue-600 transition-colors shadow-lg shadow-primary/25 btn-primary">
                                 <span class="material-symbols-outlined text-[18px]">person_add</span>
                                 Add Employee
                             </button>
@@ -87,7 +87,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <!-- Card 1 -->
                         <div
-                            class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/50 transition-colors group">
+                            class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/50 transition-colors group reveal reveal-up card-hover">
                             <div class="flex justify-between items-start mb-4">
                                 <div class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-primary">
                                     <span class="material-symbols-outlined">group</span>
@@ -98,11 +98,12 @@
                                 </span>
                             </div>
                             <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Employees</p>
-                            <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">1,240</p>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1 counter-animate"
+                                data-count="1240">1,240</p>
                         </div>
                         <!-- Card 2 -->
                         <div
-                            class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/50 transition-colors group">
+                            class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/50 transition-colors group reveal reveal-up delay-100 card-hover">
                             <div class="flex justify-between items-start mb-4">
                                 <div
                                     class="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-lg text-purple-600 dark:text-purple-400">
@@ -114,11 +115,12 @@
                                 </span>
                             </div>
                             <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Active Jobs</p>
-                            <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">8</p>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1 counter-animate"
+                                data-count="8">8</p>
                         </div>
                         <!-- Card 3 -->
                         <div
-                            class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/50 transition-colors group">
+                            class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/50 transition-colors group reveal reveal-up delay-200 card-hover">
                             <div class="flex justify-between items-start mb-4">
                                 <div
                                     class="p-2 bg-amber-50 dark:bg-amber-900/20 rounded-lg text-amber-600 dark:text-amber-400">
@@ -130,11 +132,12 @@
                                 </span>
                             </div>
                             <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Pending Leaves</p>
-                            <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">14</p>
+                            <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1 counter-animate"
+                                data-count="14">14</p>
                         </div>
                         <!-- Card 4 -->
                         <div
-                            class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/50 transition-colors group">
+                            class="bg-white dark:bg-dark-card p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:border-primary/50 transition-colors group reveal reveal-up delay-300 card-hover">
                             <div class="flex justify-between items-start mb-4">
                                 <div
                                     class="p-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg text-emerald-600 dark:text-emerald-400">
@@ -153,7 +156,7 @@
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <!-- Left Col: Hiring Pipeline -->
                         <div
-                            class="lg:col-span-2 bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col">
+                            class="lg:col-span-2 bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col reveal reveal-up delay-200">
                             <div
                                 class="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
                                 <div>
@@ -208,7 +211,7 @@
                         </div>
                         <!-- Right Col: Recent Activity -->
                         <div
-                            class="lg:col-span-1 bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col">
+                            class="lg:col-span-1 bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col reveal reveal-up delay-300">
                             <div class="p-6 border-b border-slate-200 dark:border-slate-700">
                                 <h3 class="text-lg font-bold text-slate-900 dark:text-white">Recent Activity</h3>
                             </div>
@@ -297,7 +300,7 @@
                                 <tbody class="divide-y divide-slate-200 dark:divide-border-dark">
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                         <td class="px-6 py-4 flex items-center gap-3">
-                                            <div class="size-9 rounded-full bg-cover bg-center"
+                                            <div class="size-9 rounded-full bg-cover bg-center img-hover-zoom"
                                                 data-alt="Avatar of Jane Doe"
                                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCDU6yz6l_BbpXHUg6g5ILQZw8-40AQjYDcYUy5wWBjTvs3_cYFcq3U7jBtaYhJYo5NPoeshG_GoK2p62orCriC5ZhN6Yv-1nogxNpGkw-d-6qrhKyrhC_VBt6b_XA6DfOrTWMckVgp19xVeMA05hvAXstmF_JiumykgzMQTzBYJjHoOmjqZFhlIRs98SXh2ryU8YuaT6g9wbPnDPH_9NJ_AwPtUGvg_Rp-waTPlxz-ePBFfTZM5Hw66JleBuwMGbLLlk5ZC90I0PY');">
                                             </div>
@@ -319,7 +322,7 @@
                                     </tr>
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                         <td class="px-6 py-4 flex items-center gap-3">
-                                            <div class="size-9 rounded-full bg-cover bg-center"
+                                            <div class="size-9 rounded-full bg-cover bg-center img-hover-zoom"
                                                 data-alt="Avatar of Michael Knight"
                                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADw8H9GheW3Uhmk5cxfNZDBGT0oqvJLhIiMZ2OrZimPQfV_K4HF9WcNgWMBYJsAuJ3ZHPPGtDErdKz5Y83sgJ4Eiu8BdOJR-A3tLnMerBpXZiVHv397rj831AXEXgwpOHl4li1sGpBG8GiidFza_YeGNqWFQvWEdywjZQkyB6PqlebdJsvRXOZUSrgWNklhH86q6iGocA9_j8U6cbNCv1gj--Vz8kL_a5TDEDI-wBt524feqxEYo48LvrtREe-Wf13Nji03Q9vdds');">
                                             </div>
@@ -342,7 +345,7 @@
                                     </tr>
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                                         <td class="px-6 py-4 flex items-center gap-3">
-                                            <div class="size-9 rounded-full bg-cover bg-center"
+                                            <div class="size-9 rounded-full bg-cover bg-center img-hover-zoom"
                                                 data-alt="Avatar of Alice Lee"
                                                 style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBSK8tiluRqxRW--PQ4imjMrRBW-sEUUYtfqA259W1Jmv4uwuYBuIV1gA-WPsqrGwPsmRUdRch1Dj0yTnejDffA4Q9by1pmfIwvA9tj2dytymZbRS8t-tbNFtGksYqZJnjpjqTnZPdJK93hGFwcwqPWKE0Iwn7AbiQj6hX4QoTF2WaKLtQ7IbAhwHaNuCWBJBk7eKKK3YSz1z7x8-A7_QFF1wuEM4P9hGQsJZrcfxlat88T-NvQZ0iPWkY6NzctJsJdnSpLa9B3SOc');">
                                             </div>

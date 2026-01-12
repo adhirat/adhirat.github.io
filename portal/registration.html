@@ -25,7 +25,8 @@
     <script src="../assets/js/app.js"></script>
 </head>
 
-<body class="pt-0 bg-background-light dark:bg-dark-bg text-slate-900 dark:text-white font-display overflow-hidden antialiased selection:bg-primary/30">
+<body
+    class="pt-0 bg-background-light dark:bg-dark-bg text-slate-900 dark:text-white font-display overflow-hidden antialiased selection:bg-primary/30">
     <div class="flex h-screen w-full">
         <!-- Sidebar -->
         <!-- Global Sidebar -->
@@ -36,7 +37,7 @@
             <!-- Global Header -->
             <div id="portal-header" class="contents"></div>
             <!-- Scrollable Page Content -->
-            <div class="flex-1 overflow-y-auto p-6 lg:p-10 scroll-smooth">
+            <div class="flex-1 overflow-y-auto p-6 lg:p-10 scroll-smooth animate-fade-in-up">
                 <div class="mx-auto max-w-5xl flex flex-col gap-8 pb-10">
                     <!-- Page Heading -->
                     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -104,7 +105,7 @@
                     </div>
                     <!-- Main Form Card -->
                     <div
-                        class="mt-8 rounded-xl bg-surface-light dark:bg-dark-card border border-gray-200 dark:border-[#283039] shadow-sm overflow-hidden">
+                        class="mt-8 rounded-xl bg-surface-light dark:bg-dark-card border border-gray-200 dark:border-[#283039] shadow-sm overflow-hidden reveal reveal-up">
                         <!-- Form Header -->
                         <div
                             class="border-b border-gray-200 dark:border-[#283039] bg-gray-50 dark:bg-[#1c2127] px-6 py-4 flex items-center justify-between">
@@ -132,7 +133,7 @@
                                 </div>
                                 <hr class="border-gray-200 dark:border-[#283039] my-2" />
                                 <!-- Grid Inputs -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal reveal-up delay-100">
                                     <label class="flex flex-col gap-2">
                                         <span class="text-sm font-semibold text-slate-700 dark:text-slate-200">First
                                             Name <span class="text-red-500">*</span></span>
@@ -223,7 +224,7 @@
                                     <span>Save Draft</span>
                                 </button>
                                 <button
-                                    class="flex items-center gap-2 h-10 px-6 rounded-lg bg-primary hover:bg-blue-600 text-white font-bold text-sm transition-all shadow-md shadow-blue-500/20 group"
+                                    class="flex items-center gap-2 h-10 px-6 rounded-lg bg-primary hover:bg-blue-600 text-white font-bold text-sm transition-all shadow-md shadow-blue-500/20 group btn-primary"
                                     type="button">
                                     <span>Next Step</span>
                                     <span

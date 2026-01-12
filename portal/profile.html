@@ -23,7 +23,8 @@
     <script src="../assets/js/app.js"></script>
 </head>
 
-<body class="pt-0 font-display bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-white antialiased overflow-hidden h-screen flex">
+<body
+    class="pt-0 font-display bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-white antialiased overflow-hidden h-screen flex">
 
     <!-- Global Sidebar -->
     <div id="portal-sidebar" class="contents"></div>
@@ -34,11 +35,11 @@
         <div id="portal-header" class="contents"></div>
 
         <!-- Scrollable Page Content -->
-        <div class="flex-1 overflow-y-auto p-4 lg:p-8">
+        <div class="flex-1 overflow-y-auto p-4 lg:p-8 animate-fade-in-up">
             <div class="max-w-[1400px] mx-auto w-full">
                 <div class="flex flex-col lg:flex-row gap-8">
                     <!-- Inner Settings Sidebar -->
-                    <aside class="hidden lg:flex flex-col w-64 shrink-0 gap-6">
+                    <aside class="hidden lg:flex flex-col w-64 shrink-0 gap-6 reveal reveal-right">
                         <div class="flex flex-col gap-1">
                             <h1
                                 class="text-slate-900 dark:text-white text-2xl font-black leading-tight tracking-[-0.033em]">
@@ -101,10 +102,10 @@
 
                         <!-- Profile Header Card -->
                         <div
-                            class="bg-white dark:bg-dark-card rounded-xl p-6 mb-6 shadow-sm border border-slate-200 dark:border-slate-700">
+                            class="bg-white dark:bg-dark-card rounded-xl p-6 mb-6 shadow-sm border border-slate-200 dark:border-slate-700 reveal reveal-up">
                             <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between">
                                 <div class="flex flex-col sm:flex-row gap-6 items-center text-center sm:text-left">
-                                    <div class="relative group cursor-pointer">
+                                    <div class="relative group cursor-pointer img-hover-zoom">
                                         <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-24 sm:size-32 ring-4 ring-slate-50 dark:ring-dark-card shadow-lg"
                                             data-alt="Detailed portrait of Alex Morgan, senior software engineer"
                                             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4jUP2h4OBxFiJiydmXDLOf1xLL9HuHOvzWtF-1Ucnxp7YfAEH9RiMRaQMYwFQUEl9i92l1swQnQzaEyrT8kNPhxCnMqeZiQWc3AcI8iMBhfMBisSOE7lzZ-c8AmCmw8rOtyBzI_k9Ivx49CGRgNzPA1zT_NLPP2d386RJU6vyak6gAx1p0GKA_ZTb4HUzE93NCCEv9iwR6XowrWTPcqX5mv6d5l3FRninpwDjkNgYCn_B9W3UF-UIBxewg691hOcbeVY5X2Z1InQ");'>
@@ -140,7 +141,7 @@
                         <form class="flex flex-col gap-6">
                             <!-- Basic Information -->
                             <section
-                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden reveal reveal-up delay-100">
                                 <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
                                     <h3 class="text-slate-900 dark:text-white text-lg font-bold">Basic Information</h3>
                                 </div>
@@ -189,7 +190,7 @@
 
                             <!-- Contact Details -->
                             <section
-                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden reveal reveal-up delay-200">
                                 <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
                                     <h3 class="text-slate-900 dark:text-white text-lg font-bold">Contact Details</h3>
                                 </div>
@@ -248,7 +249,7 @@
 
                             <!-- Location & Preferences -->
                             <section
-                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden reveal reveal-up delay-300">
                                 <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
                                     <h3 class="text-slate-900 dark:text-white text-lg font-bold">Location</h3>
                                 </div>
@@ -287,7 +288,7 @@
 
                             <!-- Emergency Contacts -->
                             <section
-                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden reveal reveal-up delay-400">
                                 <div
                                     class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
                                     <h3 class="text-slate-900 dark:text-white text-lg font-bold">Emergency Contact</h3>
@@ -331,7 +332,7 @@
                                     Cancel
                                 </button>
                                 <button
-                                    class="px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:bg-blue-600 transition-colors shadow-lg shadow-primary/25"
+                                    class="px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:bg-blue-600 transition-colors shadow-lg shadow-primary/25 btn-primary"
                                     type="submit">
                                     Save Changes
                                 </button>

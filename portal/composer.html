@@ -57,7 +57,8 @@
   </style>
 </head>
 
-<body class="pt-0 bg-background-light dark:bg-dark-bg text-slate-900 dark:text-white font-display antialiased overflow-hidden">
+<body
+  class="pt-0 bg-background-light dark:bg-dark-bg text-slate-900 dark:text-white font-display antialiased overflow-hidden">
   <div class="flex h-screen w-full flex-row overflow-hidden">
     <!-- Left Navigation (Global) -->
     <!-- Global Sidebar -->
@@ -70,11 +71,11 @@
       <!-- Editor & Sidebar Layout -->
       <main class="flex flex-1 overflow-hidden relative">
         <!-- Center Canvas (Editor) -->
-        <div class="flex-1 overflow-y-auto relative bg-background-light dark:bg-dark-bg">
+        <div class="flex-1 overflow-y-auto relative bg-background-light dark:bg-dark-bg animate-fade-in-up">
           <div class="max-w-[800px] mx-auto py-12 px-8 min-h-full">
             <!-- Hero Image Block -->
             <div
-              class="group relative mb-8 rounded-xl overflow-hidden border border-transparent hover:border-primary/50 transition-colors">
+              class="group relative mb-8 rounded-xl overflow-hidden border border-transparent hover:border-primary/50 transition-colors reveal reveal-up">
               <div class="bg-center bg-no-repeat w-full h-64 bg-cover" data-alt="Office collaboration generic header"
                 style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDkSvFqDbz-sF3A2Ibl42lO9vGBfuW6JJlSZxdcfb2-MFllVL3-sRhF-nouJVuEpfVkkEkcpBKLy0aZCMaD2h3q9YWjBZ_qGoYZUXCEkS3Iadg3Op0lM9CHhEOkTXvaBQqVLfj4FwIWtOUirfPPJRhvtvYxz8FKcS4OiDCPja690Wd2YfdQ0i72xC_o3Vk6aTmMTrbefuU6-CTBi7aVw1oLoFvSXbbX08vjsCFxCsfYPJt7_SMnIKYGOZxXleBd47gpcmj4gVa9rTs");'>
                 <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
@@ -88,7 +89,7 @@
               </div>
             </div>
             <!-- Content Area -->
-            <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-6 reveal reveal-up delay-100">
               <!-- H1 -->
               <h1 class="text-4xl font-bold text-slate-900 dark:text-white leading-tight outline-none"
                 contenteditable="true">
@@ -183,7 +184,7 @@
         </div>
         <!-- Right Sidebar (Metadata) -->
         <aside
-          class="w-80 bg-white dark:bg-dark-card border-l border-gray-200 dark:border-slate-700 overflow-y-auto hidden xl:flex flex-col shrink-0">
+          class="w-80 bg-white dark:bg-dark-card border-l border-gray-200 dark:border-slate-700 overflow-y-auto hidden xl:flex flex-col shrink-0 reveal reveal-left delay-200">
           <div class="p-5 border-b border-gray-200 dark:border-slate-700">
             <h2 class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider mb-4">Publishing</h2>
             <div class="flex flex-col gap-4">

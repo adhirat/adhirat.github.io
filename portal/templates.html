@@ -60,7 +60,7 @@
         <!-- Global Header -->
         <div id="portal-header" class="contents"></div>
         <!-- Main Scrollable Area -->
-        <div class="flex-1 overflow-y-auto p-4 md:p-8">
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 animate-fade-in-up">
             <div class="max-w-[1400px] mx-auto flex flex-col h-full">
                 <!-- Page Heading & Controls -->
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
@@ -77,7 +77,7 @@
                             Preview
                         </button>
                         <button
-                            class="h-10 px-5 rounded-lg bg-primary hover:bg-blue-600 text-white text-sm font-medium shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2">
+                            class="h-10 px-5 rounded-lg bg-primary hover:bg-blue-600 text-white text-sm font-medium shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2 btn-primary">
                             <span class="material-symbols-outlined text-[18px]">save</span>
                             Save Template
                         </button>
@@ -104,7 +104,7 @@
                     </nav>
                 </div>
                 <!-- Editor Workspace Layout -->
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 min-h-[600px]">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 min-h-[600px] reveal reveal-up">
                     <!-- Editor Canvas (Left) -->
                     <div class="lg:col-span-8 xl:col-span-9 flex flex-col gap-4">
                         <!-- Toolbar -->
@@ -221,7 +221,7 @@
                     <div class="lg:col-span-4 xl:col-span-3 flex flex-col gap-6">
                         <!-- Search Variables -->
                         <div
-                            class="bg-white dark:bg-dark-card rounded-xl border border-gray-200 dark:border-slate-700 p-4 shadow-sm">
+                            class="bg-white dark:bg-dark-card rounded-xl border border-gray-200 dark:border-slate-700 p-4 shadow-sm reveal reveal-left delay-100">
                             <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                                 <span class="material-symbols-outlined text-primary text-[20px]">data_object</span>
                                 Dynamic Fields
@@ -236,7 +236,7 @@
                         </div>
                         <!-- Variable Categories -->
                         <div
-                            class="bg-white dark:bg-dark-card rounded-xl border border-gray-200 dark:border-slate-700 p-1 shadow-sm flex-1 overflow-y-auto">
+                            class="bg-white dark:bg-dark-card rounded-xl border border-gray-200 dark:border-slate-700 p-1 shadow-sm flex-1 overflow-y-auto reveal reveal-left delay-200">
                             <!-- Category: Candidate -->
                             <div class="p-3">
                                 <p
@@ -244,7 +244,7 @@
                                     Candidate Details</p>
                                 <div class="space-y-2">
                                     <div
-                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors">
+                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors card-hover">
                                         <div class="flex items-center gap-2">
                                             <span
                                                 class="material-symbols-outlined text-gray-400 text-[18px]">person</span>
@@ -255,7 +255,7 @@
                                             class="material-symbols-outlined text-gray-300 text-[16px] group-hover:text-primary">drag_indicator</span>
                                     </div>
                                     <div
-                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors">
+                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors card-hover">
                                         <div class="flex items-center gap-2">
                                             <span
                                                 class="material-symbols-outlined text-gray-400 text-[18px]">mail</span>
