@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Profile Management Settings - Adhirat Technologies</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;family=Noto+Sans:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Global Assets -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/app.js"></script>
+</head>
+
+<body
+    class="pt-0 font-display bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-white antialiased overflow-hidden h-screen flex">
+
+    <!-- Global Sidebar -->
+    <div id="portal-sidebar" class="contents"></div>
+
+    <!-- Main Wrapper -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+        <!-- Global Header -->
+        <div id="portal-header" class="contents"></div>
+
+        <!-- Scrollable Page Content -->
+        <div class="flex-1 overflow-y-auto p-4 lg:p-8 animate-fade-in-up">
+            <div class="max-w-[1400px] mx-auto w-full">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Inner Settings Sidebar -->
+                    <aside class="hidden lg:flex flex-col w-64 shrink-0 gap-6 reveal reveal-right">
+                        <div class="flex flex-col gap-1">
+                            <h1
+                                class="text-slate-900 dark:text-white text-2xl font-black leading-tight tracking-[-0.033em]">
+                                Settings</h1>
+                            <p class="text-slate-500 dark:text-gray-400 text-base font-normal">Manage your account</p>
+                        </div>
+                        <nav class="flex flex-col gap-2">
+                            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/25"
+                                href="#">
+                                <span class="material-symbols-outlined fill-current"
+                                    style="font-size: 24px;">person</span>
+                                <span class="text-sm font-medium leading-normal">Personal Info</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-dark-card transition-colors"
+                                href="#">
+                                <span class="material-symbols-outlined" style="font-size: 24px;">work</span>
+                                <span class="text-sm font-medium leading-normal">Work Experience</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-dark-card transition-colors"
+                                href="#">
+                                <span class="material-symbols-outlined" style="font-size: 24px;">description</span>
+                                <span class="text-sm font-medium leading-normal">Documents</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-dark-card transition-colors"
+                                href="#">
+                                <span class="material-symbols-outlined" style="font-size: 24px;">lock</span>
+                                <span class="text-sm font-medium leading-normal">Security Settings</span>
+                            </a>
+                            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-dark-card transition-colors"
+                                href="#">
+                                <span class="material-symbols-outlined"
+                                    style="font-size: 24px;">notifications_active</span>
+                                <span class="text-sm font-medium leading-normal">Notifications</span>
+                            </a>
+                        </nav>
+                    </aside>
+
+                    <!-- Settings Content -->
+                    <div class="flex-1 min-w-0">
+                        <!-- Mobile Heading (Visible on small screens only) -->
+                        <div class="lg:hidden mb-6">
+                            <h1
+                                class="text-slate-900 dark:text-white text-3xl font-black leading-tight tracking-[-0.033em] mb-2">
+                                Profile Settings</h1>
+                            <p class="text-slate-500 dark:text-gray-400 text-sm">Manage your personal information and
+                                account security.</p>
+                            <!-- Mobile Tabs -->
+                            <div
+                                class="flex overflow-x-auto gap-2 mt-4 pb-2 border-b border-slate-200 dark:border-slate-800 scrollbar-hide">
+                                <button
+                                    class="whitespace-nowrap px-4 py-2 rounded-full bg-primary text-white text-sm font-bold">Personal
+                                    Info</button>
+                                <button
+                                    class="whitespace-nowrap px-4 py-2 rounded-full bg-slate-100 dark:bg-dark-card text-slate-600 dark:text-gray-400 text-sm font-medium">Work
+                                    Experience</button>
+                                <button
+                                    class="whitespace-nowrap px-4 py-2 rounded-full bg-slate-100 dark:bg-dark-card text-slate-600 dark:text-gray-400 text-sm font-medium">Documents</button>
+                            </div>
+                        </div>
+
+                        <!-- Profile Header Card -->
+                        <div
+                            class="bg-white dark:bg-dark-card rounded-xl p-6 mb-6 shadow-sm border border-slate-200 dark:border-slate-700 reveal reveal-up">
+                            <div class="flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between">
+                                <div class="flex flex-col sm:flex-row gap-6 items-center text-center sm:text-left">
+                                    <div class="relative group cursor-pointer img-hover-zoom">
+                                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-24 sm:size-32 ring-4 ring-slate-50 dark:ring-dark-card shadow-lg"
+                                            data-alt="Detailed portrait of Alex Morgan, senior software engineer"
+                                            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4jUP2h4OBxFiJiydmXDLOf1xLL9HuHOvzWtF-1Ucnxp7YfAEH9RiMRaQMYwFQUEl9i92l1swQnQzaEyrT8kNPhxCnMqeZiQWc3AcI8iMBhfMBisSOE7lzZ-c8AmCmw8rOtyBzI_k9Ivx49CGRgNzPA1zT_NLPP2d386RJU6vyak6gAx1p0GKA_ZTb4HUzE93NCCEv9iwR6XowrWTPcqX5mv6d5l3FRninpwDjkNgYCn_B9W3UF-UIBxewg691hOcbeVY5X2Z1InQ");'>
+                                        </div>
+                                        <div
+                                            class="absolute inset-0 bg-black/50 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                                            <span class="material-symbols-outlined text-white">camera_enhance</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col justify-center gap-1">
+                                        <h2 class="text-slate-900 dark:text-white text-2xl font-bold leading-tight">Alex
+                                            Morgan</h2>
+                                        <p class="text-slate-500 dark:text-gray-400 text-base font-normal">Senior
+                                            Software Engineer</p>
+                                        <p class="text-slate-400 dark:text-slate-600 text-sm font-normal">Employee ID:
+                                            ADH-8832</p>
+                                    </div>
+                                </div>
+                                <div class="flex gap-3 w-full sm:w-auto">
+                                    <button
+                                        class="flex-1 sm:flex-none cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-slate-100 dark:bg-dark-bg hover:bg-slate-200 dark:hover:bg-[#323b46] text-slate-900 dark:text-white text-sm font-bold border border-slate-200 dark:border-transparent transition-all">
+                                        Change Photo
+                                    </button>
+                                    <button
+                                        class="flex-1 sm:flex-none cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-white dark:bg-transparent border border-slate-200 dark:border-slate-700 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 text-sm font-bold transition-all">
+                                        Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Forms Section -->
+                        <form class="flex flex-col gap-6">
+                            <!-- Basic Information -->
+                            <section
+                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden reveal reveal-up delay-100">
+                                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                                    <h3 class="text-slate-900 dark:text-white text-lg font-bold">Basic Information</h3>
+                                </div>
+                                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">First
+                                            Name</span>
+                                        <input
+                                            class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                            placeholder="Alex" value="Alex" />
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Last
+                                            Name</span>
+                                        <input
+                                            class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                            placeholder="Morgan" value="Morgan" />
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Preferred
+                                            Name</span>
+                                        <input
+                                            class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                            placeholder="Alex" />
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Date of
+                                            Birth</span>
+                                        <div class="relative">
+                                            <input
+                                                class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                                type="date" value="1992-08-15" />
+                                        </div>
+                                    </label>
+                                    <label class="flex flex-col gap-2 md:col-span-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Short
+                                            Bio</span>
+                                        <textarea
+                                            class="form-textarea w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400 resize-none h-24"
+                                            placeholder="Tell us a little about yourself...">Passionate software engineer with 8+ years of experience in full-stack development. Love coffee and hiking.</textarea>
+                                        <span class="text-xs text-slate-400 dark:text-slate-600 text-right">240
+                                            characters left</span>
+                                    </label>
+                                </div>
+                            </section>
+
+                            <!-- Contact Details -->
+                            <section
+                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden reveal reveal-up delay-200">
+                                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                                    <h3 class="text-slate-900 dark:text-white text-lg font-bold">Contact Details</h3>
+                                </div>
+                                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Work
+                                            Email</span>
+                                        <div
+                                            class="flex items-center rounded-lg bg-slate-100 dark:bg-[#1e242b] border border-slate-200 dark:border-transparent px-4 py-2.5 opacity-80 cursor-not-allowed">
+                                            <span class="material-symbols-outlined text-slate-400 mr-2"
+                                                style="font-size: 20px;">mail</span>
+                                            <input
+                                                class="w-full bg-transparent border-none p-0 text-slate-500 dark:text-slate-400 focus:ring-0"
+                                                disabled="" readonly="" value="alex.morgan@adhirat.tech" />
+                                            <span class="material-symbols-outlined text-slate-400"
+                                                style="font-size: 16px;">lock</span>
+                                        </div>
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Personal
+                                            Email</span>
+                                        <div
+                                            class="flex items-center rounded-lg bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-transparent px-4 py-2.5 focus-within:ring-2 focus-within:ring-primary focus-within:border-primary">
+                                            <span class="material-symbols-outlined text-slate-400 mr-2"
+                                                style="font-size: 20px;">alternate_email</span>
+                                            <input
+                                                class="w-full bg-transparent border-none p-0 text-slate-900 dark:text-white focus:ring-0 placeholder:text-slate-400"
+                                                placeholder="alex@gmail.com" />
+                                        </div>
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Phone
+                                            Number</span>
+                                        <div
+                                            class="flex items-center rounded-lg bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-transparent px-4 py-2.5 focus-within:ring-2 focus-within:ring-primary focus-within:border-primary">
+                                            <span class="material-symbols-outlined text-slate-400 mr-2"
+                                                style="font-size: 20px;">call</span>
+                                            <input
+                                                class="w-full bg-transparent border-none p-0 text-slate-900 dark:text-white focus:ring-0 placeholder:text-slate-400"
+                                                placeholder="+1 (555) 000-0000" />
+                                        </div>
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Slack
+                                            Handle</span>
+                                        <div
+                                            class="flex items-center rounded-lg bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-transparent px-4 py-2.5 focus-within:ring-2 focus-within:ring-primary focus-within:border-primary">
+                                            <span class="text-slate-400 mr-1 text-lg font-bold">#</span>
+                                            <input
+                                                class="w-full bg-transparent border-none p-0 text-slate-900 dark:text-white focus:ring-0 placeholder:text-slate-400"
+                                                placeholder="alex.m" />
+                                        </div>
+                                    </label>
+                                </div>
+                            </section>
+
+                            <!-- Location & Preferences -->
+                            <section
+                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden reveal reveal-up delay-300">
+                                <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                                    <h3 class="text-slate-900 dark:text-white text-lg font-bold">Location</h3>
+                                </div>
+                                <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <label class="flex flex-col gap-2">
+                                        <span
+                                            class="text-slate-600 dark:text-gray-400 text-sm font-medium">Country</span>
+                                        <div class="relative">
+                                            <select
+                                                class="form-select w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary cursor-pointer appearance-none">
+                                                <option>United States</option>
+                                                <option>Canada</option>
+                                                <option>United Kingdom</option>
+                                                <option>India</option>
+                                            </select>
+                                        </div>
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">City</span>
+                                        <input
+                                            class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                            placeholder="San Francisco" />
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span
+                                            class="text-slate-600 dark:text-gray-400 text-sm font-medium">Timezone</span>
+                                        <select
+                                            class="form-select w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary cursor-pointer">
+                                            <option>(GMT-08:00) Pacific Time</option>
+                                            <option>(GMT-05:00) Eastern Time</option>
+                                            <option>(GMT+00:00) London</option>
+                                        </select>
+                                    </label>
+                                </div>
+                            </section>
+
+                            <!-- Emergency Contacts -->
+                            <section
+                                class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden reveal reveal-up delay-400">
+                                <div
+                                    class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                                    <h3 class="text-slate-900 dark:text-white text-lg font-bold">Emergency Contact</h3>
+                                    <button class="text-primary text-sm font-bold hover:underline" type="button">+ Add
+                                        Another</button>
+                                </div>
+                                <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Contact
+                                            Name</span>
+                                        <input
+                                            class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                            placeholder="Sarah Morgan" />
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span
+                                            class="text-slate-600 dark:text-gray-400 text-sm font-medium">Relationship</span>
+                                        <select
+                                            class="form-select w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary cursor-pointer">
+                                            <option>Spouse</option>
+                                            <option>Parent</option>
+                                            <option>Sibling</option>
+                                            <option>Friend</option>
+                                        </select>
+                                    </label>
+                                    <label class="flex flex-col gap-2">
+                                        <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Phone</span>
+                                        <input
+                                            class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                            placeholder="+1 (555) 987-6543" />
+                                    </label>
+                                </div>
+                            </section>
+
+                            <!-- Action Bar -->
+                            <div
+                                class="sticky bottom-0 bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md p-4 -mx-4 -mb-10 mt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-3 z-40 rounded-b-xl">
+                                <button
+                                    class="px-6 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-dark-card text-slate-700 dark:text-white font-bold text-sm hover:bg-slate-50 dark:hover:bg-[#323b46] transition-colors"
+                                    type="button">
+                                    Cancel
+                                </button>
+                                <button
+                                    class="px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:bg-blue-600 transition-colors shadow-lg shadow-primary/25 btn-primary"
+                                    type="submit">
+                                    Save Changes
+                                </button>
+                            </div>
+                            <div class="h-8"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+<script type="module">
+    import { initAuthObserver } from "../assets/js/firebase-modules.js";
+    initAuthObserver(true);
+</script>
+</body>
+
+</html>

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Adhirat Portal - Timesheet Management</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Global Assets -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/app.js"></script>
+    <style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+    </style>
+</head>
+
+<body
+    class="pt-0 bg-background-light dark:bg-dark-bg font-display text-[#111418] dark:text-white antialiased overflow-hidden">
+    <div class="flex h-screen w-full overflow-hidden">
+        <!-- SideNavBar -->
+        <!-- Global Sidebar -->
+        <div id="portal-sidebar" class="contents"></div>
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-dark-bg relative">
+            <!-- TopNavBar -->
+            <!-- Global Header -->
+            <div id="portal-header" class="contents"></div>
+            <!-- Scrollable Content -->
+            <div class="flex-1 overflow-y-auto p-4 md:p-8 animate-fade-in-up">
+                <div class="max-w-7xl mx-auto flex flex-col gap-8">
+                    <!-- Stats Section -->
+                    <section class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div
+                            class="flex flex-col p-5 bg-surface-light dark:bg-dark-card rounded-xl border border-border-light dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-start justify-between">
+                                <div class="p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-primary">
+                                    <span class="material-symbols-outlined">schedule</span>
+                                </div>
+                                <span
+                                    class="text-xs font-medium text-green-600 bg-green-50 dark:bg-green-900/30 px-2 py-1 rounded-full">+4%</span>
+                            </div>
+                            <div class="mt-4">
+                                <h3 class="text-2xl font-bold text-[#111418] dark:text-white">42h</h3>
+                                <p class="text-sm text-[#617589] dark:text-gray-400">Total Hours Logged</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex flex-col p-5 bg-surface-light dark:bg-dark-card rounded-xl border border-border-light dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-start justify-between">
+                                <div
+                                    class="p-2 bg-purple-50 dark:bg-purple-900/30 rounded-lg text-purple-600 dark:text-purple-400">
+                                    <span class="material-symbols-outlined">work</span>
+                                </div>
+                                <span
+                                    class="text-xs font-medium text-gray-500 bg-gray-50 dark:bg-gray-700 px-2 py-1 rounded-full">Target:
+                                    40h</span>
+                            </div>
+                            <div class="mt-4">
+                                <h3 class="text-2xl font-bold text-[#111418] dark:text-white">38h</h3>
+                                <p class="text-sm text-[#617589] dark:text-gray-400">Billable Hours</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex flex-col p-5 bg-surface-light dark:bg-dark-card rounded-xl border border-border-light dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex items-start justify-between">
+                                <div
+                                    class="p-2 bg-orange-50 dark:bg-orange-900/30 rounded-lg text-orange-600 dark:text-orange-400">
+                                    <span class="material-symbols-outlined">timelapse</span>
+                                </div>
+                                <span
+                                    class="text-xs font-medium text-orange-600 bg-orange-50 dark:bg-orange-900/30 px-2 py-1 rounded-full">Alert</span>
+                            </div>
+                            <div class="mt-4">
+                                <h3 class="text-2xl font-bold text-[#111418] dark:text-white">4h</h3>
+                                <p class="text-sm text-[#617589] dark:text-gray-400">Overtime</p>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Main Work Area Split -->
+                    <div class="flex flex-col xl:flex-row gap-6 items-start h-full min-h-[600px]">
+                        <!-- Left: Calendar Grid -->
+                        <div
+                            class="flex-1 w-full bg-surface-light dark:bg-dark-card rounded-xl border border-border-light dark:border-slate-700 shadow-sm flex flex-col h-full reveal reveal-left delay-200">
+                            <!-- Calendar Controls -->
+                            <div
+                                class="flex items-center justify-between p-4 border-b border-border-light dark:border-slate-700">
+                                <div class="flex items-center gap-2">
+                                    <button
+                                        class="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-[#617589] dark:text-gray-400 transition-colors">
+                                        <span class="material-symbols-outlined">chevron_left</span>
+                                    </button>
+                                    <h3
+                                        class="text-lg font-bold text-[#111418] dark:text-white min-w-[140px] text-center">
+                                        October 2023</h3>
+                                    <button
+                                        class="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-[#617589] dark:text-gray-400 transition-colors">
+                                        <span class="material-symbols-outlined">chevron_right</span>
+                                    </button>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button
+                                        class="px-3 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">Week</button>
+                                    <button
+                                        class="px-3 py-1.5 text-sm font-medium text-white bg-primary rounded-md shadow-sm">Month</button>
+                                </div>
+                            </div>
+                            <!-- Calendar Days Header -->
+                            <div
+                                class="grid grid-cols-7 border-b border-border-light dark:border-slate-700 bg-gray-50 dark:bg-gray-800/50">
+                                <div
+                                    class="py-3 text-center text-xs font-semibold uppercase text-[#617589] dark:text-gray-400 tracking-wider">
+                                    Sun</div>
+                                <div
+                                    class="py-3 text-center text-xs font-semibold uppercase text-[#617589] dark:text-gray-400 tracking-wider">
+                                    Mon</div>
+                                <div
+                                    class="py-3 text-center text-xs font-semibold uppercase text-[#617589] dark:text-gray-400 tracking-wider">
+                                    Tue</div>
+                                <div
+                                    class="py-3 text-center text-xs font-semibold uppercase text-[#617589] dark:text-gray-400 tracking-wider">
+                                    Wed</div>
+                                <div
+                                    class="py-3 text-center text-xs font-semibold uppercase text-[#617589] dark:text-gray-400 tracking-wider">
+                                    Thu</div>
+                                <div
+                                    class="py-3 text-center text-xs font-semibold uppercase text-[#617589] dark:text-gray-400 tracking-wider">
+                                    Fri</div>
+                                <div
+                                    class="py-3 text-center text-xs font-semibold uppercase text-[#617589] dark:text-gray-400 tracking-wider">
+                                    Sat</div>
+                            </div>
+                            <!-- Calendar Grid Body -->
+                            <div
+                                class="grid grid-cols-7 auto-rows-fr flex-1 bg-surface-light dark:bg-dark-card min-h-[400px]">
+                                <!-- Empty Previous Month Days -->
+                                <div
+                                    class="border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] bg-gray-50/50 dark:bg-gray-800/20">
+                                </div>
+                                <div
+                                    class="border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] bg-gray-50/50 dark:bg-gray-800/20">
+                                </div>
+                                <!-- Active Days -->
+                                <!-- Day 1 -->
+                                <button
+                                    class="group relative flex flex-col items-start justify-start border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors text-left">
+                                    <span class="text-sm font-medium text-[#617589] dark:text-gray-400 mb-1">1</span>
+                                    <div
+                                        class="w-full p-1.5 rounded bg-blue-100 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 mb-1">
+                                        <p class="text-[10px] font-bold text-blue-800 dark:text-blue-200 leading-tight">
+                                            8h</p>
+                                        <p class="text-[10px] text-blue-700 dark:text-blue-300 truncate">Proj Alpha</p>
+                                    </div>
+                                </button>
+                                <!-- Day 2 -->
+                                <button
+                                    class="group relative flex flex-col items-start justify-start border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors text-left">
+                                    <span class="text-sm font-medium text-[#617589] dark:text-gray-400 mb-1">2</span>
+                                    <div
+                                        class="w-full p-1.5 rounded bg-blue-100 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 mb-1">
+                                        <p class="text-[10px] font-bold text-blue-800 dark:text-blue-200 leading-tight">
+                                            8h</p>
+                                        <p class="text-[10px] text-blue-700 dark:text-blue-300 truncate">Proj Alpha</p>
+                                    </div>
+                                </button>
+                                <!-- Day 3 -->
+                                <button
+                                    class="group relative flex flex-col items-start justify-start border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors text-left">
+                                    <span class="text-sm font-medium text-[#617589] dark:text-gray-400 mb-1">3</span>
+                                    <div
+                                        class="w-full p-1.5 rounded bg-blue-100 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 mb-1">
+                                        <p class="text-[10px] font-bold text-blue-800 dark:text-blue-200 leading-tight">
+                                            8h</p>
+                                        <p class="text-[10px] text-blue-700 dark:text-blue-300 truncate">Internal</p>
+                                    </div>
+                                </button>
+                                <!-- Day 4 -->
+                                <button
+                                    class="group relative flex flex-col items-start justify-start border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors text-left">
+                                    <span class="text-sm font-medium text-[#617589] dark:text-gray-400 mb-1">4</span>
+                                    <div
+                                        class="w-full p-1.5 rounded bg-blue-100 dark:bg-blue-900/40 border border-blue-200 dark:border-blue-800 mb-1">
+                                        <p class="text-[10px] font-bold text-blue-800 dark:text-blue-200 leading-tight">
+                                            9h</p>
+                                        <p class="text-[10px] text-blue-700 dark:text-blue-300 truncate">Proj Beta</p>
+                                    </div>
+                                </button>
+                                <!-- Day 5 -->
+                                <button
+                                    class="group relative flex flex-col items-start justify-start border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors text-left ring-2 ring-inset ring-primary z-10 bg-blue-50/30 dark:bg-blue-900/10">
+                                    <span
+                                        class="flex items-center justify-center size-6 rounded-full bg-primary text-white text-xs font-bold mb-1 shadow-sm">5</span>
+                                    <div
+                                        class="w-full p-1.5 rounded border border-dashed border-primary/40 bg-white/50 dark:bg-black/20 text-center flex items-center justify-center h-8">
+                                        <span class="text-[10px] text-primary font-medium">+ Add Time</span>
+                                    </div>
+                                </button>
+                                <!-- Day 6 -->
+                                <button
+                                    class="group relative flex flex-col items-start justify-start border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors text-left bg-gray-50/30 dark:bg-gray-800/10">
+                                    <span class="text-sm font-medium text-[#617589] dark:text-gray-400 mb-1">6</span>
+                                </button>
+                                <!-- Day 7 -->
+                                <button
+                                    class="group relative flex flex-col items-start justify-start border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors text-left bg-gray-50/30 dark:bg-gray-800/10">
+                                    <span class="text-sm font-medium text-[#617589] dark:text-gray-400 mb-1">7</span>
+                                </button>
+                                <!-- Placeholder days to fill grid -->
+                                <div
+                                    class="border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] text-sm text-[#617589] dark:text-gray-400">
+                                    8</div>
+                                <div
+                                    class="border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] text-sm text-[#617589] dark:text-gray-400">
+                                    9</div>
+                                <div
+                                    class="border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] text-sm text-[#617589] dark:text-gray-400">
+                                    10</div>
+                                <div
+                                    class="border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] text-sm text-[#617589] dark:text-gray-400">
+                                    11</div>
+                                <div
+                                    class="border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] text-sm text-[#617589] dark:text-gray-400">
+                                    12</div>
+                                <div
+                                    class="border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] text-sm text-[#617589] dark:text-gray-400">
+                                    13</div>
+                                <div
+                                    class="border-b border-r border-border-light dark:border-slate-700 p-2 min-h-[100px] text-sm text-[#617589] dark:text-gray-400">
+                                    14</div>
+                            </div>
+                        </div>
+                        <!-- Right: Entry Form Panel -->
+                        <div class="w-full xl:w-[400px] shrink-0 flex flex-col gap-6">
+                            <!-- Edit Card -->
+                            <div
+                                class="bg-surface-light dark:bg-dark-card rounded-xl border border-border-light dark:border-slate-700 shadow-sm p-6 sticky top-6 reveal reveal-right delay-200">
+                                <div class="flex items-center justify-between mb-6">
+                                    <div>
+                                        <h3 class="text-lg font-bold text-[#111418] dark:text-white">Log Time</h3>
+                                        <p class="text-sm text-[#617589] dark:text-gray-400">Friday, Oct 5th</p>
+                                    </div>
+                                    <button
+                                        class="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded-lg transition-colors">
+                                        <span class="material-symbols-outlined text-[20px]">delete</span>
+                                    </button>
+                                </div>
+                                <form class="flex flex-col gap-5">
+                                    <!-- Project Select -->
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-[#111418] dark:text-gray-200">Project /
+                                            Code</label>
+                                        <div class="relative">
+                                            <select
+                                                class="w-full appearance-none rounded-lg border border-border-light dark:border-slate-700 bg-white dark:bg-gray-800 text-[#111418] dark:text-white px-4 py-3 pr-10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow">
+                                                <option disabled="" selected="" value="">Select a project...</option>
+                                                <option value="alpha">Project Alpha - Dev</option>
+                                                <option value="beta">Project Beta - QA</option>
+                                                <option value="internal">Internal - Meetings</option>
+                                            </select>
+                                            <div
+                                                class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-[#617589]">
+                                                <span class="material-symbols-outlined">expand_more</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Task Type -->
+                                    <div class="flex flex-col gap-2">
+                                        <label class="text-sm font-medium text-[#111418] dark:text-gray-200">Task
+                                            Type</label>
+                                        <div class="flex gap-2">
+                                            <label class="cursor-pointer">
+                                                <input checked="" class="peer sr-only" name="task_type" type="radio" />
+                                                <div
+                                                    class="px-3 py-2 rounded-lg border border-border-light dark:border-slate-700 bg-white dark:bg-gray-800 text-sm peer-checked:bg-primary/10 peer-checked:text-primary peer-checked:border-primary transition-all">
+                                                    Development
+                                                </div>
+                                            </label>
+                                            <label class="cursor-pointer">
+                                                <input class="peer sr-only" name="task_type" type="radio" />
+                                                <div
+                                                    class="px-3 py-2 rounded-lg border border-border-light dark:border-slate-700 bg-white dark:bg-gray-800 text-sm peer-checked:bg-primary/10 peer-checked:text-primary peer-checked:border-primary transition-all">
+                                                    Meeting
+                                                </div>
+                                            </label>
+                                            <label class="cursor-pointer">
+                                                <input class="peer sr-only" name="task_type" type="radio" />
+                                                <div
+                                                    class="px-3 py-2 rounded-lg border border-border-light dark:border-slate-700 bg-white dark:bg-gray-800 text-sm peer-checked:bg-primary/10 peer-checked:text-primary peer-checked:border-primary transition-all">
+                                                    Research
+                                                </div>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- Description -->
+                                    <div class="flex flex-col gap-2">
+                                        <label
+                                            class="text-sm font-medium text-[#111418] dark:text-gray-200">Description</label>
+                                        <textarea
+                                            class="w-full rounded-lg border border-border-light dark:border-slate-700 bg-white dark:bg-gray-800 text-[#111418] dark:text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-shadow resize-none"
+                                            placeholder="What did you work on?" rows="3"></textarea>
+                                    </div>
+                                    <!-- Hours Input -->
+                                    <div class="flex flex-col gap-2">
+                                        <label
+                                            class="text-sm font-medium text-[#111418] dark:text-gray-200">Hours</label>
+                                        <div class="flex items-center gap-4">
+                                            <button
+                                                class="size-10 rounded-lg border border-border-light dark:border-slate-700 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                                type="button">
+                                                <span class="material-symbols-outlined">remove</span>
+                                            </button>
+                                            <input
+                                                class="w-full text-center rounded-lg border border-border-light dark:border-slate-700 bg-white dark:bg-gray-800 text-[#111418] dark:text-white py-2.5 font-bold text-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                                type="number" value="8.0" />
+                                            <button
+                                                class="size-10 rounded-lg border border-border-light dark:border-slate-700 flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                                type="button">
+                                                <span class="material-symbols-outlined">add</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Actions -->
+                                    <div class="pt-4 flex gap-3">
+                                        <button
+                                            class="flex-1 py-3 px-4 rounded-lg border border-border-light dark:border-slate-700 text-[#111418] dark:text-white font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                                            type="button">Cancel</button>
+                                        <button
+                                            class="flex-1 py-3 px-4 rounded-lg bg-primary text-white font-bold hover:bg-blue-600 transition-colors shadow-md shadow-primary/20"
+                                            type="button">Save Entry</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Submit Card -->
+                            <div
+                                class="bg-gradient-to-br from-gray-900 to-gray-800 dark:from-gray-800 dark:to-gray-900 rounded-xl p-6 text-white shadow-lg relative overflow-hidden group reveal reveal-right delay-300">
+                                <div
+                                    class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:bg-white/10 transition-all">
+                                </div>
+                                <div class="relative z-10 flex flex-col gap-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="p-2 bg-white/10 rounded-lg">
+                                            <span class="material-symbols-outlined text-yellow-400">warning</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold">Ready to Submit?</h4>
+                                            <p class="text-xs text-gray-400">Oct 1 - Oct 15 Period</p>
+                                        </div>
+                                    </div>
+                                    <div class="h-px bg-white/10 w-full"></div>
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-gray-300">Total Hours:</span>
+                                        <span class="font-bold">42 hrs</span>
+                                    </div>
+                                    <button
+                                        class="w-full py-3 bg-white text-gray-900 rounded-lg font-bold mt-2 hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                                        <span>Submit for Approval</span>
+                                        <span class="material-symbols-outlined text-[18px]">send</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- Hidden Confirmation Modal Markup (Example of what it would look like if triggered) -->
+    <!-- 
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+        <div class="bg-white dark:bg-dark-card w-full max-w-md p-6 rounded-2xl shadow-2xl transform scale-100 transition-transform">
+            <div class="flex flex-col items-center text-center gap-4">
+                <div class="size-16 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-primary mb-2">
+                    <span class="material-symbols-outlined text-[32px]">assignment_turned_in</span>
+                </div>
+                <h3 class="text-xl font-bold text-[#111418] dark:text-white">Confirm Submission</h3>
+                <p class="text-[#617589] dark:text-gray-400 text-sm">
+                    You are about to submit your timesheet for <span class="font-bold text-[#111418] dark:text-white">Oct 1 - Oct 15</span>. 
+                    <br>Total Hours: <span class="font-bold text-[#111418] dark:text-white">80h</span>.
+                    <br>This action cannot be undone without manager approval.
+                </p>
+                <div class="flex w-full gap-3 mt-4">
+                    <button class="flex-1 py-3 rounded-lg border border-border-light dark:border-slate-700 font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">Back</button>
+                    <button class="flex-1 py-3 rounded-lg bg-primary text-white font-bold hover:bg-blue-600 shadow-lg shadow-primary/25 transition-colors">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div> 
+    -->
+<script type="module">
+    import { initAuthObserver } from "../assets/js/firebase-modules.js";
+    initAuthObserver(true);
+</script>
+</body>
+
+</html>
