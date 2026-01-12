@@ -103,6 +103,7 @@ function loadHTML(id, file) {
 function afterLoad() {
     highlightActiveNav();
     initScrollAnimations();
+    initTiltEffect();
 }
 
 function highlightActiveNav() {
@@ -124,25 +125,150 @@ function highlightActiveNav() {
 }
 
 function initScrollAnimations() {
+    // Enhanced observer with different thresholds for different effects
     const observerOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.1
+        rootMargin: '-50px 0px -100px 0px',
+        threshold: [0.1, 0.25, 0.5]
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.1) {
                 entry.target.classList.add('visible');
-                // Once visible, we can stop observing this element
+                // Once visible, stop observing
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
+    // Observe all reveal elements
     const revealElements = document.querySelectorAll('.reveal');
     revealElements.forEach(el => {
         observer.observe(el);
+    });
+
+    // Initialize parallax effects
+    initParallax();
+
+    // Initialize stat counter animations
+    initCounterAnimations();
+
+    // Initialize mouse tracking for glow effects
+    initMouseTracking();
+
+    // Initialize staggered grid animations
+    initGridStagger();
+}
+
+// Parallax scrolling effect
+function initParallax() {
+    const parallaxElements = document.querySelectorAll('.parallax-slow, .parallax-medium, .parallax-fast');
+    if (parallaxElements.length === 0) return;
+
+    let ticking = false;
+
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+
+                parallaxElements.forEach(el => {
+                    const speed = el.classList.contains('parallax-fast') ? 0.15
+                        : el.classList.contains('parallax-medium') ? 0.08
+                            : 0.04;
+                    const rect = el.getBoundingClientRect();
+                    const elementCenter = rect.top + rect.height / 2;
+                    const viewportCenter = window.innerHeight / 2;
+                    const distanceFromCenter = elementCenter - viewportCenter;
+
+                    el.style.transform = `translateY(${distanceFromCenter * speed}px)`;
+                });
+
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+}
+
+// Animate number counters when they come into view
+function initCounterAnimations() {
+    const counters = document.querySelectorAll('[data-count], .counter-animate');
+    if (counters.length === 0) return;
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const text = el.textContent;
+                const match = text.match(/(\d+)/);
+
+                if (match) {
+                    const targetNum = parseInt(match[1]);
+                    const suffix = text.replace(/\d+/g, '').trim();
+                    const prefix = text.split(/\d/)[0];
+                    const duration = 2000;
+                    const startTime = performance.now();
+
+                    function updateCounter(currentTime) {
+                        const elapsedTime = currentTime - startTime;
+                        const progress = Math.min(elapsedTime / duration, 1);
+
+                        // Easing function for smooth animation
+                        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                        const currentNum = Math.floor(easeOutQuart * targetNum);
+
+                        el.textContent = prefix + currentNum + suffix;
+
+                        if (progress < 1) {
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            el.textContent = text; // Ensure final value is exact
+                        }
+                    }
+
+                    requestAnimationFrame(updateCounter);
+                }
+
+                counterObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+}
+
+// Track mouse position for interactive glow effects
+function initMouseTracking() {
+    const glowElements = document.querySelectorAll('.hover-glow, .cursor-glow');
+
+    glowElements.forEach(el => {
+        el.addEventListener('mousemove', (e) => {
+            const rect = el.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+            el.style.setProperty('--mouse-x', `${x}%`);
+            el.style.setProperty('--mouse-y', `${y}%`);
+        });
+    });
+}
+
+// Apply staggered animation delays to grid children
+function initGridStagger() {
+    const staggerGrids = document.querySelectorAll('.grid-stagger');
+
+    staggerGrids.forEach(grid => {
+        const children = grid.children;
+        Array.from(children).forEach((child, index) => {
+            // Add reveal class if not already present
+            if (!child.classList.contains('reveal')) {
+                child.classList.add('reveal', 'reveal-up');
+            }
+            // Set custom delay based on index
+            child.style.transitionDelay = `${index * 100}ms`;
+        });
     });
 }
 
@@ -174,7 +300,41 @@ document.addEventListener("DOMContentLoaded", () => {
     initScrollSpy();
     initContentFilters();
     initReviewsSlider();
+    initTiltEffect();
 });
+
+// Tilt on hover effect
+function initTiltEffect() {
+    const tiltElements = document.querySelectorAll('.hover-tilt');
+
+    tiltElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            el.style.transition = 'transform 0.1s ease-out';
+        });
+
+        el.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Max rotation 15 degrees
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+        });
+
+        el.addEventListener('mouseleave', () => {
+            el.style.transition = 'transform 0.5s ease-out';
+            el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+    });
+}
 
 function initCookieConsent() {
     if (localStorage.getItem('cookieConsent')) return;

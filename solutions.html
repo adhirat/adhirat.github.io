@@ -76,11 +76,11 @@
             </p>
             <div class="flex flex-col sm:flex-row gap-4 mt-4">
                 <button onclick="document.getElementById('enterprise').scrollIntoView({behavior: 'smooth'})"
-                    class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-primary hover:bg-blue-600 text-white text-base font-bold transition-all hover:scale-105 shadow-xl shadow-primary/25">
+                    class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-primary hover:bg-blue-600 text-white text-base font-bold transition-all hover:scale-105 shadow-xl shadow-primary/25 hover-tilt">
                     Explore Solutions
                 </button>
                 <button onclick="window.location.href='portfolio.html'"
-                    class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-base font-bold transition-all border border-slate-200 dark:border-slate-700 shadow-sm">
+                    class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-lg h-12 px-6 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-base font-bold transition-all border border-slate-200 dark:border-slate-700 shadow-sm hover-tilt">
                     View Case Studies
                 </button>
             </div>
@@ -101,7 +101,7 @@
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             <aside
-                class="lg:col-span-3 sticky top-24 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur rounded-xl border border-slate-200 dark:border-slate-800 p-2 md:p-4 shadow-sm overflow-x-auto lg:overflow-visible no-scrollbar -mx-4 px-4 md:mx-0 transition-colors duration-300 reveal reveal-left">
+                class="lg:col-span-3 sticky top-24 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur rounded-xl border border-slate-200 dark:border-slate-800 p-2 md:p-4 shadow-sm overflow-x-auto lg:overflow-visible no-scrollbar -mx-4 px-4 md:mx-0 transition-colors duration-300">
                 <div class="flex lg:flex-col gap-2 min-w-max lg:min-w-0">
                     <div class="hidden lg:flex items-center gap-3 px-3 py-3 mb-2">
                         <div class="bg-blue-50 dark:bg-blue-900/20 p-2 rounded-lg transition-colors duration-300">
@@ -203,7 +203,7 @@
                                 </li>
                             </ul>
                             <button onclick="window.location.href='services.html'"
-                                class="w-fit text-primary font-bold hover:text-white hover:bg-primary px-4 py-2 rounded-lg transition-all border border-primary mt-2">
+                                class="w-fit text-primary font-bold hover:text-white hover:bg-primary px-4 py-2 rounded-lg transition-all border border-primary mt-2 hover-tilt">
                                 Learn More
                             </button>
                         </div>
@@ -245,7 +245,7 @@
                                 </li>
                             </ul>
                             <button onclick="window.location.href='services.html'"
-                                class="w-fit text-purple-600 dark:text-purple-400 font-bold hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition-all border border-purple-600 dark:border-purple-400 mt-2">
+                                class="w-fit text-purple-600 dark:text-purple-400 font-bold hover:text-white hover:bg-purple-600 px-4 py-2 rounded-lg transition-all border border-purple-600 dark:border-purple-400 mt-2 hover-tilt">
                                 Learn More
                             </button>
                         </div>
@@ -310,7 +310,7 @@
                                 </li>
                             </ul>
                             <button onclick="window.location.href='portfolio.html'"
-                                class="w-fit text-rose-500 dark:text-rose-400 font-bold hover:text-white hover:bg-rose-500 px-4 py-2 rounded-lg transition-all border border-rose-500 dark:border-rose-400 mt-2">
+                                class="w-fit text-rose-500 dark:text-rose-400 font-bold hover:text-white hover:bg-rose-500 px-4 py-2 rounded-lg transition-all border border-rose-500 dark:border-rose-400 mt-2 hover-tilt">
                                 See Impact
                             </button>
                         </div>
@@ -318,12 +318,12 @@
                 </section>
                 <section class="scroll-mt-28 group" id="ecommerce">
                     <div class="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-                        <div class="flex flex-col gap-6 reveal reveal-left">
+                        <div class="flex flex-col gap-6">
                             <div
-                                class="size-12 rounded-xl bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center text-amber-600 dark:text-amber-400 transition-colors duration-300">
+                                class="size-12 rounded-xl bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center text-amber-600 dark:text-amber-400 transition-colors duration-300 reveal reveal-left">
                                 <span class="material-symbols-outlined text-3xl">shopping_cart</span>
                             </div>
-                            <div>
+                            <div class="reveal reveal-left delay-100">
                                 <h3
                                     class="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-3 transition-colors duration-300">
                                     E-Commerce Solutions</h3>
@@ -335,32 +335,32 @@
                             </div>
                             <div class="grid grid-cols-2 gap-4">
                                 <div
-                                    class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
+                                    class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all reveal reveal-up delay-200">
                                     <span class="material-symbols-outlined text-amber-500 mb-2">speed</span>
                                     <h4 class="font-bold text-slate-900 dark:text-white transition-colors duration-300">
                                         Page Speed Optimization</h4>
                                 </div>
                                 <div
-                                    class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
+                                    class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all reveal reveal-up delay-300">
                                     <span class="material-symbols-outlined text-amber-500 mb-2">lock</span>
                                     <h4 class="font-bold text-slate-900 dark:text-white transition-colors duration-300">
                                         Secure Payments</h4>
                                 </div>
                                 <div
-                                    class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
+                                    class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all reveal reveal-up delay-400">
                                     <span class="material-symbols-outlined text-amber-500 mb-2">inventory_2</span>
                                     <h4 class="font-bold text-slate-900 dark:text-white transition-colors duration-300">
                                         Inventory Sync</h4>
                                 </div>
                                 <div
-                                    class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all">
+                                    class="p-4 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all reveal reveal-up delay-500">
                                     <span class="material-symbols-outlined text-amber-500 mb-2">analytics</span>
                                     <h4 class="font-bold text-slate-900 dark:text-white transition-colors duration-300">
                                         Sales Analytics</h4>
                                 </div>
                             </div>
                             <button onclick="window.location.href='web-development.html'"
-                                class="w-fit text-amber-600 dark:text-amber-400 font-bold hover:text-white hover:bg-amber-500 px-4 py-2 rounded-lg transition-all border border-amber-500 dark:border-amber-400 mt-2">
+                                class="w-fit text-amber-600 dark:text-amber-400 font-bold hover:text-white hover:bg-amber-500 px-4 py-2 rounded-lg transition-all border border-amber-500 dark:border-amber-400 mt-2 reveal reveal-left delay-500 hover-tilt">
                                 Optimize Sales
                             </button>
                         </div>
@@ -421,7 +421,7 @@
                                 </li>
                             </ul>
                             <button onclick="window.location.href='web-development.html'"
-                                class="w-fit text-cyan-600 dark:text-cyan-400 font-bold hover:text-white hover:bg-cyan-500 px-4 py-2 rounded-lg transition-all border border-cyan-500 dark:border-cyan-400 mt-2">
+                                class="w-fit text-cyan-600 dark:text-cyan-400 font-bold hover:text-white hover:bg-cyan-500 px-4 py-2 rounded-lg transition-all border border-cyan-500 dark:border-cyan-400 mt-2 hover-tilt">
                                 Explore FinTech
                             </button>
                         </div>
@@ -440,7 +440,7 @@
                 the digital age.
             </p>
             <button onclick="window.location.href='contact.html'"
-                class="inline-flex items-center justify-center h-14 px-8 rounded-full bg-white hover:bg-blue-50 dark:bg-slate-900 dark:text-blue-400 dark:hover:bg-slate-800 text-primary text-lg font-bold transition-all shadow-xl hover:shadow-2xl">
+                class="inline-flex items-center justify-center h-14 px-8 rounded-full bg-white hover:bg-blue-50 dark:bg-slate-900 dark:text-blue-400 dark:hover:bg-slate-800 text-primary text-lg font-bold transition-all shadow-xl hover:shadow-2xl hover-tilt">
                 Let's Talk Business
                 <span class="material-symbols-outlined ml-2">arrow_forward</span>
             </button>
