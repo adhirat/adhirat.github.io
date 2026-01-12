@@ -103,6 +103,7 @@ function loadHTML(id, file) {
 function afterLoad() {
     highlightActiveNav();
     initScrollAnimations();
+    initTiltEffect();
 }
 
 function highlightActiveNav() {
@@ -299,7 +300,41 @@ document.addEventListener("DOMContentLoaded", () => {
     initScrollSpy();
     initContentFilters();
     initReviewsSlider();
+    initTiltEffect();
 });
+
+// Tilt on hover effect
+function initTiltEffect() {
+    const tiltElements = document.querySelectorAll('.hover-tilt');
+
+    tiltElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            el.style.transition = 'transform 0.1s ease-out';
+        });
+
+        el.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Max rotation 15 degrees
+                const rotateX = ((y - centerY) / centerY) * -10;
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+            });
+        });
+
+        el.addEventListener('mouseleave', () => {
+            el.style.transition = 'transform 0.5s ease-out';
+            el.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+    });
+}
 
 function initCookieConsent() {
     if (localStorage.getItem('cookieConsent')) return;

@@ -994,4 +994,14 @@ html {
 
 .grid-stagger>*:nth-child(12) {
   transition-delay: 1100ms;
+}/* ========================================
+   TILT EFFECT
+   ======================================== */
+.hover-tilt {
+    transform-style: preserve-3d;
+    will-change: transform;
+    /* Ensure it has a z-index to be on top during transform if needed, though usually scale handles it */
 }
+
+/* Optional: Add a subtle inner shadow or sheen if possible with pure CSS, 
+   but JavaScript handles the main gradient glow already via .hover-glow */
