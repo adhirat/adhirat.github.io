@@ -194,7 +194,7 @@
                             </div>
                             <div class="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-500/10 blur-2xl">
                             </div>
-                            <form action="#" class="relative space-y-8">
+                            <form id="contact-form" class="relative space-y-8">
                                 <div class="space-y-2">
                                     <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Send us a message</h3>
                                     <p class="text-slate-500 dark:text-slate-400 text-sm">Fill out the form below and
@@ -210,7 +210,7 @@
                                         <div class="relative">
                                             <input
                                                 class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
-                                                id="name" name="name" placeholder="John Doe" type="text" />
+                                                id="name" name="name" placeholder="John Doe" type="text" required />
                                             <div
                                                 class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
                                                 <span
@@ -225,7 +225,8 @@
                                         <div class="relative">
                                             <input
                                                 class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
-                                                id="email" name="email" placeholder="john@company.com" type="email" />
+                                                id="email" name="email" placeholder="john@company.com" type="email"
+                                                required />
                                             <div
                                                 class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
                                                 <span
@@ -262,14 +263,14 @@
                                     <textarea
                                         class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
                                         id="message" name="message"
-                                        placeholder="Tell us about your project goals, timeline, and budget..."
-                                        rows="4"></textarea>
+                                        placeholder="Tell us about your project goals, timeline, and budget..." rows="4"
+                                        required></textarea>
                                 </div>
                                 <div class="flex items-center gap-3 py-2">
                                     <div class="relative flex items-center">
                                         <input
                                             class="peer h-5 w-5 cursor-pointer rounded border-gray-300 text-primary focus:ring-primary"
-                                            id="privacy" name="privacy" type="checkbox" />
+                                            id="privacy" name="privacy" type="checkbox" required />
                                         <svg class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100"
                                             fill="none" height="12" stroke="currentColor" stroke-width="3"
                                             viewBox="0 0 24 24" width="12">
@@ -285,7 +286,7 @@
                                 </div>
                                 <button
                                     class="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-primary/40 hover:scale-[1.01] hover:-translate-y-0.5 active:scale-[0.99] hover-tilt"
-                                    type="submit">
+                                    type="submit" id="submit-btn">
                                     <span>Send Message</span>
                                     <span
                                         class="material-symbols-outlined text-lg transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">send</span>
@@ -298,6 +299,46 @@
         </main>
     </div>
     <div id="footer"></div>
+
+    <script type="module">
+        import { submitContactForm } from './assets/js/firebase-modules.js';
+
+        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const btn = document.getElementById('submit-btn');
+            const originalContent = btn.innerHTML;
+
+            // Get data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value
+            };
+
+            // Loading state
+            btn.disabled = true;
+            btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-sm mr-2">progress_activity</span> Sending...';
+
+            // Submit
+            const result = await submitContactForm(formData);
+
+            if (result.success) {
+                if (window.showToast) window.showToast('Message sent successfully! We will contact you soon.', 'success');
+                else alert('Message sent successfully!');
+
+                document.getElementById('contact-form').reset();
+            } else {
+                if (window.showToast) window.showToast('Failed to send message. Please try again.', 'error');
+                else alert('Failed to send message: ' + result.error);
+            }
+
+            // Reset button
+            btn.disabled = false;
+            btn.innerHTML = originalContent;
+        });
+    </script>
 </body>
 
 </html>

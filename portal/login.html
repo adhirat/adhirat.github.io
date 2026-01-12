@@ -91,7 +91,7 @@
                     </h1>
                     <p class="text-slate-500 dark:text-slate-400 text-sm">Manage your payroll and benefits securely.</p>
                 </div>
-                <form action="#" class="space-y-6" method="POST">
+                <form id="login-form" class="space-y-6">
                     <!-- Email Field -->
                     <div>
                         <label class="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200 mb-2"
@@ -102,7 +102,7 @@
                             </div>
                             <input
                                 class="block w-full rounded-lg border-0 py-3 pl-10 text-slate-900 dark:text-white ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-slate-900 transition-all"
-                                id="email" name="email" placeholder="name@adhirat.com" type="email" value="" />
+                                id="email" name="email" placeholder="name@adhirat.com" type="email" required />
                         </div>
                     </div>
                     <!-- Password Field -->
@@ -121,11 +121,12 @@
                             </div>
                             <input
                                 class="block w-full rounded-lg border-0 py-3 pl-10 pr-10 text-slate-900 dark:text-white ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-slate-900 transition-all"
-                                id="password" name="password" placeholder="Enter your password" type="password" />
+                                id="password" name="password" placeholder="Enter your password" type="password"
+                                required />
                             <button
-                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-500 cursor-pointer"
-                                type="button">
-                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-500 cursor-pointer focus:outline-none"
+                                type="button" id="toggle-password">
+                                <span class="material-symbols-outlined text-[20px]" id="eye-icon">visibility</span>
                             </button>
                         </div>
                     </div>
@@ -141,11 +142,56 @@
                     <div>
                         <button
                             class="flex w-full justify-center rounded-lg bg-primary px-3 py-3 text-sm font-bold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all transform active:scale-[0.98] reveal reveal-up delay-200 btn-primary"
-                            type="button" onclick="window.location.href='dashboard.html'">
+                            type="submit" id="login-btn">
                             Login to Dashboard
                         </button>
                     </div>
                 </form>
+
+                <script type="module">
+                    import { loginUser } from '../assets/js/firebase-modules.js';
+
+                    // Password Visibility Toggle
+                    const togglePassword = document.getElementById('toggle-password');
+                    const password = document.getElementById('password');
+                    const eyeIcon = document.getElementById('eye-icon');
+
+                    togglePassword.addEventListener('click', function () {
+                        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                        password.setAttribute('type', type);
+                        eyeIcon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+                    });
+
+                    // Login Handler
+                    document.getElementById('login-form').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+
+                        const email = document.getElementById('email').value;
+                        const passwordVal = document.getElementById('password').value;
+                        const btn = document.getElementById('login-btn');
+
+                        // Loading State
+                        const originalText = btn.innerHTML;
+                        btn.disabled = true;
+                        btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-sm mr-2">progress_activity</span> Signing In...';
+
+                        const result = await loginUser(email, passwordVal);
+
+                        if (result.success) {
+                            if (window.showToast) window.showToast('Login successful!', 'success');
+                            setTimeout(() => {
+                                window.location.href = 'dashboard.html';
+                            }, 1000);
+                        } else {
+                            if (window.showToast) window.showToast(result.error || 'Login failed', 'error');
+                            else alert(result.error);
+
+                            // Reset button
+                            btn.disabled = false;
+                            btn.innerHTML = originalText;
+                        }
+                    });
+                </script>
                 <!-- Divider -->
                 <div class="relative mt-8">
                     <div aria-hidden="true" class="absolute inset-0 flex items-center">

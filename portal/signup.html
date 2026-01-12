@@ -84,7 +84,7 @@
                     </h1>
                     <p class="text-slate-500 dark:text-slate-400 text-sm">Join Adhirat Portal today.</p>
                 </div>
-                <form action="#" class="space-y-6" method="POST">
+                <form id="signup-form" class="space-y-6">
                     <!-- Name Field -->
                     <div>
                         <label class="block text-sm font-medium leading-6 text-slate-900 dark:text-slate-200 mb-2"
@@ -95,7 +95,7 @@
                             </div>
                             <input
                                 class="block w-full rounded-lg border-0 py-3 pl-10 text-slate-900 dark:text-white ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-slate-900 transition-all"
-                                id="name" name="name" placeholder="John Doe" type="text" />
+                                id="name" name="name" placeholder="John Doe" type="text" required />
                         </div>
                     </div>
                     <!-- Email Field -->
@@ -108,7 +108,7 @@
                             </div>
                             <input
                                 class="block w-full rounded-lg border-0 py-3 pl-10 text-slate-900 dark:text-white ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-slate-900 transition-all"
-                                id="email" name="email" placeholder="name@adhirat.com" type="email" />
+                                id="email" name="email" placeholder="name@adhirat.com" type="email" required />
                         </div>
                     </div>
                     <!-- Password Field -->
@@ -121,18 +121,54 @@
                             </div>
                             <input
                                 class="block w-full rounded-lg border-0 py-3 pl-10 pr-10 text-slate-900 dark:text-white ring-1 ring-inset ring-slate-300 dark:ring-slate-600 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 bg-gray-50 dark:bg-slate-900 transition-all"
-                                id="password" name="password" placeholder="Create a password" type="password" />
+                                id="password" name="password" placeholder="Create a password" type="password"
+                                required />
                         </div>
                     </div>
                     <!-- Submit Button -->
                     <div>
                         <button
                             class="flex w-full justify-center rounded-lg bg-primary px-3 py-3 text-sm font-bold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all transform active:scale-[0.98] btn-primary"
-                            type="button" onclick="window.location.href='dashboard.html'">
+                            type="submit" id="submit-btn">
                             Create Account
                         </button>
                     </div>
                 </form>
+
+                <script type="module">
+                    import { registerUser } from '../assets/js/firebase-modules.js';
+
+                    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+                        e.preventDefault();
+
+                        const name = document.getElementById('name').value;
+                        const email = document.getElementById('email').value;
+                        const password = document.getElementById('password').value;
+                        const btn = document.getElementById('submit-btn');
+
+                        // Loading State
+                        const originalText = btn.innerHTML;
+                        btn.disabled = true;
+                        btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-sm mr-2">progress_activity</span> Creating Account...';
+
+                        const result = await registerUser(name, email, password);
+
+                        if (result.success) {
+                            // Use global toast if available, else alert
+                            if (window.showToast) window.showToast('Account created successfully!', 'success');
+                            setTimeout(() => {
+                                window.location.href = 'dashboard.html';
+                            }, 1000);
+                        } else {
+                            if (window.showToast) window.showToast(result.error || 'Registration failed', 'error');
+                            else alert(result.error);
+
+                            // Reset button
+                            btn.disabled = false;
+                            btn.innerHTML = originalText;
+                        }
+                    });
+                </script>
                 <div class="relative mt-8">
                     <div aria-hidden="true" class="absolute inset-0 flex items-center">
                         <div class="w-full border-t border-slate-200 dark:border-slate-700"></div>
