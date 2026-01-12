@@ -66,7 +66,7 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
 }
 
 // Cache version - increment this when you update header/footer/mobile-menu
-const CACHE_VERSION = 'v7';
+const CACHE_VERSION = 'v8';
 
 function loadHTML(id, file) {
     const cacheKey = `${file}_${CACHE_VERSION}`;
@@ -108,18 +108,48 @@ function afterLoad() {
 
 function highlightActiveNav() {
     const page = window.location.pathname.split("/").pop() || "index.html";
-
-    // Standardize page name for home
+    // Standardize page name for home and handle directory roots
     const activePage = (page === "" || page === "/") ? "index.html" : page;
 
-    document.querySelectorAll("nav a").forEach(link => {
+    // 1. Sidebar Nav Highlighting (Specific styles)
+    const sidebarLinks = document.querySelectorAll("aside nav a");
+    sidebarLinks.forEach(link => {
         const href = link.getAttribute("href");
-        if (href === activePage) {
-            link.classList.add("active");
-            // Also add a visible indicator class for Tailwind-based styles if needed
-            link.classList.add("text-primary");
+        // Check for exact match or if the href ends with the active page name to handle potential relative path differences
+        if (href === activePage || (href && href.endsWith(activePage))) {
+            // Apply Active Styles
+            link.classList.add("bg-blue-50", "dark:bg-blue-900/20", "text-primary", "dark:text-blue-400", "font-semibold");
+            // Remove Inactive/Default Styles that conflict
+            link.classList.remove("text-slate-600", "dark:text-[#9dabb9]", "hover:bg-slate-100", "dark:hover:bg-[#283039]", "hover:text-primary", "dark:hover:text-white");
+
+            // Style the icon specifically
+            const icon = link.querySelector('.material-symbols-outlined');
+            if (icon) {
+                icon.classList.add('text-primary', 'dark:text-blue-400');
+                icon.classList.remove('group-hover:text-primary');
+            }
         } else {
-            link.classList.remove("active", "text-primary");
+            // Reset to Default Styles
+            link.classList.remove("bg-blue-50", "dark:bg-blue-900/20", "text-primary", "dark:text-blue-400", "font-semibold");
+            link.classList.add("text-slate-600", "dark:text-[#9dabb9]", "hover:bg-slate-100", "dark:hover:bg-[#283039]", "hover:text-primary", "dark:hover:text-white");
+
+            const icon = link.querySelector('.material-symbols-outlined');
+            if (icon) {
+                icon.classList.remove('text-primary', 'dark:text-blue-400');
+                icon.classList.add('group-hover:text-primary');
+            }
+        }
+    });
+
+    // 2. Global Header/Other Nav Highlighting (Generic styles)
+    // Filter out sidebar links to avoid conflicts
+    const otherLinks = Array.from(document.querySelectorAll("nav a")).filter(link => !link.closest("aside"));
+    otherLinks.forEach(link => {
+        const href = link.getAttribute("href");
+        if (href === activePage || (href && href.endsWith(activePage))) {
+            link.classList.add("text-primary", "font-semibold", "active");
+        } else {
+            link.classList.remove("text-primary", "font-semibold", "active");
         }
     });
 }
@@ -277,7 +307,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const components = [
         { id: "header", file: "global/header.html" },
         { id: "footer", file: "global/footer.html" },
-        { id: "mobile-menu-container", file: "global/mobile-menu.html" }
+        { id: "mobile-menu-container", file: "global/mobile-menu.html" },
+        { id: "portal-header", file: "partials/header.html" },
+        { id: "portal-sidebar", file: "partials/sidebar.html" }
     ];
 
     let loadedCount = 0;

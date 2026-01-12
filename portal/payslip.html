@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Employee Payslip View - Adhirat Portal</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Global Assets -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/app.js"></script>
+</head>
+
+<body
+    class="pt-0 bg-background-light dark:bg-dark-bg text-slate-900 dark:text-white font-display transition-colors duration-200">
+    <div class="flex h-screen w-full overflow-hidden">
+        <!-- Sidebar -->
+        <!-- Global Sidebar -->
+        <div id="portal-sidebar" class="contents"></div>
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-dark-bg relative">
+            <!-- Header -->
+            <!-- Global Header -->
+            <div id="portal-header" class="contents"></div>
+            <!-- Scrollable Content -->
+            <div class="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
+                <div class="mx-auto max-w-6xl flex flex-col gap-6">
+                    <!-- Action & Filter Bar -->
+                    <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
+                        <div class="flex flex-col gap-2 w-full md:w-auto">
+                            <label class="text-sm font-medium text-slate-500 dark:text-slate-400">Select Month</label>
+                            <div class="relative">
+                                <select
+                                    class="appearance-none bg-surface-light dark:bg-dark-card border border-border-light dark:border-slate-700 text-slate-900 dark:text-white text-sm rounded-lg focus:ring-primary focus:border-primary block w-full md:w-64 p-3 pr-10">
+                                    <option selected="">October 2023</option>
+                                    <option>September 2023</option>
+                                    <option>August 2023</option>
+                                </select>
+                                <div
+                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500 dark:text-slate-400">
+                                    <span class="material-symbols-outlined">arrow_drop_down</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 w-full md:w-auto">
+                            <button
+                                class="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-surface-light dark:bg-dark-card border border-border-light dark:border-slate-700 text-slate-700 dark:text-white font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <span class="material-symbols-outlined text-[20px]">mail</span>
+                                <span>Email</span>
+                            </button>
+                            <button
+                                class="flex-1 md:flex-none flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-primary text-white font-bold hover:bg-blue-600 transition-colors shadow-lg shadow-primary/25">
+                                <span class="material-symbols-outlined text-[20px]">download</span>
+                                <span>Download PDF</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Net Pay Hero Card -->
+                    <div
+                        class="bg-surface-light dark:bg-dark-card rounded-xl p-6 md:p-8 border border-border-light dark:border-slate-700 shadow-sm relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none">
+                        </div>
+                        <div
+                            class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative z-10">
+                            <div class="flex flex-col gap-2">
+                                <p class="text-slate-500 dark:text-slate-400 font-medium">Net Pay Amount</p>
+                                <div class="flex items-center gap-4">
+                                    <h2
+                                        class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight">
+                                        ₹1,45,200</h2>
+                                    <button class="text-slate-400 hover:text-primary transition-colors"
+                                        title="Hide Amount">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </button>
+                                </div>
+                                <p
+                                    class="text-sm text-green-600 dark:text-green-400 font-medium mt-1 flex items-center gap-1">
+                                    <span class="material-symbols-outlined text-[16px]">check_circle</span>
+                                    Paid on Oct 31, 2023
+                                </p>
+                            </div>
+                            <!-- Tax Visualizer -->
+                            <div
+                                class="w-full md:w-64 bg-slate-100 dark:bg-slate-800/50 rounded-lg p-4 border border-border-light dark:border-slate-700">
+                                <div class="flex justify-between text-xs mb-2">
+                                    <span class="text-slate-500 dark:text-slate-400">Earnings vs Deductions</span>
+                                </div>
+                                <div
+                                    class="flex h-3 w-full rounded-full overflow-hidden bg-slate-200 dark:bg-slate-700">
+                                    <div class="h-full bg-primary" style="width: 85%"></div>
+                                    <div class="h-full bg-red-400" style="width: 15%"></div>
+                                </div>
+                                <div class="flex justify-between mt-2 text-xs font-medium">
+                                    <span class="text-primary">85% Pay</span>
+                                    <span class="text-red-400">15% Tax</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Employee Info Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div
+                            class="bg-surface-light dark:bg-dark-card p-4 rounded-lg border border-border-light dark:border-slate-700">
+                            <p
+                                class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">
+                                Employee Name</p>
+                            <p class="text-slate-900 dark:text-white font-medium">Arjun Mehta</p>
+                        </div>
+                        <div
+                            class="bg-surface-light dark:bg-dark-card p-4 rounded-lg border border-border-light dark:border-slate-700">
+                            <p
+                                class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">
+                                Employee ID</p>
+                            <p class="text-slate-900 dark:text-white font-medium">AT-204</p>
+                        </div>
+                        <div
+                            class="bg-surface-light dark:bg-dark-card p-4 rounded-lg border border-border-light dark:border-slate-700">
+                            <p
+                                class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">
+                                Designation</p>
+                            <p class="text-slate-900 dark:text-white font-medium">Senior Developer</p>
+                        </div>
+                        <div
+                            class="bg-surface-light dark:bg-dark-card p-4 rounded-lg border border-border-light dark:border-slate-700">
+                            <p
+                                class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold mb-1">
+                                Bank Account</p>
+                            <p class="text-slate-900 dark:text-white font-medium font-mono">**** **** 4589</p>
+                        </div>
+                    </div>
+                    <!-- Details Tables -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Earnings -->
+                        <div
+                            class="bg-surface-light dark:bg-dark-card rounded-xl border border-border-light dark:border-slate-700 overflow-hidden flex flex-col">
+                            <div
+                                class="p-4 border-b border-border-light dark:border-slate-700 bg-slate-50 dark:bg-slate-800/30 flex justify-between items-center">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Earnings</h3>
+                                <span class="material-symbols-outlined text-green-500">trending_up</span>
+                            </div>
+                            <div class="p-0 flex-1">
+                                <table class="w-full text-sm text-left">
+                                    <thead
+                                        class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-800/50">
+                                        <tr>
+                                            <th class="px-6 py-3 font-medium">Description</th>
+                                            <th class="px-6 py-3 font-medium text-right">Amount (INR)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-border-light dark:divide-border-dark">
+                                        <tr>
+                                            <td class="px-6 py-4 text-slate-900 dark:text-white">Basic Salary</td>
+                                            <td
+                                                class="px-6 py-4 text-right font-mono text-slate-700 dark:text-slate-200">
+                                                85,000.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 text-slate-900 dark:text-white">HRA</td>
+                                            <td
+                                                class="px-6 py-4 text-right font-mono text-slate-700 dark:text-slate-200">
+                                                34,000.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 text-slate-900 dark:text-white">Special Allowance</td>
+                                            <td
+                                                class="px-6 py-4 text-right font-mono text-slate-700 dark:text-slate-200">
+                                                25,000.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 text-slate-900 dark:text-white">Performance Bonus</td>
+                                            <td
+                                                class="px-6 py-4 text-right font-mono text-slate-700 dark:text-slate-200">
+                                                20,000.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div
+                                class="p-4 bg-slate-50 dark:bg-slate-800/30 border-t border-border-light dark:border-slate-700 flex justify-between items-center">
+                                <span class="font-medium text-slate-600 dark:text-slate-400">Total Earnings</span>
+                                <span
+                                    class="font-bold text-lg text-slate-900 dark:text-white font-mono">₹1,64,000.00</span>
+                            </div>
+                        </div>
+                        <!-- Deductions -->
+                        <div
+                            class="bg-surface-light dark:bg-dark-card rounded-xl border border-border-light dark:border-slate-700 overflow-hidden flex flex-col">
+                            <div
+                                class="p-4 border-b border-border-light dark:border-slate-700 bg-slate-50 dark:bg-slate-800/30 flex justify-between items-center">
+                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Deductions</h3>
+                                <span class="material-symbols-outlined text-red-400">trending_down</span>
+                            </div>
+                            <div class="p-0 flex-1">
+                                <table class="w-full text-sm text-left">
+                                    <thead
+                                        class="text-xs text-slate-500 dark:text-slate-400 uppercase bg-slate-50 dark:bg-slate-800/50">
+                                        <tr>
+                                            <th class="px-6 py-3 font-medium">Description</th>
+                                            <th class="px-6 py-3 font-medium text-right">Amount (INR)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-border-light dark:divide-border-dark">
+                                        <tr>
+                                            <td class="px-6 py-4 text-slate-900 dark:text-white">Provident Fund</td>
+                                            <td
+                                                class="px-6 py-4 text-right font-mono text-slate-700 dark:text-slate-200">
+                                                3,600.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 text-slate-900 dark:text-white">Professional Tax</td>
+                                            <td
+                                                class="px-6 py-4 text-right font-mono text-slate-700 dark:text-slate-200">
+                                                200.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="px-6 py-4 text-slate-900 dark:text-white">Income Tax (TDS)</td>
+                                            <td
+                                                class="px-6 py-4 text-right font-mono text-slate-700 dark:text-slate-200">
+                                                15,000.00</td>
+                                        </tr>
+                                        <!-- Spacer row to align height with earnings if needed, logically empty -->
+                                        <tr>
+                                            <td class="px-6 py-4 text-slate-900 dark:text-white opacity-0">Spacer</td>
+                                            <td
+                                                class="px-6 py-4 text-right font-mono text-slate-700 dark:text-slate-200 opacity-0">
+                                                -</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div
+                                class="p-4 bg-slate-50 dark:bg-slate-800/30 border-t border-border-light dark:border-slate-700 flex justify-between items-center">
+                                <span class="font-medium text-slate-600 dark:text-slate-400">Total Deductions</span>
+                                <span class="font-bold text-lg text-red-500 dark:text-red-400 font-mono">-
+                                    ₹18,800.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Footer / Disclaimers -->
+                    <div class="py-6 border-t border-border-light dark:border-slate-700 mt-4">
+                        <p class="text-xs text-slate-500 dark:text-slate-400 text-center">
+                            This is a system-generated payslip and does not require a signature. <br />
+                            Adhirat Technologies Pvt Ltd. | 123 Tech Park, Silicon Valley, Bengaluru, India.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+
+</html>

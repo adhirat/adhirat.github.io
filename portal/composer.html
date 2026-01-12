@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Content Composer - Adhirat Tech</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <!-- Material Symbols -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <!-- Global Assets -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../assets/js/app.js"></script>
+  <style>
+    /* Custom scrollbar for webkit */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #3b4754;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #556677;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+      font-size: 24px;
+    }
+
+    .icon-fill {
+      font-variation-settings: 'FILL' 1;
+    }
+  </style>
+</head>
+
+<body class="pt-0 bg-background-light dark:bg-dark-bg text-slate-900 dark:text-white font-display antialiased overflow-hidden">
+  <div class="flex h-screen w-full flex-row overflow-hidden">
+    <!-- Left Navigation (Global) -->
+    <!-- Global Sidebar -->
+    <div id="portal-sidebar" class="contents"></div>
+    <!-- Main Workspace -->
+    <div class="flex flex-1 flex-col h-full min-w-0 bg-background-light dark:bg-dark-bg relative">
+      <!-- Top Bar -->
+      <!-- Global Header -->
+      <div id="portal-header" class="contents"></div>
+      <!-- Editor & Sidebar Layout -->
+      <main class="flex flex-1 overflow-hidden relative">
+        <!-- Center Canvas (Editor) -->
+        <div class="flex-1 overflow-y-auto relative bg-background-light dark:bg-dark-bg">
+          <div class="max-w-[800px] mx-auto py-12 px-8 min-h-full">
+            <!-- Hero Image Block -->
+            <div
+              class="group relative mb-8 rounded-xl overflow-hidden border border-transparent hover:border-primary/50 transition-colors">
+              <div class="bg-center bg-no-repeat w-full h-64 bg-cover" data-alt="Office collaboration generic header"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDkSvFqDbz-sF3A2Ibl42lO9vGBfuW6JJlSZxdcfb2-MFllVL3-sRhF-nouJVuEpfVkkEkcpBKLy0aZCMaD2h3q9YWjBZ_qGoYZUXCEkS3Iadg3Op0lM9CHhEOkTXvaBQqVLfj4FwIWtOUirfPPJRhvtvYxz8FKcS4OiDCPja690Wd2YfdQ0i72xC_o3Vk6aTmMTrbefuU6-CTBi7aVw1oLoFvSXbbX08vjsCFxCsfYPJt7_SMnIKYGOZxXleBd47gpcmj4gVa9rTs");'>
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+              </div>
+              <!-- Block Actions -->
+              <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 flex gap-1 transition-opacity">
+                <button class="bg-slate-800 text-white p-1 rounded hover:bg-primary"><span
+                    class="material-symbols-outlined text-[18px]">edit</span></button>
+                <button class="bg-slate-800 text-white p-1 rounded hover:bg-red-500"><span
+                    class="material-symbols-outlined text-[18px]">delete</span></button>
+              </div>
+            </div>
+            <!-- Content Area -->
+            <div class="flex flex-col gap-6">
+              <!-- H1 -->
+              <h1 class="text-4xl font-bold text-slate-900 dark:text-white leading-tight outline-none"
+                contenteditable="true">
+                Quarterly Growth: Aiming Higher Together
+              </h1>
+              <!-- Intro Text -->
+              <div class="text-lg text-slate-700 dark:text-gray-300 leading-relaxed outline-none"
+                contenteditable="true">
+                <p>Welcome to the Q3 newsletter. As we wrap up an incredible second quarter, it's time to reflect on our
+                  achievements and set our sights on the ambitious goals ahead. This edition covers updated policies,
+                  new team members, and a spotlight on our engineering team.</p>
+              </div>
+              <!-- Drag Drop Separator -->
+              <div
+                class="h-1 w-full bg-primary/20 hover:bg-primary cursor-row-resize rounded-full transition-colors flex items-center justify-center group my-2">
+                <div
+                  class="bg-primary text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity transform scale-75 group-hover:scale-100">
+                  <span class="material-symbols-outlined text-[16px]">add</span>
+                </div>
+              </div>
+              <!-- Image Text Block (Component) -->
+              <div
+                class="flex flex-col md:flex-row gap-6 p-6 rounded-xl bg-white dark:bg-dark-card border border-gray-200 dark:border-slate-700 group relative">
+                <div class="w-full md:w-1/3 shrink-0">
+                  <div class="aspect-video w-full rounded-lg bg-cover bg-center" data-alt="Team meeting discussion"
+                    style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAIz4S8sytvdd--zwiB5qY_6nsHNrTgRkXBjk20fJoaoG_rg50PX4aDwVAQf21zI-geAcmmuxA2Hrg0Xy1HiTEtcyeGiGBItFAT6WeiXgchXX5FEHVTe2yLLqROkvLsj0ScArHI63RV0sZoglbDsFQ8QhWnk6xMW97RidyYoG9HZhZ258tiWkeYq2rnrPSZhKI4mDJgRhrJnJ_mJnlShrhIqRMfk8RU-c-Yh9ZnHAdUksXPDfQ4LvvzWPlmAbOlp_N9d9v5EAqAMgs");'>
+                  </div>
+                </div>
+                <div class="flex-1 flex flex-col justify-center">
+                  <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-2">Engineering Spotlight</h3>
+                  <p class="text-slate-600 dark:text-text-secondary text-sm leading-relaxed">
+                    Our engineering team has shipped 12 major features this month alone. From the new payroll
+                    integration to the enhanced dashboard widgets, their hard work is paying off.
+                  </p>
+                </div>
+                <!-- Drag Handle -->
+                <div
+                  class="absolute -left-8 top-1/2 -translate-y-1/2 cursor-move text-text-secondary opacity-0 group-hover:opacity-100 p-2">
+                  <span class="material-symbols-outlined">drag_indicator</span>
+                </div>
+              </div>
+              <!-- Quote Block -->
+              <blockquote
+                class="border-l-4 border-primary pl-6 py-2 my-4 italic text-xl text-slate-800 dark:text-gray-200 bg-gray-50 dark:bg-transparent rounded-r-lg">
+                "Innovation distinguishes between a leader and a follower."
+                <footer class="text-sm text-text-secondary mt-2 not-italic font-medium">— Steve Jobs</footer>
+              </blockquote>
+              <!-- Wysiwyg Input Area -->
+              <div class="relative group">
+                <textarea
+                  class="w-full bg-transparent text-lg text-slate-700 dark:text-gray-300 resize-none outline-none min-h-[120px] placeholder-gray-500"
+                  placeholder="Type '/' for commands or start writing..."></textarea>
+                <!-- Floating Command Hint -->
+                <div
+                  class="absolute top-1 left-0 transform -translate-y-full pb-2 opacity-0 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none">
+                  <div
+                    class="bg-slate-800 text-white text-xs px-2 py-1 rounded shadow-lg border border-slate-700 flex items-center gap-2">
+                    <span class="bg-white/20 px-1 rounded text-[10px]">/</span>
+                    to insert blocks
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Floating Action Toolbar (Bottom Center) -->
+          <div class="sticky bottom-8 left-0 right-0 mx-auto w-max z-30">
+            <div
+              class="flex items-center gap-1 p-1.5 rounded-xl bg-slate-800 border border-slate-700 shadow-2xl shadow-black/50 backdrop-blur-md bg-opacity-90">
+              <button class="p-2 rounded-lg text-white hover:bg-white/10 transition-colors tooltip" title="Bold">
+                <span class="material-symbols-outlined text-[20px]">format_bold</span>
+              </button>
+              <button class="p-2 rounded-lg text-white hover:bg-white/10 transition-colors tooltip" title="Italic">
+                <span class="material-symbols-outlined text-[20px]">format_italic</span>
+              </button>
+              <button class="p-2 rounded-lg text-white hover:bg-white/10 transition-colors tooltip" title="Link">
+                <span class="material-symbols-outlined text-[20px]">link</span>
+              </button>
+              <div class="w-px h-5 bg-white/20 mx-1"></div>
+              <button class="p-2 rounded-lg text-white hover:bg-white/10 transition-colors tooltip" title="Heading 1">
+                <span class="material-symbols-outlined text-[20px]">title</span>
+              </button>
+              <button class="p-2 rounded-lg text-white hover:bg-white/10 transition-colors tooltip" title="List">
+                <span class="material-symbols-outlined text-[20px]">format_list_bulleted</span>
+              </button>
+              <div class="w-px h-5 bg-white/20 mx-1"></div>
+              <button class="p-2 rounded-lg text-primary bg-primary/20 hover:bg-primary/30 transition-colors tooltip"
+                title="Add Block">
+                <span class="material-symbols-outlined text-[20px]">add</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Right Sidebar (Metadata) -->
+        <aside
+          class="w-80 bg-white dark:bg-dark-card border-l border-gray-200 dark:border-slate-700 overflow-y-auto hidden xl:flex flex-col shrink-0">
+          <div class="p-5 border-b border-gray-200 dark:border-slate-700">
+            <h2 class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider mb-4">Publishing</h2>
+            <div class="flex flex-col gap-4">
+              <!-- Date Picker Mock -->
+              <div class="flex flex-col gap-2">
+                <label class="text-text-secondary text-xs font-medium">Schedule Date</label>
+                <div class="relative">
+                  <input
+                    class="w-full bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none"
+                    type="text" value="Oct 24, 2023" />
+                  <span
+                    class="material-symbols-outlined absolute right-3 top-2.5 text-text-secondary text-[20px]">calendar_today</span>
+                </div>
+              </div>
+              <!-- Time Picker Mock -->
+              <div class="flex flex-col gap-2">
+                <label class="text-text-secondary text-xs font-medium">Time</label>
+                <div class="relative">
+                  <input
+                    class="w-full bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-900 dark:text-white focus:ring-1 focus:ring-primary focus:border-primary outline-none"
+                    type="text" value="09:00 AM" />
+                  <span
+                    class="material-symbols-outlined absolute right-3 top-2.5 text-text-secondary text-[20px]">schedule</span>
+                </div>
+              </div>
+              <button
+                class="w-full py-2.5 bg-slate-800 border border-primary/50 text-primary font-bold text-sm rounded-lg hover:bg-primary/10 transition-colors flex items-center justify-center gap-2 mt-2">
+                <span class="material-symbols-outlined text-[18px]">send</span>
+                Schedule Post
+              </button>
+            </div>
+          </div>
+          <div class="p-5 border-b border-gray-200 dark:border-slate-700">
+            <h2 class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider mb-4">Taxonomy</h2>
+            <div class="flex flex-col gap-4">
+              <!-- Categories -->
+              <div class="flex flex-col gap-2">
+                <label class="text-text-secondary text-xs font-medium">Category</label>
+                <select
+                  class="w-full bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 rounded-lg px-3 py-2.5 text-sm text-slate-900 dark:text-white focus:ring-1 focus:ring-primary outline-none">
+                  <option>Company News</option>
+                  <option>Policy Update</option>
+                  <option>Events</option>
+                </select>
+              </div>
+              <!-- Tags -->
+              <div class="flex flex-col gap-2">
+                <label class="text-text-secondary text-xs font-medium">Tags</label>
+                <div
+                  class="bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 rounded-lg p-2 min-h-[42px] flex flex-wrap gap-2">
+                  <span
+                    class="bg-primary/20 text-primary text-xs font-medium px-2 py-1 rounded flex items-center gap-1">
+                    #growth
+                    <button class="hover:text-white"><span
+                        class="material-symbols-outlined text-[14px]">close</span></button>
+                  </span>
+                  <span
+                    class="bg-primary/20 text-primary text-xs font-medium px-2 py-1 rounded flex items-center gap-1">
+                    #Q3
+                    <button class="hover:text-white"><span
+                        class="material-symbols-outlined text-[14px]">close</span></button>
+                  </span>
+                  <input
+                    class="bg-transparent text-sm w-20 outline-none text-slate-900 dark:text-white placeholder-text-secondary"
+                    placeholder="Add..." type="text" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- SEO Preview -->
+          <div class="p-5">
+            <h2 class="text-slate-900 dark:text-white text-sm font-bold uppercase tracking-wider mb-4">Email Preview
+            </h2>
+            <div class="bg-gray-100 dark:bg-dark-card rounded-lg p-3 border border-gray-200 dark:border-slate-700">
+              <div class="flex items-center gap-2 mb-2 border-b border-gray-200 dark:border-gray-700 pb-2">
+                <div class="size-6 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                <div class="flex flex-col">
+                  <div class="h-2 w-20 bg-gray-300 dark:bg-gray-600 rounded"></div>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <div class="h-3 w-3/4 bg-slate-900 dark:bg-white rounded"></div>
+                <div class="h-2 w-full bg-gray-300 dark:bg-gray-600 rounded"></div>
+                <div class="h-2 w-5/6 bg-gray-300 dark:bg-gray-600 rounded"></div>
+              </div>
+            </div>
+            <p class="text-xs text-text-secondary mt-2 text-center">Preview of how it appears in inbox</p>
+          </div>
+          <!-- Block Library (Quick Add) -->
+          <div class="mt-auto p-5 border-t border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-[#151a20]">
+            <p class="text-xs font-medium text-text-secondary mb-3">Drag to add blocks</p>
+            <div class="grid grid-cols-2 gap-2">
+              <div
+                class="bg-white dark:bg-dark-card p-2 rounded border border-gray-200 dark:border-slate-700 flex flex-col items-center justify-center gap-1 cursor-grab active:cursor-grabbing hover:border-primary/50 transition-colors">
+                <span class="material-symbols-outlined text-text-secondary text-[20px]">image</span>
+                <span class="text-[10px] text-text-secondary font-medium">Image</span>
+              </div>
+              <div
+                class="bg-white dark:bg-dark-card p-2 rounded border border-gray-200 dark:border-slate-700 flex flex-col items-center justify-center gap-1 cursor-grab active:cursor-grabbing hover:border-primary/50 transition-colors">
+                <span class="material-symbols-outlined text-text-secondary text-[20px]">format_quote</span>
+                <span class="text-[10px] text-text-secondary font-medium">Quote</span>
+              </div>
+              <div
+                class="bg-white dark:bg-dark-card p-2 rounded border border-gray-200 dark:border-slate-700 flex flex-col items-center justify-center gap-1 cursor-grab active:cursor-grabbing hover:border-primary/50 transition-colors">
+                <span class="material-symbols-outlined text-text-secondary text-[20px]">smart_button</span>
+                <span class="text-[10px] text-text-secondary font-medium">Button</span>
+              </div>
+              <div
+                class="bg-white dark:bg-dark-card p-2 rounded border border-gray-200 dark:border-slate-700 flex flex-col items-center justify-center gap-1 cursor-grab active:cursor-grabbing hover:border-primary/50 transition-colors">
+                <span class="material-symbols-outlined text-text-secondary text-[20px]">horizontal_rule</span>
+                <span class="text-[10px] text-text-secondary font-medium">Divider</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </main>
+    </div>
+  </div>
+</body>
+
+</html>
