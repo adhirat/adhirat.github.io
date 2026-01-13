@@ -65,15 +65,15 @@
         <h4 class="text-slate-900 dark:text-white font-bold mb-6 transition-colors">Stay Updated</h4>
         <p class="text-slate-500 dark:text-slate-400 text-sm font-body mb-4 transition-colors">Subscribe to
           our newsletter for the latest tech trends.</p>
-        <div class="flex gap-2">
-          <input
+        <form id="newsletter-form" class="flex gap-2">
+          <input id="newsletter-email"
             class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 text-sm text-slate-800 dark:text-white w-full focus:outline-none focus:border-primary/50 transition-colors"
-            placeholder="Enter email" type="email" />
-          <button onclick="window.location.href='contact.html'"
+            placeholder="Enter email" type="email" required />
+          <button id="newsletter-submit" type="submit"
             class="bg-primary hover:bg-primary/90 text-white rounded-lg px-4 py-2 hover:scale-105 transition-all duration-200 hover-tilt">
             <span class="material-symbols-outlined text-sm">send</span>
           </button>
-        </div>
+        </form>
       </div>
     </div>
     <div
@@ -93,3 +93,25 @@
     </div>
   </div>
 </footer>
+<script type="module">
+  import { subscribeToNewsletter } from './assets/js/firebase-modules.js';
+  document.getElementById('newsletter-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('newsletter-email').value;
+    const btn = document.getElementById('newsletter-submit');
+    const originalContent = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-sm">progress_activity</span>';
+    const result = await subscribeToNewsletter(email);
+    if (result.success) {
+      if (window.showToast) window.showToast('Successfully subscribed!', 'success');
+      else alert('Successfully subscribed!');
+      document.getElementById('newsletter-form').reset();
+    } else {
+      if (window.showToast) window.showToast('Subscription failed. Please try again.', 'error');
+      else alert('Subscription failed: ' + result.error);
+    }
+    btn.disabled = false;
+    btn.innerHTML = originalContent;
+  });
+</script>
