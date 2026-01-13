@@ -192,15 +192,22 @@ function initScrollAnimations() {
 }
 
 // Parallax scrolling effect
+let parallaxInitialized = false;
 function initParallax() {
-    const parallaxElements = document.querySelectorAll('.parallax-slow, .parallax-medium, .parallax-fast');
-    if (parallaxElements.length === 0) return;
+    // Prevent adding multiple scroll listeners
+    if (parallaxInitialized) {
+        return;
+    }
 
     let ticking = false;
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
+                // Re-query elements on each frame to support dynamic content
+                const parallaxElements = document.querySelectorAll('.parallax-slow, .parallax-medium, .parallax-fast');
+                if (parallaxElements.length === 0) return;
+
                 const scrollY = window.scrollY;
 
                 parallaxElements.forEach(el => {
@@ -220,6 +227,8 @@ function initParallax() {
             ticking = true;
         }
     });
+
+    parallaxInitialized = true;
 }
 
 // Animate number counters when they come into view
