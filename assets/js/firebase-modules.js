@@ -138,7 +138,71 @@ export async function submitContactForm(data) {
     }
 }
 
+/**
+ * Subscribe to Newsletter
+ */
+export async function subscribeToNewsletter(email) {
+    try {
+        await addDoc(collection(db, "subscribers"), {
+            email: email,
+            subscribedAt: serverTimestamp()
+        });
+        return { success: true };
+    } catch (error) {
+        console.error("Newsletter Subscription Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Subscribe to Newsletter
+ */
+export async function subscribeToNewsletter(email) {
+    try {
+        await addDoc(collection(db, "subscribers"), {
+            email: email,
+            subscribedAt: serverTimestamp()
+        });
+        return { success: true };
+    } catch (error) {
+        console.error("Newsletter Subscription Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Subscribe to Newsletter
+ */
+export async function subscribeToNewsletter(email) {
+    try {
+        await addDoc(collection(db, "subscribers"), {
+            email: email,
+            subscribedAt: serverTimestamp()
+        });
+        return { success: true };
+    } catch (error) {
+        console.error("Newsletter Subscription Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
 // Expose Logout Globally for Sidebar
 window.handleLogout = async () => {
     await logoutUser();
 };
+
+/**
+ * Subscribe to Newsletter
+ */
+export async function subscribeToNewsletter(email) {
+    try {
+        await addDoc(collection(db, "subscribers"), {
+            email: email,
+            subscribedAt: serverTimestamp()
+        });
+        return { success: true };
+    } catch (error) {
+        console.error("Newsletter Subscription Error:", error);
+        return { success: false, error: error.message };
+    }
+}
