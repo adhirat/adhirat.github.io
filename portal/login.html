@@ -63,7 +63,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <a href="dashboard.html" class="flex items-center gap-3 group hover-tilt">
+                <a href="review.html" class="flex items-center gap-3 group hover-tilt">
                     <div class="size-8 text-primary">
                         <img src="../assets/images/logo.svg" alt="Logo"
                             class="w-full h-full transform rotate-180 dark:brightness-0 dark:invert transition-all duration-300">
@@ -180,7 +180,7 @@
                         if (result.success) {
                             if (window.showToast) window.showToast('Login successful!', 'success');
                             setTimeout(() => {
-                                window.location.href = 'dashboard.html';
+                                window.location.href = 'review.html';
                             }, 1000);
                         } else {
                             if (window.showToast) window.showToast(result.error || 'Login failed', 'error');

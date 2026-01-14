@@ -1,4 +1,4 @@
-import { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, updateProfile, doc, setDoc, getDoc, serverTimestamp, collection, addDoc } from './firebase-config.js';
+import { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, updateProfile, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs, query, where, orderBy, serverTimestamp, collection, addDoc } from './firebase-config.js';
 
 // --- Auth Handling ---
 
@@ -74,7 +74,7 @@ export async function resetPassword(email) {
 
 // --- Auth State Observer ---
 
-export function initAuthObserver(protectedRoute = false) {
+export function initAuthObserver(protectedRoute = false, onAuthReady = null) {
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             console.log("User is signed in:", user.uid);
@@ -87,6 +87,11 @@ export function initAuthObserver(protectedRoute = false) {
 
             // Update UI with user info if available elements exist
             updateUserUI(user);
+
+            // Call the callback if provided
+            if (onAuthReady && typeof onAuthReady === 'function') {
+                onAuthReady(user);
+            }
 
         } else {
             console.log("User is signed out");
@@ -142,3 +147,75 @@ export async function submitContactForm(data) {
 window.handleLogout = async () => {
     await logoutUser();
 };
+
+/**
+ * Save Content (Email, Article, Case Study)
+ */
+export async function saveContent(data) {
+    try {
+        const user = auth.currentUser;
+        if (!user) throw new Error("User must be logged in to save content.");
+
+        const contentData = {
+            ...data,
+            userId: user.uid,
+            authorName: user.displayName || "Unknown",
+            updatedAt: serverTimestamp()
+        };
+
+        if (data.id) {
+            // Update
+            const docRef = doc(db, "contents", data.id);
+            await updateDoc(docRef, contentData);
+            return { success: true, id: data.id };
+        } else {
+            // Create
+            contentData.createdAt = serverTimestamp();
+            const docRef = await addDoc(collection(db, "contents"), contentData);
+            return { success: true, id: docRef.id };
+        }
+    } catch (error) {
+        console.error("Save Content Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Fetch Contents
+ */
+export async function fetchContents() {
+    try {
+        const user = auth.currentUser;
+        if (!user) throw new Error("User must be logged in.");
+
+        const q = query(
+            collection(db, "contents"),
+            where("userId", "==", user.uid),
+            orderBy("updatedAt", "desc")
+        );
+
+        const querySnapshot = await getDocs(q);
+        const contents = [];
+        querySnapshot.forEach((doc) => {
+            contents.push({ id: doc.id, ...doc.data() });
+        });
+
+        return { success: true, data: contents };
+    } catch (error) {
+        console.error("Fetch Contents Error:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Delete Content
+ */
+export async function deleteContent(id) {
+    try {
+        await deleteDoc(doc(db, "contents", id));
+        return { success: true };
+    } catch (error) {
+        console.error("Delete Content Error:", error);
+        return { success: false, error: error.message };
+    }
+}
