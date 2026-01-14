@@ -229,3 +229,20 @@ export async function deleteContent(id) {
         return { success: false, error: error.message };
     }
 }
+
+/**
+ * Subscribe to Newsletter
+ */
+export async function subscribeNewsletter(email) {
+    try {
+        await addDoc(collection(db, "newsletter"), {
+            email: email,
+            subscribedAt: serverTimestamp(),
+            status: "active"
+        });
+        return { success: true };
+    } catch (error) {
+        console.error("Newsletter Subscription Error:", error);
+        return { success: false, error: error.message };
+    }
+}

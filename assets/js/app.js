@@ -560,7 +560,7 @@ function showToast(message, type = 'success') {
 // Newsletter Simulation
 function initNewsletterFeedback() {
     // We use event delegation since footers are loaded dynamically
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', async (e) => {
         const btn = e.target.closest('button');
         const container = btn?.closest('#newsletter-container');
 
@@ -569,13 +569,33 @@ function initNewsletterFeedback() {
             if (emailInput && emailInput.value) {
                 e.preventDefault();
                 if (emailInput.checkValidity()) {
-                    showToast('Success! You have been subscribed to our newsletter.');
-                    emailInput.value = '';
+                    const originalContent = btn.innerHTML;
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-xs">progress_activity</span>';
+
+                    try {
+                        // Dynamically import the firebase module
+                        const { subscribeNewsletter } = await import('./firebase-modules.js' + '?v=' + Date.now());
+                        const result = await subscribeNewsletter(emailInput.value);
+
+                        if (result.success) {
+                            showToast('Success! You have been subscribed to our newsletter.');
+                            emailInput.value = '';
+                        } else {
+                            showToast('Something went wrong. Please try again.', 'info');
+                        }
+                    } catch (err) {
+                        console.error("Newsletter error:", err);
+                        showToast('Error connecting to subscription service.', 'info');
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = originalContent;
+                    }
                 } else {
                     showToast('Please enter a valid email address.', 'info');
                 }
             }
-            // If no email value, let the existing onclick handler (redirect) work
+            // If no email value, let the existing onclick handler (redirect) work if it exists
         }
     });
 }
