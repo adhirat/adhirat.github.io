@@ -562,15 +562,20 @@ function initNewsletterFeedback() {
     // We use event delegation since footers are loaded dynamically
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('button');
-        if (btn && btn.closest('div')?.querySelector('input[type="email"]')) {
-            e.preventDefault();
-            const emailInput = btn.closest('div').querySelector('input[type="email"]');
-            if (emailInput.value && emailInput.checkValidity()) {
-                showToast('Success! You have been subscribed to our newsletter.');
-                emailInput.value = '';
-            } else {
-                showToast('Please enter a valid email address.', 'info');
+        const container = btn?.closest('#newsletter-container');
+
+        if (btn && container) {
+            const emailInput = container.querySelector('input[type="email"]');
+            if (emailInput && emailInput.value) {
+                e.preventDefault();
+                if (emailInput.checkValidity()) {
+                    showToast('Success! You have been subscribed to our newsletter.');
+                    emailInput.value = '';
+                } else {
+                    showToast('Please enter a valid email address.', 'info');
+                }
             }
+            // If no email value, let the existing onclick handler (redirect) work
         }
     });
 }

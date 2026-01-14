@@ -42,6 +42,47 @@
         .input-transition {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @keyframes shake {
+
+            10%,
+            90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+
+            20%,
+            80% {
+                transform: translate3d(2px, 0, 0);
+            }
+
+            30%,
+            50%,
+            70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+
+            40%,
+            60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            margin-left: 0.25rem;
+        }
+
+        .show-error .error-message {
+            display: block;
+        }
     </style>
 </head>
 
@@ -194,104 +235,131 @@
                             </div>
                             <div class="absolute bottom-0 left-0 h-40 w-40 rounded-full bg-indigo-500/10 blur-2xl">
                             </div>
-                            <form id="contact-form" class="relative space-y-8">
-                                <div class="space-y-2">
-                                    <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Send us a message</h3>
-                                    <p class="text-slate-500 dark:text-slate-400 text-sm">Fill out the form below and
-                                        our team will get back
-                                        to
-                                        you within 24 hours.</p>
-                                </div>
-                                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                            <div id="form-content">
+                                <form id="contact-form" class="relative space-y-8">
+                                    <div class="space-y-2">
+                                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Send us a message
+                                        </h3>
+                                        <p class="text-slate-500 dark:text-slate-400 text-sm">Fill out the form below
+                                            and our team will get back to you within 24 hours.</p>
+                                    </div>
+                                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                        <div class="space-y-2 group">
+                                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
+                                                for="name">Full Name</label>
+                                            <div class="relative">
+                                                <input
+                                                    class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
+                                                    id="name" name="name" placeholder="John Doe" type="text" required
+                                                    minlength="2" />
+                                                <div
+                                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                                    <span
+                                                        class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">person</span>
+                                                </div>
+                                            </div>
+                                            <span class="error-message">Please enter your full name.</span>
+                                        </div>
+                                        <div class="space-y-2 group">
+                                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
+                                                for="email">Business Email</label>
+                                            <div class="relative">
+                                                <input
+                                                    class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
+                                                    id="email" name="email" placeholder="john@company.com" type="email"
+                                                    required />
+                                                <div
+                                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                                    <span
+                                                        class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">alternate_email</span>
+                                                </div>
+                                            </div>
+                                            <span class="error-message">Please enter a valid email address.</span>
+                                        </div>
+                                    </div>
                                     <div class="space-y-2 group">
                                         <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
-                                            for="name">Full
-                                            Name</label>
+                                            for="service">Service Interest</label>
                                         <div class="relative">
-                                            <input
-                                                class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
-                                                id="name" name="name" placeholder="John Doe" type="text" required />
+                                            <select
+                                                class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10 appearance-none"
+                                                id="service" name="service" required>
+                                                <option value="" disabled selected>Select a Service</option>
+                                                <option value="Web Development">Web Development</option>
+                                                <option value="UI/UX Design">UI/UX Design</option>
+                                                <option value="Mobile App Development">Mobile App Development</option>
+                                                <option value="AI Solutions">AI Solutions</option>
+                                                <option value="Other">Other</option>
+                                            </select>
                                             <div
                                                 class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
                                                 <span
-                                                    class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">person</span>
+                                                    class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">expand_more</span>
                                             </div>
                                         </div>
+                                        <span class="error-message">Please select a service interest.</span>
                                     </div>
                                     <div class="space-y-2 group">
                                         <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
-                                            for="email">Business
-                                            Email</label>
-                                        <div class="relative">
-                                            <input
-                                                class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
-                                                id="email" name="email" placeholder="john@company.com" type="email"
-                                                required />
-                                            <div
-                                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
-                                                <span
-                                                    class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">alternate_email</span>
-                                            </div>
-                                        </div>
+                                            for="message">Project Details</label>
+                                        <textarea
+                                            class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
+                                            id="message" name="message"
+                                            placeholder="Tell us about your project goals, timeline, and budget..."
+                                            rows="4" required minlength="10"></textarea>
+                                        <span class="error-message">Please provide some details about your
+                                            project.</span>
                                     </div>
-                                </div>
-                                <div class="space-y-2 group">
-                                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
-                                        for="service">Service
-                                        Interest</label>
-                                    <div class="relative">
-                                        <select
-                                            class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10 appearance-none"
-                                            id="service" name="service">
-                                            <option>Web Development</option>
-                                            <option>UI/UX Design</option>
-                                            <option>Mobile App Development</option>
-                                            <option>AI Solutions</option>
-                                            <option>Other</option>
-                                        </select>
-                                        <div
-                                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
-                                            <span
-                                                class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">expand_more</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="space-y-2 group">
-                                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
-                                        for="message">Project
-                                        Details</label>
-                                    <textarea
-                                        class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
-                                        id="message" name="message"
-                                        placeholder="Tell us about your project goals, timeline, and budget..." rows="4"
-                                        required></textarea>
-                                </div>
-                                <div class="flex items-center gap-3 py-2">
-                                    <div class="relative flex items-center">
+                                    <div class="space-y-2 group">
+                                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
+                                            for="attachment">Attachment</label>
                                         <input
-                                            class="peer h-5 w-5 cursor-pointer rounded border-gray-300 text-primary focus:ring-primary"
-                                            id="privacy" name="privacy" type="checkbox" required />
-                                        <svg class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100"
-                                            fill="none" height="12" stroke="currentColor" stroke-width="3"
-                                            viewBox="0 0 24 24" width="12">
-                                            <path d="M4.5 12.75l6 6 9-13.5" stroke-linecap="round"
-                                                stroke-linejoin="round">
-                                            </path>
-                                        </svg>
+                                            class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all cursor-pointer"
+                                            id="attachment" name="attachment" type="file" required />
+                                        <span class="error-message">Please attach a supporting file.</span>
                                     </div>
-                                    <label class="text-sm text-slate-500 cursor-pointer select-none" for="privacy">I
-                                        agree
-                                        to the <a class="text-primary font-medium hover:underline" href="#">Privacy
-                                            Policy</a>.</label>
-                                </div>
-                                <button
-                                    class="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-primary/40 hover:scale-[1.01] hover:-translate-y-0.5 active:scale-[0.99] hover-tilt"
-                                    type="submit" id="submit-btn">
-                                    <span>Send Message</span>
+                                    <div class="flex flex-col gap-2 py-2">
+                                        <div class="flex items-center gap-3">
+                                            <div class="relative flex items-center">
+                                                <input
+                                                    class="peer h-5 w-5 cursor-pointer rounded border-gray-300 text-primary focus:ring-primary"
+                                                    id="privacy" name="privacy" type="checkbox" required />
+                                                <svg class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                                                    fill="none" height="12" stroke="currentColor" stroke-width="3"
+                                                    viewBox="0 0 24 24" width="12">
+                                                    <path d="M4.5 12.75l6 6 9-13.5" stroke-linecap="round"
+                                                        stroke-linejoin="round"></path>
+                                                </svg>
+                                            </div>
+                                            <label class="text-sm text-slate-500 cursor-pointer select-none"
+                                                for="privacy">I agree to the <a
+                                                    class="text-primary font-medium hover:underline" href="#">Privacy
+                                                    Policy</a>.</label>
+                                        </div>
+                                        <span class="error-message">You must agree to the privacy policy.</span>
+                                    </div>
+                                    <button
+                                        class="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary to-blue-600 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-primary/40 hover:scale-[1.01] hover:-translate-y-0.5 active:scale-[0.99] hover-tilt"
+                                        type="submit" id="submit-btn" style="z-index: 10;">
+                                        <span>Send Message</span>
+                                        <span
+                                            class="material-symbols-outlined text-lg transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">send</span>
+                                    </button>
+                                </form>
+                            </div>
+                            <div id="success-message"
+                                class="hidden flex flex-col items-center justify-center text-center py-20 animate-fade-in">
+                                <div
+                                    class="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 shadow-sm">
                                     <span
-                                        class="material-symbols-outlined text-lg transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">send</span>
-                                </button>
-                            </form>
+                                        class="material-symbols-outlined text-4xl text-green-600 dark:text-green-400">check_circle</span>
+                                </div>
+                                <h3 class="text-3xl font-bold text-slate-900 dark:text-white mb-4">Message Sent!</h3>
+                                <p class="text-slate-600 dark:text-slate-400 text-lg max-w-sm mx-auto leading-relaxed">
+                                    Thank you for reaching out. We have received your message and will get back to you
+                                    shortly.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -303,8 +371,95 @@
     <script type="module">
         import { submitContactForm } from './assets/js/firebase-modules.js';
 
-        document.getElementById('contact-form').addEventListener('submit', async (e) => {
+        const HAS_SUBMITTED_KEY = 'adhirat_contact_submitted';
+
+        // Check submission status on load
+        if (localStorage.getItem(HAS_SUBMITTED_KEY) === 'true') {
+            document.getElementById('form-content').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+        }
+
+        // Validation Logic
+        const form = document.getElementById('contact-form');
+        const inputs = form.querySelectorAll('input, select, textarea');
+
+        function showError(input) {
+            // Remove default border colors
+            input.classList.remove('border-slate-200', 'dark:border-slate-700', 'border-gray-300');
+            input.classList.remove('focus:border-primary');
+
+            // Add error colors
+            input.classList.add('border-red-500', 'dark:border-red-500', 'focus:border-red-500', 'ring-red-200');
+
+            // For checkbox specific
+            if (input.type === 'checkbox') {
+                input.classList.add('text-red-600', 'focus:ring-red-500');
+                input.classList.remove('text-primary');
+            }
+
+            // Show error message
+            const container = input.closest('.group') || input.closest('.flex-col');
+            if (container) container.classList.add('show-error');
+        }
+
+        function clearError(input) {
+            // Remove error colors
+            input.classList.remove('border-red-500', 'dark:border-red-500', 'focus:border-red-500', 'ring-red-200');
+
+            // Restore default border colors
+            if (input.type === 'checkbox') {
+                input.classList.add('border-gray-300', 'text-primary');
+                input.classList.remove('text-red-600', 'focus:ring-red-500');
+            } else {
+                input.classList.add('border-slate-200', 'dark:border-slate-700');
+                input.classList.add('focus:border-primary');
+            }
+
+            // Hide error message
+            const container = input.closest('.group') || input.closest('.flex-col');
+            if (container) container.classList.remove('show-error');
+        }
+
+        function validateField(input) {
+            if (!input.checkValidity()) {
+                showError(input);
+                return false;
+            } else {
+                clearError(input);
+                return true;
+            }
+        }
+
+        // Attach listeners
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => validateField(input));
+            input.addEventListener('input', () => {
+                if (input.classList.contains('border-red-500')) validateField(input);
+            });
+            // For file input 'change'
+            if (input.type === 'file') {
+                input.addEventListener('change', () => validateField(input));
+            }
+        });
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // Validate all fields
+            let isValid = true;
+            inputs.forEach(input => {
+                if (!validateField(input)) isValid = false;
+            });
+
+            if (!isValid) {
+                // Shake form container
+                const glassPanel = form.closest('.glass-panel');
+                glassPanel.classList.add('shake');
+                setTimeout(() => glassPanel.classList.remove('shake'), 500);
+
+                if (window.showToast) window.showToast('Please correct the highlighted fields.', 'error');
+                return;
+            }
 
             const btn = document.getElementById('submit-btn');
             const originalContent = btn.innerHTML;
@@ -316,27 +471,31 @@
                 service: document.getElementById('service').value,
                 message: document.getElementById('message').value
             };
+            const fileInput = document.getElementById('attachment');
+            const file = fileInput.files.length > 0 ? fileInput.files[0] : null;
 
             // Loading state
             btn.disabled = true;
             btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-sm mr-2">progress_activity</span> Sending...';
 
             // Submit
-            const result = await submitContactForm(formData);
+            const result = await submitContactForm(formData, file);
 
             if (result.success) {
-                if (window.showToast) window.showToast('Message sent successfully! We will contact you soon.', 'success');
-                else alert('Message sent successfully!');
+                localStorage.setItem(HAS_SUBMITTED_KEY, 'true');
+                if (window.showToast) window.showToast('Message sent successfully!', 'success');
 
-                document.getElementById('contact-form').reset();
+                // Show success message and hide form
+                document.getElementById('form-content').classList.add('hidden');
+                document.getElementById('success-message').classList.remove('hidden');
             } else {
                 if (window.showToast) window.showToast('Failed to send message. Please try again.', 'error');
                 else alert('Failed to send message: ' + result.error);
-            }
 
-            // Reset button
-            btn.disabled = false;
-            btn.innerHTML = originalContent;
+                // Reset button
+                btn.disabled = false;
+                btn.innerHTML = originalContent;
+            }
         });
     </script>
 </body>

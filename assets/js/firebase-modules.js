@@ -1,4 +1,4 @@
-import { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, updateProfile, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs, query, where, orderBy, serverTimestamp, collection, addDoc } from './firebase-config.js';
+import { auth, db, storage, ref, uploadBytes, getDownloadURL, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, updateProfile, doc, setDoc, getDoc, updateDoc, deleteDoc, getDocs, query, where, orderBy, serverTimestamp, collection, addDoc } from './firebase-config.js';
 
 // --- Auth Handling ---
 
@@ -130,10 +130,19 @@ function updateUserUI(user) {
 /**
  * Submit Contact Form
  */
-export async function submitContactForm(data) {
+export async function submitContactForm(data, file = null) {
     try {
+        let attachmentUrl = null;
+
+        if (file) {
+            const storageRef = ref(storage, `contact-attachments/${Date.now()}_${file.name}`);
+            const snapshot = await uploadBytes(storageRef, file);
+            attachmentUrl = await getDownloadURL(snapshot.ref);
+        }
+
         await addDoc(collection(db, "messages"), {
             ...data,
+            attachmentUrl: attachmentUrl,
             createdAt: serverTimestamp(),
             status: "new"
         });
@@ -162,6 +171,7 @@ export async function saveContent(data) {
             authorName: user.displayName || "Unknown",
             updatedAt: serverTimestamp()
         };
+        delete contentData.id; // Prevent saving ID inside the document case it's null
 
         if (data.id) {
             // Update
@@ -197,7 +207,7 @@ export async function fetchContents() {
         const querySnapshot = await getDocs(q);
         const contents = [];
         querySnapshot.forEach((doc) => {
-            contents.push({ id: doc.id, ...doc.data() });
+            contents.push({ ...doc.data(), id: doc.id });
         });
 
         return { success: true, data: contents };

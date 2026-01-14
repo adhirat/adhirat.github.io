@@ -189,26 +189,37 @@
     .column-row {
       display: grid;
       gap: 1rem;
+      width: 100%;
     }
 
-    .column-row.cols-2 {
-      grid-template-columns: 1fr 1fr;
+    /* Mobile: Stack columns by default */
+    @media (max-width: 767px) {
+      .column-row {
+        grid-template-columns: 1fr !important;
+      }
     }
 
-    .column-row.cols-3 {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
+    /* Desktop/Tablet: Use defined columns */
+    @media (min-width: 768px) {
+      .column-row.cols-2 {
+        grid-template-columns: 1fr 1fr;
+      }
 
-    .column-row.cols-4 {
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-    }
+      .column-row.cols-3 {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
 
-    .column-row.cols-sidebar-left {
-      grid-template-columns: 1fr 2fr;
-    }
+      .column-row.cols-4 {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
 
-    .column-row.cols-sidebar-right {
-      grid-template-columns: 2fr 1fr;
+      .column-row.cols-sidebar-left {
+        grid-template-columns: 1fr 2fr;
+      }
+
+      .column-row.cols-sidebar-right {
+        grid-template-columns: 2fr 1fr;
+      }
     }
 
     .column-cell {
@@ -389,7 +400,7 @@
       <main class="flex flex-1 overflow-hidden relative">
         <!-- Left Column: Library -->
         <aside
-          class="w-80 bg-gray-50 dark:bg-[#151a20] border-r border-gray-200 dark:border-slate-800 flex flex-col shrink-0 z-10"
+          class="w-full md:w-80 bg-gray-50 dark:bg-[#151a20] border-gray-200 dark:border-slate-800 flex flex-col shrink-0 z-20 md:border-r absolute md:relative inset-0"
           id="content-list-sidebar">
           <div class="p-4 border-b border-gray-200 dark:border-slate-800 flex flex-col gap-3">
             <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -522,7 +533,12 @@
           <!-- Template Selection -->
           <div id="template-gallery"
             class="flex flex-1 flex-col items-center justify-center p-8 animate-fade-in-up bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-background-light to-background-light dark:from-slate-900 dark:via-dark-bg dark:to-dark-bg relative z-10">
-            <div class="max-w-4xl w-full">
+            <div class="max-w-4xl w-full relative">
+              <button onclick="showLibrary()"
+                class="md:hidden absolute -top-12 left-0 p-2 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center gap-1">
+                <span class="material-symbols-outlined">arrow_back</span>
+                <span class="text-sm font-medium">Back</span>
+              </button>
               <div class="text-center mb-10">
                 <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mb-2">Start Writing</h2>
                 <p class="text-slate-500 dark:text-slate-400">Select a content type to begin.</p>
@@ -565,6 +581,10 @@
             <div
               class="sticky top-0 z-20 bg-white dark:bg-[#0f172a]/90 backdrop-blur-sm border-b border-gray-200 dark:border-slate-800 px-6 py-3 flex flex-wrap gap-4 justify-between items-center">
               <div class="flex items-center gap-4">
+                <button onclick="showLibrary()"
+                  class="md:hidden p-1.5 -ml-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                  <span class="material-symbols-outlined">arrow_back</span>
+                </button>
                 <div
                   class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-slate-500 bg-gray-100 dark:bg-slate-800 px-3 py-1.5 rounded-md">
                   <span class="material-symbols-outlined text-[16px]" id="current-type-icon">article</span>
@@ -1332,11 +1352,26 @@
     };
 
     // --- View Switching ---
+    // --- View Switching ---
+    const sidebar = document.getElementById('content-list-sidebar');
+
+    function checkMobile() {
+      return window.innerWidth < 768;
+    }
+
+    window.showLibrary = function () {
+      sidebar.classList.remove('hidden');
+    };
+
     function showTemplateGallery() {
       templateGallery.classList.remove('hidden');
       templateGallery.classList.add('flex');
       editorWrapper.classList.add('hidden');
       editorWrapper.classList.remove('flex');
+
+      if (checkMobile()) {
+        sidebar.classList.add('hidden');
+      }
     }
 
     function showEditor() {
@@ -1344,6 +1379,10 @@
       templateGallery.classList.remove('flex');
       editorWrapper.classList.remove('hidden');
       editorWrapper.classList.add('flex');
+
+      if (checkMobile()) {
+        sidebar.classList.add('hidden');
+      }
     }
 
     // --- Data Handling ---
