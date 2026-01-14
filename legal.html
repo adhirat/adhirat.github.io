@@ -51,7 +51,7 @@
     <div id="header"></div>
     <div id="mobile-menu-container"></div>
 
-    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+    <div class="relative flex min-h-screen flex-col">
         <main class="flex-1 flex flex-col relative">
             <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden">
                 <div
@@ -86,45 +86,46 @@
                 </div>
             </div>
             <div
-                class="layout-container flex flex-col lg:flex-row w-full max-w-[1280px] mx-auto px-4 md:px-10 pb-20 pt-8 gap-10 z-10">
-                <aside
-                    class="hidden lg:flex flex-col w-64 shrink-0 sticky top-24 h-fit max-h-[calc(100vh-120px)] overflow-y-auto no-scrollbar py-2 reveal reveal-left">
-                    <div class="flex flex-col gap-6">
-                        <div class="flex flex-col">
-                            <h3
-                                class="text-slate-900 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-3 px-3">
-                                Table of Contents</h3>
-                            <div class="flex flex-col gap-1">
-                                <a class="group flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-400 hover:bg-[#f0f2f4] dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
-                                    href="#privacy">
-                                    <span class="material-symbols-outlined text-[20px]">shield</span>
-                                    <span class="text-sm font-medium leading-normal">Privacy Policy</span>
-                                </a>
-                                <a class="group flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-400 hover:bg-[#f0f2f4] dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
-                                    href="#terms">
-                                    <span class="material-symbols-outlined text-[20px]">description</span>
-                                    <span class="text-sm font-medium leading-normal">Terms &amp; Conditions</span>
-                                </a>
-                                <a class="group flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-400 hover:bg-[#f0f2f4] dark:hover:bg-white/5 text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
-                                    href="#cookies">
-                                    <span class="material-symbols-outlined text-[20px]">cookie</span>
-                                    <span class="text-sm font-medium leading-normal">Cookie Policy</span>
-                                </a>
-                                <a class="group flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-400 hover:bg-[#f0f2f4] dark:hover:bg-white/5 text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
-                                    href="#legal-inquiries">
-                                    <span class="material-symbols-outlined text-[20px]">gavel</span>
-                                    <span class="text-sm font-medium leading-normal">Legal Inquiries</span>
+                class="layout-container flex flex-col lg:flex-row lg:items-start w-full max-w-[1280px] mx-auto px-4 md:px-10 pb-20 pt-8 gap-10 z-10">
+                <aside class="hidden lg:block w-64 shrink-0">
+                    <div class="sticky top-28 max-h-[calc(100vh-140px)] overflow-y-auto no-scrollbar py-2">
+                        <div class="flex flex-col gap-6">
+                            <div class="flex flex-col">
+                                <h3
+                                    class="text-slate-900 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-3 px-3">
+                                    Table of Contents</h3>
+                                <div class="flex flex-col gap-1">
+                                    <a class="group flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-400 hover:bg-[#f0f2f4] dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
+                                        href="#privacy">
+                                        <span class="material-symbols-outlined text-[20px]">shield</span>
+                                        <span class="text-sm font-medium leading-normal">Privacy Policy</span>
+                                    </a>
+                                    <a class="group flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-400 hover:bg-[#f0f2f4] dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
+                                        href="#terms">
+                                        <span class="material-symbols-outlined text-[20px]">description</span>
+                                        <span class="text-sm font-medium leading-normal">Terms &amp; Conditions</span>
+                                    </a>
+                                    <a class="group flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-400 hover:bg-[#f0f2f4] dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
+                                        href="#cookies">
+                                        <span class="material-symbols-outlined text-[20px]">cookie</span>
+                                        <span class="text-sm font-medium leading-normal">Cookie Policy</span>
+                                    </a>
+                                    <a class="group flex items-center gap-3 px-3 py-2 rounded-lg text-slate-500 dark:text-gray-400 hover:bg-[#f0f2f4] dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white transition-all duration-200"
+                                        href="#legal-inquiries">
+                                        <span class="material-symbols-outlined text-[20px]">gavel</span>
+                                        <span class="text-sm font-medium leading-normal">Legal Inquiries</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div
+                                class="px-4 py-5 rounded-xl bg-gradient-to-br from-[#eef6fc] to-white dark:from-[#131b2b] dark:to-[#0B1120] border border-[#f0f2f4] dark:border-white/5 shadow-sm">
+                                <p class="text-xs text-slate-500 dark:text-gray-400 mb-2">Need direct assistance?</p>
+                                <a class="text-sm font-bold text-primary hover:text-primary-dark hover:underline flex items-center gap-1 transition-colors"
+                                    href="#">
+                                    Contact Legal Support
+                                    <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                                 </a>
                             </div>
-                        </div>
-                        <div
-                            class="px-4 py-5 rounded-xl bg-gradient-to-br from-[#eef6fc] to-white dark:from-[#131b2b] dark:to-[#0B1120] border border-[#f0f2f4] dark:border-white/5 shadow-sm">
-                            <p class="text-xs text-slate-500 dark:text-gray-400 mb-2">Need direct assistance?</p>
-                            <a class="text-sm font-bold text-primary hover:text-primary-dark hover:underline flex items-center gap-1 transition-colors"
-                                href="#">
-                                Contact Legal Support
-                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
-                            </a>
                         </div>
                     </div>
                 </aside>
