@@ -104,6 +104,7 @@ function afterLoad() {
     highlightActiveNav();
     initScrollAnimations();
     initTiltEffect();
+    initSidebarToggle();
 }
 
 function highlightActiveNav() {
@@ -559,17 +560,42 @@ function showToast(message, type = 'success') {
 // Newsletter Simulation
 function initNewsletterFeedback() {
     // We use event delegation since footers are loaded dynamically
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', async (e) => {
         const btn = e.target.closest('button');
-        if (btn && btn.closest('div')?.querySelector('input[type="email"]')) {
-            e.preventDefault();
-            const emailInput = btn.closest('div').querySelector('input[type="email"]');
-            if (emailInput.value && emailInput.checkValidity()) {
-                showToast('Success! You have been subscribed to our newsletter.');
-                emailInput.value = '';
-            } else {
-                showToast('Please enter a valid email address.', 'info');
+        const container = btn?.closest('#newsletter-container');
+
+        if (btn && container) {
+            const emailInput = container.querySelector('input[type="email"]');
+            if (emailInput && emailInput.value) {
+                e.preventDefault();
+                if (emailInput.checkValidity()) {
+                    const originalContent = btn.innerHTML;
+                    btn.disabled = true;
+                    btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-xs">progress_activity</span>';
+
+                    try {
+                        // Dynamically import the firebase module
+                        const { subscribeNewsletter } = await import('./firebase-modules.js' + '?v=' + Date.now());
+                        const result = await subscribeNewsletter(emailInput.value);
+
+                        if (result.success) {
+                            showToast('Success! You have been subscribed to our newsletter.');
+                            emailInput.value = '';
+                        } else {
+                            showToast('Something went wrong. Please try again.', 'info');
+                        }
+                    } catch (err) {
+                        console.error("Newsletter error:", err);
+                        showToast('Error connecting to subscription service.', 'info');
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = originalContent;
+                    }
+                } else {
+                    showToast('Please enter a valid email address.', 'info');
+                }
             }
+            // If no email value, let the existing onclick handler (redirect) work if it exists
         }
     });
 }
@@ -721,4 +747,61 @@ function initReviewsSlider() {
     // Pause on hover
     slider.addEventListener('mouseenter', stopAutoSlide);
     slider.addEventListener('mouseleave', startAutoSlide);
+}
+
+// Sidebar Toggle Logic
+function initSidebarToggle() {
+    const sidebar = document.getElementById('global-sidebar');
+    const toggleBtn = document.getElementById('sidebar-toggle-btn');
+    if (!sidebar || !toggleBtn) return;
+
+    const labels = sidebar.querySelectorAll('.sidebar-label');
+    const tooltips = sidebar.querySelectorAll('.collapsed-tooltip');
+    const toggleIcon = toggleBtn.querySelector('.material-symbols-outlined');
+    const logoImg = sidebar.querySelector('img');
+
+    // Helper to apply state
+    function setCollapsed(collapsed) {
+        if (collapsed) {
+            sidebar.classList.remove('w-72');
+            sidebar.classList.add('w-20', 'collapsed');
+
+            // Hide labels immediately to prevent overflow during transition? 
+            // Better to transition opacity then hidden. 
+            // But for simple implementation:
+            labels.forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            tooltips.forEach(el => el.classList.remove('hidden'));
+
+            toggleIcon.textContent = 'chevron_right';
+            if (logoImg) logoImg.classList.add('scale-75');
+        } else {
+            sidebar.classList.add('w-72');
+            sidebar.classList.remove('w-20', 'collapsed');
+
+            labels.forEach(el => {
+                el.classList.remove('hidden');
+            });
+
+            tooltips.forEach(el => el.classList.add('hidden'));
+
+            toggleIcon.textContent = 'chevron_left';
+            if (logoImg) logoImg.classList.remove('scale-75');
+        }
+        localStorage.setItem('portalSidebarCollapsed', collapsed);
+    }
+
+    // Initial State
+    // We check immediately to prevent FOUC, but transition might still be visible
+    const isCollapsed = localStorage.getItem('portalSidebarCollapsed') === 'true';
+    setCollapsed(isCollapsed);
+
+    // Event Listener (Remove old listeners to be safe handled by afterLoad calling multiple times?)
+    // Actually toggleBtn is fresh from DOM each time loadHTML runs, so this is fine.
+    toggleBtn.onclick = () => {
+        const currentlyCollapsed = sidebar.classList.contains('collapsed');
+        setCollapsed(!currentlyCollapsed);
+    };
 }

@@ -1,9 +1,9 @@
 <!-- Chat Widget Container (Fixed) -->
-<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+<div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4 pointer-events-none">
 
     <!-- Chat Window (Hidden by default) -->
     <div id="chat-window"
-        class="w-[360px] h-[520px] bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl ring-1 ring-black/5 dark:ring-white/10 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right transform scale-95 opacity-0 invisible translate-y-4">
+        class="pointer-events-auto w-[360px] h-[520px] bg-white dark:bg-[#1e293b] rounded-2xl shadow-2xl ring-1 ring-black/5 dark:ring-white/10 flex flex-col overflow-hidden transition-all duration-300 origin-bottom-right transform scale-95 opacity-0 invisible translate-y-4">
 
         <!-- Header -->
         <div class="p-4 bg-primary text-white flex justify-between items-center shrink-0 shadow-md relative z-10">
@@ -91,7 +91,7 @@
 
     <!-- Floating Action Button -->
     <button onclick="toggleChat()" id="chat-fab"
-        class="size-14 bg-primary text-white rounded-full shadow-xl shadow-primary/25 hover:scale-110 hover:shadow-2xl hover:shadow-primary/40 active:scale-95 transition-all duration-300 flex items-center justify-center group z-50">
+        class="pointer-events-auto size-14 bg-primary text-white rounded-full shadow-xl shadow-primary/25 hover:scale-110 hover:shadow-2xl hover:shadow-primary/40 active:scale-95 transition-all duration-300 flex items-center justify-center group z-50">
         <span class="material-symbols-outlined text-[28px] group-hover:rotate-12 transition-transform duration-300"
             id="chat-icon">chat_bubble</span>
     </button>
