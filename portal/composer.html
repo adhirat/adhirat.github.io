@@ -395,6 +395,13 @@
             <h2 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <span class="material-symbols-outlined text-primary">library_books</span> Library
             </h2>
+            <!-- Search Input -->
+            <div class="relative">
+              <span
+                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[18px]">search</span>
+              <input type="text" id="library-search" placeholder="Search saved content..."
+                class="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all" />
+            </div>
             <button id="btn-new-content"
               class="w-full flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white py-2.5 rounded-lg font-medium transition-all shadow-lg shadow-primary/20 active:scale-95">
               <span class="material-symbols-outlined text-[20px]">add</span>
@@ -577,6 +584,11 @@
                 <button id="btn-delete" class="p-2 text-slate-400 hover:text-red-500 transition-colors hidden"
                   title="Delete">
                   <span class="material-symbols-outlined text-[20px]">delete</span>
+                </button>
+                <button id="btn-preview"
+                  class="px-4 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-100 dark:hover:bg-slate-700 transition-all flex items-center gap-2"
+                  title="Preview">
+                  <span class="material-symbols-outlined text-[16px]">visibility</span> Preview
                 </button>
                 <button id="btn-save"
                   class="px-4 py-1.5 rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-bold shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all flex items-center gap-2">
@@ -765,6 +777,68 @@
         class="text-slate-700 dark:text-slate-200">Stat/Metric</span></button>
   </div>
 
+  <!-- Preview Modal -->
+  <div id="preview-modal" class="fixed inset-0 z-[100] hidden">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closePreview()"></div>
+
+    <!-- Modal Content -->
+    <div class="relative z-10 flex flex-col h-full">
+      <!-- Header -->
+      <div class="flex items-center justify-between px-6 py-4 bg-slate-900 border-b border-slate-700">
+        <div class="flex items-center gap-4">
+          <h3 class="text-white font-bold text-lg">Preview</h3>
+          <!-- Device Switcher -->
+          <div class="flex items-center bg-slate-800 rounded-lg p-1">
+            <button onclick="setPreviewDevice('mobile')" class="preview-device-btn active" data-device="mobile"
+              title="Mobile (375px)">
+              <span class="material-symbols-outlined text-[20px]">smartphone</span>
+            </button>
+            <button onclick="setPreviewDevice('tablet')" class="preview-device-btn" data-device="tablet"
+              title="Tablet (768px)">
+              <span class="material-symbols-outlined text-[20px]">tablet</span>
+            </button>
+            <button onclick="setPreviewDevice('desktop')" class="preview-device-btn" data-device="desktop"
+              title="Desktop (100%)">
+              <span class="material-symbols-outlined text-[20px]">desktop_windows</span>
+            </button>
+          </div>
+        </div>
+        <button onclick="closePreview()"
+          class="p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-slate-700">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <!-- Preview Frame Container -->
+      <div class="flex-1 flex items-center justify-center p-8 overflow-auto">
+        <div id="preview-frame" class="bg-white rounded-lg shadow-2xl transition-all duration-300 overflow-hidden"
+          style="width: 375px; height: 667px;">
+          <div id="preview-content" class="w-full h-full overflow-auto p-6">
+            <!-- Content will be injected here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .preview-device-btn {
+      padding: 0.375rem 0.75rem;
+      border-radius: 0.5rem;
+      color: rgb(148 163 184);
+      transition: color 0.15s;
+    }
+
+    .preview-device-btn:hover {
+      color: white;
+    }
+
+    .preview-device-btn.active {
+      background-color: var(--color-primary, #3b82f6);
+      color: white;
+    }
+  </style>
   <script type="module">
     import { initAuthObserver, saveContent, fetchContents, deleteContent } from "../assets/js/firebase-modules.js";
 
@@ -1284,22 +1358,34 @@
       }
     }
 
-    function renderList(data) {
+    function renderList(data, searchQuery = '') {
       listEl.innerHTML = '';
       const filterBtn = document.querySelector('button[data-filter].active-filter');
       const filterType = filterBtn ? filterBtn.dataset.filter : 'all';
-      const filtered = filterType === 'all' ? data : data.filter(item => item.type === filterType);
+      let filtered = filterType === 'all' ? data : data.filter(item => item.type === filterType);
+
+      // Apply search filter
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase();
+        filtered = filtered.filter(item =>
+          (item.title || '').toLowerCase().includes(query) ||
+          (item.type || '').toLowerCase().includes(query) ||
+          (item.tags || []).some(tag => tag.toLowerCase().includes(query))
+        );
+      }
 
       if (filtered.length === 0) {
-        listEl.innerHTML = `<div class="p-8 text-center text-slate-400 text-sm">No items found.</div>`;
+        listEl.innerHTML = `<div class="p-8 text-center text-slate-400 text-sm">${searchQuery ? 'No matching items.' : 'No items found.'}</div>`;
         return;
       }
 
       filtered.forEach(item => {
         const div = document.createElement('div');
         const isActive = item.id === currentId;
-        div.className = `p-3 rounded-xl cursor-pointer border transition-all mb-2 ${isActive ? 'bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-600 shadow-sm' : 'border-transparent hover:bg-slate-100 dark:hover:bg-slate-800/50'}`;
-        div.onclick = () => loadItem(item);
+        div.className = `library-item group relative p-3 rounded-xl cursor-pointer border transition-all mb-2 ${isActive
+          ? 'bg-primary/10 dark:bg-primary/20 border-primary ring-2 ring-primary/30 shadow-md'
+          : 'border-transparent hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:border-slate-200 dark:hover:border-slate-700'}`;
+        div.dataset.itemId = item.id;
 
         const iconMap = { article: 'article', email: 'mail', casestudy: 'work_history' };
         const typeName = item.type || 'article';
@@ -1307,15 +1393,29 @@
 
         div.innerHTML = `
           <div class="flex items-start gap-3">
-            <div class="size-8 rounded-lg bg-slate-100 dark:bg-slate-700 flex items-center justify-center shrink-0 text-slate-500">
+            <div class="size-8 rounded-lg ${isActive ? 'bg-primary text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500'} flex items-center justify-center shrink-0 transition-colors">
               <span class="material-symbols-outlined text-[16px]">${iconMap[typeName]}</span>
             </div>
             <div class="flex-1 min-w-0">
-              <h4 class="font-semibold text-sm text-slate-800 dark:text-slate-100 truncate mb-1">${item.title || 'Untitled'}</h4>
+              <h4 class="font-semibold text-sm ${isActive ? 'text-primary dark:text-primary' : 'text-slate-800 dark:text-slate-100'} truncate mb-1">${item.title || 'Untitled'}</h4>
               <div class="text-xs text-slate-400">${typeName} • ${date}</div>
             </div>
           </div>
+          <!-- Action Buttons (visible on hover) -->
+          <div class="absolute right-2 top-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button onclick="event.stopPropagation(); duplicateItem('${item.id}')" class="p-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm hover:bg-slate-100 dark:hover:bg-slate-600 text-slate-500 hover:text-primary transition-colors" title="Duplicate">
+              <span class="material-symbols-outlined text-[14px]">content_copy</span>
+            </button>
+            <button onclick="event.stopPropagation(); shareItem('${item.id}')" class="p-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm hover:bg-slate-100 dark:hover:bg-slate-600 text-slate-500 hover:text-primary transition-colors" title="Share">
+              <span class="material-symbols-outlined text-[14px]">share</span>
+            </button>
+            <button onclick="event.stopPropagation(); deleteItemFromList('${item.id}')" class="p-1.5 rounded-lg bg-white dark:bg-slate-700 shadow-sm hover:bg-red-50 dark:hover:bg-red-900/30 text-slate-500 hover:text-red-500 transition-colors" title="Delete">
+              <span class="material-symbols-outlined text-[14px]">delete</span>
+            </button>
+          </div>
         `;
+
+        div.addEventListener('click', () => loadItem(item));
         listEl.appendChild(div);
       });
     }
@@ -1414,8 +1514,148 @@
         });
         btn.classList.add('bg-slate-200', 'dark:bg-slate-700', 'active-filter');
         btn.classList.remove('bg-transparent');
-        renderList(allContents);
+        const searchQuery = document.getElementById('library-search')?.value || '';
+        renderList(allContents, searchQuery);
       };
+    });
+
+    // --- Library Search ---
+    const librarySearch = document.getElementById('library-search');
+    if (librarySearch) {
+      librarySearch.addEventListener('input', (e) => {
+        renderList(allContents, e.target.value);
+      });
+    }
+
+    // --- Library Item Actions ---
+    window.duplicateItem = async (itemId) => {
+      const item = allContents.find(i => i.id === itemId);
+      if (!item) return;
+
+      const newData = {
+        title: `${item.title || 'Untitled'} (Copy)`,
+        content: item.content,
+        type: item.type,
+        status: 'draft',
+        tags: item.tags || []
+      };
+
+      const result = await saveContent(newData);
+      if (result.success) {
+        if (window.showToast) window.showToast('Content duplicated!', 'success');
+        loadContents();
+      } else {
+        if (window.showToast) window.showToast('Duplication failed', 'error');
+      }
+    };
+
+    window.shareItem = (itemId) => {
+      const item = allContents.find(i => i.id === itemId);
+      if (!item) return;
+
+      const shareUrl = `${window.location.origin}/portal/composer.html?id=${itemId}`;
+
+      if (navigator.share) {
+        navigator.share({
+          title: item.title || 'Shared Content',
+          text: `Check out: ${item.title || 'Untitled'}`,
+          url: shareUrl
+        }).catch(() => {
+          copyToClipboard(shareUrl);
+        });
+      } else {
+        copyToClipboard(shareUrl);
+      }
+    };
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        if (window.showToast) window.showToast('Link copied to clipboard!', 'success');
+      }).catch(() => {
+        if (window.showToast) window.showToast('Failed to copy link', 'error');
+      });
+    }
+
+    window.deleteItemFromList = async (itemId) => {
+      if (!confirm('Are you sure you want to delete this item?')) return;
+
+      const result = await deleteContent(itemId);
+      if (result.success) {
+        allContents = allContents.filter(i => i.id !== itemId);
+        if (currentId === itemId) {
+          currentId = null;
+          showTemplateGallery();
+        }
+        const searchQuery = document.getElementById('library-search')?.value || '';
+        renderList(allContents, searchQuery);
+        if (window.showToast) window.showToast('Item deleted!', 'success');
+      } else {
+        if (window.showToast) window.showToast('Delete failed', 'error');
+      }
+    };
+
+    // --- Preview ---
+    const previewModal = document.getElementById('preview-modal');
+    const previewFrame = document.getElementById('preview-frame');
+    const previewContent = document.getElementById('preview-content');
+
+    document.getElementById('btn-preview').onclick = () => {
+      openPreview();
+    };
+
+    window.openPreview = () => {
+      // Gather content
+      const title = titleEl.innerText || 'Untitled';
+      const blocks = Array.from(contentEl.children).map(block => {
+        const content = block.querySelector('.block-content');
+        return content ? content.innerHTML : '';
+      }).join('');
+
+      // Build preview HTML
+      previewContent.innerHTML = `
+        <article class="prose prose-slate max-w-none">
+          <h1 class="text-2xl font-bold text-slate-900 mb-4">${title}</h1>
+          ${blocks}
+        </article>
+      `;
+
+      previewModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closePreview = () => {
+      previewModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    };
+
+    window.setPreviewDevice = (device) => {
+      // Update active button
+      document.querySelectorAll('.preview-device-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.device === device);
+      });
+
+      // Set dimensions
+      const dimensions = {
+        mobile: { width: '375px', height: '667px' },
+        tablet: { width: '768px', height: '1024px' },
+        desktop: { width: '100%', height: '100%', maxWidth: '1200px' }
+      };
+
+      const dim = dimensions[device];
+      previewFrame.style.width = dim.width;
+      previewFrame.style.height = dim.height;
+      if (dim.maxWidth) {
+        previewFrame.style.maxWidth = dim.maxWidth;
+      } else {
+        previewFrame.style.maxWidth = '';
+      }
+    };
+
+    // Close preview on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !previewModal.classList.contains('hidden')) {
+        closePreview();
+      }
     });
 
     // --- Sidebar Tabs ---
