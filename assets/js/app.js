@@ -118,13 +118,20 @@ function toggleMobileMenu() {
     }
 }
 
-// Check for saved theme preference - default to dark
-if (localStorage.theme === 'light') {
-    document.documentElement.classList.remove('dark');
+// Check for saved theme preference - default to system preference
+if ('theme' in localStorage) {
+    // Use saved user preference
+    if (localStorage.theme === 'light') {
+        document.documentElement.classList.remove('dark');
+    } else {
+        document.documentElement.classList.add('dark');
+    }
 } else {
-    document.documentElement.classList.add('dark');
-    if (!('theme' in localStorage)) {
-        localStorage.setItem('theme', 'dark');
+    // No saved preference - use system preference (but don't persist it)
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark');
     }
 }
 
