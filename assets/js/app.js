@@ -120,20 +120,18 @@ function toggleMobileMenu() {
 
 // Check for saved theme preference - default to system preference
 if ('theme' in localStorage) {
-    // Use saved preference
+    // Use saved user preference
     if (localStorage.theme === 'light') {
         document.documentElement.classList.remove('dark');
     } else {
         document.documentElement.classList.add('dark');
     }
 } else {
-    // No saved preference - use system preference
+    // No saved preference - use system preference (but don't persist it)
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
     } else {
         document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
     }
 }
 
