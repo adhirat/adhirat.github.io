@@ -3,21 +3,61 @@ tailwind.config = {
     theme: {
         extend: {
             colors: {
-                "primary": "#137fec",
-                "background-light": "#ffffff",
-                "background-subtle": "#f8fafc",
-                "dark-bg": "#0f172a",
-                "dark-card": "#1e293b",
+                // Futuristic Multi-Color Palette
+                "primary": "#8b5cf6",
+                "primary-light": "#a78bfa",
+                "primary-dark": "#7c3aed",
+                "neon-cyan": "#00f5ff",
+                "neon-magenta": "#ff00ff",
+                "neon-violet": "#8b5cf6",
+                "neon-blue": "#0ea5e9",
+                "neon-pink": "#ec4899",
+                "neon-green": "#22d3ee",
+                "accent": "#ec4899",
+                "accent-alt": "#f97316",
+                "background-light": "#f8fafc",
+                "background-subtle": "#f1f5f9",
+                "dark-bg": "#0f0f23",
+                "dark-card": "#1a1a3e",
+                "dark-surface": "#2d1b4e",
             },
             fontFamily: {
-                "display": ["Space Grotesk", "sans-serif"],
-                "body": ["Noto Sans", "sans-serif"]
+                // Futuristic Multi-Font System
+                "futuristic": ["Orbitron", "Space Grotesk", "sans-serif"],
+                "display": ["Rajdhani", "Space Grotesk", "sans-serif"],
+                "heading": ["Exo 2", "Space Grotesk", "sans-serif"],
+                "body": ["Inter", "Noto Sans", "sans-serif"],
+                "accent": ["Space Grotesk", "sans-serif"],
             },
-            borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+            borderRadius: {
+                "DEFAULT": "0.5rem",
+                "lg": "0.75rem",
+                "xl": "1rem",
+                "2xl": "1.25rem",
+                "3xl": "1.5rem",
+                "full": "9999px"
+            },
+            backgroundImage: {
+                'gradient-futuristic': 'linear-gradient(135deg, #00f5ff 0%, #8b5cf6 50%, #ff00ff 100%)',
+                'gradient-aurora': 'linear-gradient(135deg, #00f5ff 0%, #22d3ee 25%, #8b5cf6 50%, #ec4899 75%, #ff00ff 100%)',
+                'gradient-cosmic': 'linear-gradient(135deg, #0f0f23 0%, #1a1a3e 25%, #2d1b4e 50%, #1e1e4a 75%, #0a0a1a 100%)',
+                'gradient-neon': 'linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%)',
+            },
+            boxShadow: {
+                'neon': '0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(0, 245, 255, 0.2)',
+                'neon-lg': '0 0 40px rgba(139, 92, 246, 0.4), 0 0 80px rgba(0, 245, 255, 0.3)',
+                'glow-cyan': '0 0 30px rgba(0, 245, 255, 0.5)',
+                'glow-violet': '0 0 30px rgba(139, 92, 246, 0.5)',
+                'glow-magenta': '0 0 30px rgba(255, 0, 255, 0.5)',
+            },
             animation: {
                 'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                 'float': 'float 6s ease-in-out infinite',
                 'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                'gradient-flow': 'gradientFlow 6s ease infinite',
+                'glow-pulse': 'glowPulse 3s ease-in-out infinite',
+                'aurora-shift': 'auroraShift 10s ease-in-out infinite',
+                'neon-flicker': 'neonFlicker 3s ease-in-out infinite',
             },
             keyframes: {
                 float: {
@@ -27,6 +67,26 @@ tailwind.config = {
                 fadeInUp: {
                     '0%': { opacity: '0', transform: 'translateY(20px)' },
                     '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                gradientFlow: {
+                    '0%, 100%': { backgroundPosition: '0% 50%' },
+                    '50%': { backgroundPosition: '100% 50%' },
+                },
+                glowPulse: {
+                    '0%, 100%': { boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)' },
+                    '50%': { boxShadow: '0 0 40px rgba(0, 245, 255, 0.5)' },
+                },
+                auroraShift: {
+                    '0%, 100%': { backgroundPosition: '0% 50%' },
+                    '25%': { backgroundPosition: '50% 0%' },
+                    '50%': { backgroundPosition: '100% 50%' },
+                    '75%': { backgroundPosition: '50% 100%' },
+                },
+                neonFlicker: {
+                    '0%, 100%': { opacity: '1' },
+                    '50%': { opacity: '0.8' },
+                    '75%': { opacity: '1' },
+                    '85%': { opacity: '0.9' },
                 }
             }
         },
@@ -305,20 +365,12 @@ function initGridStagger() {
 
 document.addEventListener("DOMContentLoaded", () => {
     // Initial load of global components
-    // Create Chat Container if not exists
-    if (!document.getElementById("chat-widget-container")) {
-        const chatContainer = document.createElement("div");
-        chatContainer.id = "chat-widget-container";
-        chatContainer.className = "contents";
-        document.body.appendChild(chatContainer);
-    }
     const components = [
         { id: "header", file: "global/header.html" },
         { id: "footer", file: "global/footer.html" },
         { id: "mobile-menu-container", file: "global/mobile-menu.html" },
         { id: "portal-header", file: "partials/header.html" },
-        { id: "portal-sidebar", file: "partials/sidebar.html" },
-        { id: "chat-widget-container", file: "partials/chat.html" }
+        { id: "portal-sidebar", file: "partials/sidebar.html" }
     ];
 
     let loadedCount = 0;
@@ -376,65 +428,6 @@ function initTiltEffect() {
     });
 }
 
-// Chat Widget Logic
-function toggleChat() {
-    const chatWindow = document.getElementById("chat-window");
-    const chatFab = document.getElementById("chat-fab");
-    const chatIcon = document.getElementById("chat-icon");
-
-    if (chatWindow && chatFab && chatIcon) {
-        chatWindow.classList.toggle("visible");
-        chatFab.classList.toggle("active");
-
-        if (chatFab.classList.contains("active")) {
-            chatIcon.textContent = "close";
-        } else {
-            chatIcon.textContent = "chat_bubble";
-        }
-    }
-}
-
-function handleChatSubmit(e) {
-    e.preventDefault();
-    const input = document.getElementById("chat-input");
-    const messages = document.getElementById("chat-messages");
-
-    if (input && input.value.trim() !== "") {
-        // User Message
-        const userMsg = document.createElement("div");
-        userMsg.className = "flex gap-3 max-w-[85%] self-end flex-row-reverse animate-fade-in-up";
-        userMsg.innerHTML = `
-            <div class="size-8 rounded-full bg-primary flex items-center justify-center text-white shrink-0 mt-1 shadow-sm">
-                <span class="material-symbols-outlined text-[16px]">person</span>
-            </div>
-            <div class="flex flex-col gap-1 items-end">
-                 <div class="bg-primary text-white p-3 rounded-2xl rounded-tr-none shadow-md text-sm">
-                    ${input.value}
-                </div>
-            </div>
-        `;
-        messages.appendChild(userMsg);
-        messages.scrollTop = messages.scrollHeight;
-        input.value = "";
-
-        setTimeout(() => {
-            const botMsg = document.createElement("div");
-            botMsg.className = "flex gap-3 max-w-[85%] animate-fade-in-up";
-            botMsg.innerHTML = `
-                <div class="size-8 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 mt-1">
-                    <span class="material-symbols-outlined text-[16px]">smart_toy</span>
-                </div>
-                 <div class="flex flex-col gap-1">
-                    <div class="bg-white dark:bg-[#1e293b] p-3 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-200">
-                        Thanks for your message! I am a demo bot, but I heard you! 🤖
-                    </div>
-                </div>
-            `;
-            messages.appendChild(botMsg);
-            messages.scrollTop = messages.scrollHeight;
-        }, 1000);
-    }
-}
 
 // Notification Dropdown Logic
 function toggleNotifications() {
