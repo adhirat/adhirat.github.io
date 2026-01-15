@@ -133,22 +133,67 @@
         <div
             class="sticky top-[80px] z-40 w-full bg-white/95 dark:bg-slate-950/95 backdrop-blur border-b border-slate-200 dark:border-slate-800 overflow-x-auto no-scrollbar shadow-sm transition-colors duration-300">
             <div class="max-w-[1280px] mx-auto px-4 md:px-10">
-                <div class="flex whitespace-nowrap gap-8 min-w-max">
-                    <a class="py-4 border-b-[3px] border-primary text-primary text-sm font-bold tracking-wide"
-                        href="#frontend">Frontend</a>
-                    <a class="py-4 border-b-[3px] border-transparent hover:border-slate-300 dark:hover:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-bold tracking-wide"
-                        href="#backend">Backend</a>
-                    <a class="py-4 border-b-[3px] border-transparent hover:border-slate-300 dark:hover:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-bold tracking-wide"
-                        href="#cloud">Cloud Platforms</a>
-                    <a class="py-4 border-b-[3px] border-transparent hover:border-slate-300 dark:hover:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-bold tracking-wide"
-                        href="#devops">DevOps &amp; CI/CD</a>
-                    <a class="py-4 border-b-[3px] border-transparent hover:border-slate-300 dark:hover:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-bold tracking-wide"
-                        href="#databases">Databases</a>
-                    <a class="py-4 border-b-[3px] border-transparent hover:border-slate-300 dark:hover:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-bold tracking-wide"
-                        href="#api">API &amp; Integration</a>
+                <div id="tech-tabs" class="flex whitespace-nowrap gap-8 min-w-max">
+                    <a class="tech-tab py-4 border-b-[3px] border-primary text-primary text-sm font-bold tracking-wide"
+                        href="#frontend" data-section="frontend">Frontend</a>
+                    <a class="tech-tab py-4 border-b-[3px] border-transparent hover:border-slate-300 dark:hover:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-bold tracking-wide"
+                        href="#backend" data-section="backend">Backend</a>
+                    <a class="tech-tab py-4 border-b-[3px] border-transparent hover:border-slate-300 dark:hover:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-bold tracking-wide"
+                        href="#cloud" data-section="cloud">Cloud Platforms</a>
+                    <a class="tech-tab py-4 border-b-[3px] border-transparent hover:border-slate-300 dark:hover:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-bold tracking-wide"
+                        href="#devops" data-section="devops">DevOps &amp; CI/CD</a>
+                    <a class="tech-tab py-4 border-b-[3px] border-transparent hover:border-slate-300 dark:hover:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors text-sm font-bold tracking-wide"
+                        href="#databases" data-section="databases">Databases</a>
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const tabs = document.querySelectorAll('.tech-tab');
+                const sections = ['frontend', 'backend', 'cloud', 'devops', 'databases'];
+
+                function setActiveTab(sectionId) {
+                    tabs.forEach(tab => {
+                        if (tab.dataset.section === sectionId) {
+                            tab.classList.add('border-primary', 'text-primary');
+                            tab.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+                        } else {
+                            tab.classList.remove('border-primary', 'text-primary');
+                            tab.classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+                        }
+                    });
+                }
+
+                // Click handler
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', function () {
+                        setActiveTab(this.dataset.section);
+                    });
+                });
+
+                // Scroll-based highlighting
+                let ticking = false;
+                window.addEventListener('scroll', function () {
+                    if (!ticking) {
+                        requestAnimationFrame(function () {
+                            const scrollPos = window.scrollY + 200;
+                            let currentSection = 'frontend';
+
+                            sections.forEach(sectionId => {
+                                const el = document.getElementById(sectionId);
+                                if (el && el.offsetTop <= scrollPos) {
+                                    currentSection = sectionId;
+                                }
+                            });
+
+                            setActiveTab(currentSection);
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                });
+            });
+        </script>
         <div class="max-w-[1280px] w-full mx-auto px-4 md:px-10 py-16 flex flex-col gap-24">
             <section class="scroll-mt-36" id="frontend">
                 <div class="flex items-center gap-4 mb-8">
@@ -586,11 +631,11 @@
                 <p class="text-blue-100 mb-10 max-w-xl mx-auto text-lg font-medium">Leverage our expertise in these
                     technologies to bring your vision to life. Let's discuss your next project.</p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <button
+                    <button onclick="window.location.href='contact.html'"
                         class="flex items-center justify-center rounded-lg h-14 px-8 bg-white hover:bg-slate-100 transition-colors text-blue-700 font-bold text-lg shadow-xl hover-tilt">
                         Contact Sales
                     </button>
-                    <button
+                    <button onclick="window.location.href='solutions.html'"
                         class="flex items-center justify-center rounded-lg h-14 px-8 bg-transparent border-2 border-white/30 hover:bg-white/10 transition-colors text-white font-bold text-lg backdrop-blur-sm hover-tilt">
                         View Portfolio
                     </button>

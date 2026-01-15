@@ -182,8 +182,8 @@ html {
 
 .dark .glass-card {
   background: linear-gradient(135deg,
-      rgba(15, 15, 35, 0.92) 0%,
-      rgba(26, 26, 62, 0.88) 100%);
+      rgba(15, 15, 35, 0.96) 0%,
+      rgba(26, 26, 62, 0.94) 100%);
   border: 1px solid rgba(139, 92, 246, 0.3);
   box-shadow:
     0 8px 40px rgba(0, 0, 0, 0.4),
