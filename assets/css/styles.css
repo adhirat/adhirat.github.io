@@ -191,6 +191,115 @@ html {
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
+/* Glass Section - for large content areas with subtle effect */
+.glass-section {
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(248, 250, 255, 0.8) 50%,
+      rgba(245, 243, 255, 0.7) 100%);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border-top: 1px solid rgba(139, 92, 246, 0.1);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+.dark .glass-section {
+  background: linear-gradient(180deg,
+      rgba(15, 15, 35, 0.85) 0%,
+      rgba(26, 26, 62, 0.8) 50%,
+      rgba(15, 15, 35, 0.85) 100%);
+  border-top: 1px solid rgba(139, 92, 246, 0.15);
+  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+/* Glass Card Solid - more opaque for better readability */
+.glass-card-solid {
+  background: linear-gradient(135deg,
+      rgba(255, 255, 255, 0.95) 0%,
+      rgba(248, 250, 255, 0.92) 100%);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(139, 92, 246, 0.12);
+  box-shadow:
+    0 4px 24px rgba(139, 92, 246, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.dark .glass-card-solid {
+  background: linear-gradient(135deg,
+      rgba(26, 26, 62, 0.98) 0%,
+      rgba(15, 15, 35, 0.95) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(139, 92, 246, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Glass Input - for form elements */
+.glass-input {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s ease;
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow:
+    0 0 0 3px rgba(139, 92, 246, 0.1),
+    inset 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.dark .glass-input {
+  background: rgba(26, 26, 62, 0.6);
+  border: 1px solid rgba(0, 245, 255, 0.2);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass-input:focus {
+  background: rgba(26, 26, 62, 0.8);
+  border-color: rgba(0, 245, 255, 0.5);
+  box-shadow:
+    0 0 0 3px rgba(0, 245, 255, 0.1),
+    0 0 20px rgba(0, 245, 255, 0.1),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Glass Badge - for small elements like tags */
+.glass-badge {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.dark .glass-badge {
+  background: rgba(26, 26, 62, 0.7);
+  border: 1px solid rgba(0, 245, 255, 0.25);
+}
+
+/* Glass Hero - for hero sections with dramatic effect */
+.glass-hero {
+  background: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(248, 250, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0.4) 100%);
+  backdrop-filter: blur(60px) saturate(200%);
+  -webkit-backdrop-filter: blur(60px) saturate(200%);
+}
+
+.dark .glass-hero {
+  background: linear-gradient(180deg,
+      rgba(15, 15, 35, 0.6) 0%,
+      rgba(26, 26, 62, 0.7) 50%,
+      rgba(15, 15, 35, 0.6) 100%);
+}
+
 /* ========================================
    NEON GLOW EFFECTS
    ======================================== */
@@ -272,6 +381,9 @@ html {
   background: var(--gradient-aurora);
   background-size: 300% 300%;
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -461,6 +573,9 @@ html {
   padding: 2px;
   background: var(--gradient-primary);
   -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
