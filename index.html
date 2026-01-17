@@ -67,7 +67,7 @@
         <div class="absolute inset-0 bg-grid-pattern opacity-50 pointer-events-none"></div>
 
         <div
-            class="relative z-10 container mx-auto px-4 md:px-8 flex flex-col items-center text-center animate-fade-in-up reveal reveal-up">
+            class="relative z-10 container mx-auto px-4 md:px-8 pb-24 flex flex-col items-center text-center animate-fade-in-up reveal reveal-up">
 
             <!-- Badge -->
             <div
@@ -108,15 +108,15 @@
                     <span class="material-symbols-outlined text-[22px]">explore</span>
                 </button>
             </div>
+        </div>
 
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-60">
-                <span
-                    class="text-xs font-display uppercase tracking-[0.3em] text-slate-400 dark:text-neon-cyan/50">Scroll</span>
-                <div
-                    class="w-6 h-10 rounded-full border-2 border-slate-300 dark:border-neon-cyan/30 flex items-start justify-center p-1">
-                    <span class="w-1.5 h-3 bg-slate-400 dark:bg-neon-cyan rounded-full animate-bounce"></span>
-                </div>
+        <!-- Scroll Indicator - Positioned relative to hero section -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 opacity-60 z-20">
+            <span
+                class="text-xs font-display uppercase tracking-[0.3em] text-slate-400 dark:text-neon-cyan/50">Scroll</span>
+            <div
+                class="w-6 h-10 rounded-full border-2 border-slate-300 dark:border-neon-cyan/30 flex items-start justify-center p-1">
+                <span class="w-1.5 h-3 bg-slate-400 dark:bg-neon-cyan rounded-full animate-bounce"></span>
             </div>
         </div>
     </section>
