@@ -321,12 +321,16 @@
                                     </div>
                                     <div class="space-y-2 group">
                                         <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
-                                            for="attachment">Attachment</label>
+                                            for="attachment">Attachment <span
+                                                class="text-slate-400 font-normal">(optional)</span></label>
                                         <input
                                             class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all cursor-pointer"
-                                            id="attachment" name="attachment" type="file" required />
-                                        <span class="error-message">Please attach a supporting file.</span>
+                                            id="attachment" name="attachment" type="file"
+                                            accept="image/*, .pdf, .doc, .docx" />
+                                        <p class="text-xs text-slate-400 ml-1">Max 10MB. Supported: PDF, DOC, DOCX, PNG,
+                                            JPG</p>
                                     </div>
+
                                     <div class="flex flex-col gap-2 py-2">
                                         <div class="flex items-center gap-3">
                                             <div class="relative flex items-center">

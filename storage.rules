@@ -1,10 +1,12 @@
 rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {
-    match /contact-attachments/{allPaths=**} {
-      allow create: if request.resource.size < 10 * 1024 * 1024 // Limit to 10MB
-                   && request.resource.contentType.matches('image/.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-      allow read: if false; // Only admin via Console
+    match /contact-attachments/{fileName} {
+      // Allow images (image/.*) and documents (pdf, doc, docx)
+      // Max size: 10MB
+      allow write: if request.resource.size < 10 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*|application/pdf|application/msword|application/vnd.openxmlformats-officedocument.*');
+      allow read: if true;
     }
   }
 }
