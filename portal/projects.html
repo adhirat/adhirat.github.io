@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Project Management - Adhirat Portal</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/app.js"></script>
+    <style>
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+
+<body
+    class="pt-0 bg-background-light dark:bg-dark-bg text-slate-900 dark:text-white font-display antialiased overflow-hidden">
+    <div class="flex h-screen w-full overflow-hidden">
+        <div id="portal-sidebar" class="contents"></div>
+        <main class="flex-1 flex flex-col min-w-0">
+            <div id="portal-header" class="contents"></div>
+            <div class="flex-1 overflow-y-auto p-4 sm:p-8 animate-fade-in-up">
+                <div class="max-w-[1280px] mx-auto flex flex-col gap-8">
+                    <div class="flex flex-col gap-1">
+                        <h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Project Management
+                        </h1>
+                        <p class="text-slate-500 dark:text-slate-400">Track and manage projects, schedules, and team
+                            collaboration.</p>
+                    </div>
+
+                    <div
+                        class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden">
+                        <div
+                            class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50/50 dark:bg-dark-card">
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">Active Projects</h3>
+                            <div class="flex flex-wrap items-center gap-3">
+                                <div class="relative">
+                                    <input type="text" placeholder="Search projects..."
+                                        class="pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm focus:ring-2 focus:ring-primary focus:border-transparent w-48 sm:w-56">
+                                    <span
+                                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                                </div>
+                                <button onclick="openProjectModal()"
+                                    class="px-4 py-2 rounded-lg bg-primary text-white font-semibold flex items-center gap-2 hover:bg-blue-600 transition-colors shadow-lg shadow-primary/25 whitespace-nowrap">
+                                    <span class="material-symbols-outlined text-lg">add</span>
+                                    New Project
+                                </button>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm text-slate-500 dark:text-slate-400">
+                                <thead
+                                    class="bg-slate-50 dark:bg-[#1a202c] text-xs uppercase font-semibold text-slate-500 dark:text-slate-400">
+                                    <tr>
+                                        <th class="px-6 py-3">Project Name</th>
+                                        <th class="px-6 py-3">Client</th>
+                                        <th class="px-6 py-3">Deadline</th>
+                                        <th class="px-6 py-3">Status</th>
+                                        <th class="px-6 py-3">Team</th>
+                                        <th class="px-6 py-3 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 dark:divide-border-dark">
+                                    <!-- Mock Data -->
+                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                        <td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Website
+                                            Redesign</td>
+                                        <td class="px-6 py-4">Acme Corp</td>
+                                        <td class="px-6 py-4">Mar 15, 2024</td>
+                                        <td class="px-6 py-4"><span
+                                                class="px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-600">In
+                                                Progress</span></td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex -space-x-2">
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white dark:border-dark-card">
+                                                </div>
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-slate-300 border-2 border-white dark:border-dark-card">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <button
+                                                class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-primary"
+                                                title="Edit"><span
+                                                    class="material-symbols-outlined">edit</span></button>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                        <td class="px-6 py-4 font-medium text-slate-900 dark:text-white">Mobile App Dev
+                                        </td>
+                                        <td class="px-6 py-4">Globex Inc.</td>
+                                        <td class="px-6 py-4">Apr 01, 2024</td>
+                                        <td class="px-6 py-4"><span
+                                                class="px-2 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-600">Planning</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex -space-x-2">
+                                                <div
+                                                    class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white dark:border-dark-card">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <button
+                                                class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors text-primary"
+                                                title="Edit"><span
+                                                    class="material-symbols-outlined">edit</span></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="modal-backdrop absolute inset-0" onclick="closeProjectModal()"></div>
+        <div
+            class="relative bg-white dark:bg-dark-card rounded-2xl shadow-2xl max-w-lg w-full border border-slate-200 dark:border-slate-700 animate-fade-in-up">
+            <div class="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-white">Create New Project</h2>
+                <button onclick="closeProjectModal()"
+                    class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"><span
+                        class="material-symbols-outlined">close</span></button>
+            </div>
+            <form class="p-6 space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <label class="block">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Project Name</span>
+                        <input type="text"
+                            class="form-input mt-1 block w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+                    </label>
+                    <label class="block">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Client</span>
+                        <select
+                            class="form-select mt-1 block w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+                            <option>Acme Corp</option>
+                            <option>Globex Inc.</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <label class="block">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Start Date</span>
+                        <input type="date"
+                            class="form-input mt-1 block w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+                    </label>
+                    <label class="block">
+                        <span class="text-sm font-medium text-slate-700 dark:text-slate-200">Deadline</span>
+                        <input type="date"
+                            class="form-input mt-1 block w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+                    </label>
+                </div>
+            </form>
+            <div class="p-6 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-3">
+                <button onclick="closeProjectModal()"
+                    class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+                <button
+                    class="px-6 py-2 rounded-lg bg-primary text-white hover:bg-blue-600 shadow-lg shadow-primary/25">Create
+                    Project</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initAuthObserver } from '../assets/js/firebase-modules.js';
+        initAuthObserver();
+
+        window.openProjectModal = function () {
+            document.getElementById('project-modal').classList.remove('hidden');
+        }
+        window.closeProjectModal = function () {
+            document.getElementById('project-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+
+</html>
