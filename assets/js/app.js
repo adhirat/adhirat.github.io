@@ -136,7 +136,7 @@ if ('theme' in localStorage) {
 }
 
 // Cache version - increment this when you update header/footer/mobile-menu
-const CACHE_VERSION = 'v9';
+const CACHE_VERSION = 'v10';
 
 function loadHTML(id, file) {
     const cacheKey = `${file}_${CACHE_VERSION}`;

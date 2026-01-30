@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Adhirat Portal - Template Manager</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Global Assets -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/app.js"></script>
+    <style>
+        /* Custom scrollbar for sidebar and content */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3b4754;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #5a6b7c;
+        }
+
+        .paper-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body
+    class="pt-0 bg-background-light dark:bg-dark-bg text-slate-900 dark:text-white font-display overflow-hidden h-screen flex">
+    <!-- Side Navigation -->
+    <!-- Global Sidebar -->
+    <div id="portal-sidebar" class="contents"></div>
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-background-light dark:bg-dark-bg">
+        <!-- Top Header -->
+        <!-- Global Header -->
+        <div id="portal-header" class="contents"></div>
+        <!-- Main Scrollable Area -->
+        <div class="flex-1 overflow-y-auto p-4 md:p-8 animate-fade-in-up">
+            <div class="max-w-[1400px] mx-auto flex flex-col h-full">
+                <!-- Page Heading & Controls -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">Offer
+                            Letter Template</h2>
+                        <p class="text-gray-500 dark:text-[#9dabb9] text-sm mt-1">Configure structure and dynamic fields
+                            for new hire offers.</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <button
+                            class="h-10 px-4 rounded-lg border border-gray-300 dark:border-[#3b4754] text-gray-700 dark:text-white text-sm font-medium hover:bg-gray-50 dark:hover:bg-[#283039] transition-colors flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">visibility</span>
+                            Preview
+                        </button>
+                        <button
+                            class="h-10 px-5 rounded-lg bg-primary hover:bg-blue-600 text-white text-sm font-medium shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2 btn-primary">
+                            <span class="material-symbols-outlined text-[18px]">save</span>
+                            Save Template
+                        </button>
+                    </div>
+                </div>
+                <!-- Tabs -->
+                <div class="border-b border-gray-200 dark:border-[#3b4754] mb-6">
+                    <nav class="flex gap-6">
+                        <a class="pb-3 border-b-2 border-primary text-primary font-medium text-sm flex items-center gap-2"
+                            href="#">
+                            <span class="material-symbols-outlined text-[18px]">drafts</span>
+                            Offer Letter
+                        </a>
+                        <a class="pb-3 border-b-2 border-transparent text-gray-500 dark:text-[#9dabb9] hover:text-gray-700 dark:hover:text-white font-medium text-sm transition-colors flex items-center gap-2"
+                            href="#">
+                            <span class="material-symbols-outlined text-[18px]">logout</span>
+                            Relieving Letter
+                        </a>
+                        <a class="pb-3 border-b-2 border-transparent text-gray-500 dark:text-[#9dabb9] hover:text-gray-700 dark:hover:text-white font-medium text-sm transition-colors flex items-center gap-2"
+                            href="#">
+                            <span class="material-symbols-outlined text-[18px]">trending_up</span>
+                            Increment Letter
+                        </a>
+                    </nav>
+                </div>
+                <!-- Editor Workspace Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 min-h-[600px] reveal reveal-up">
+                    <!-- Editor Canvas (Left) -->
+                    <div class="lg:col-span-8 xl:col-span-9 flex flex-col gap-4">
+                        <!-- Toolbar -->
+                        <div
+                            class="bg-white dark:bg-dark-card rounded-lg p-2 flex flex-wrap items-center gap-1 border border-gray-200 dark:border-slate-700 shadow-sm">
+                            <div class="flex items-center gap-1 pr-2 border-r border-gray-200 dark:border-gray-700">
+                                <select
+                                    class="bg-transparent text-sm border-none focus:ring-0 text-gray-700 dark:text-white font-medium h-8 py-0">
+                                    <option>Normal Text</option>
+                                    <option>Heading 1</option>
+                                    <option>Heading 2</option>
+                                </select>
+                            </div>
+                            <div class="flex items-center gap-0.5 px-2 border-r border-gray-200 dark:border-gray-700">
+                                <button
+                                    class="size-8 rounded hover:bg-gray-100 dark:hover:bg-[#283039] text-gray-600 dark:text-gray-300 flex items-center justify-center"><span
+                                        class="material-symbols-outlined text-[20px]">format_bold</span></button>
+                                <button
+                                    class="size-8 rounded hover:bg-gray-100 dark:hover:bg-[#283039] text-gray-600 dark:text-gray-300 flex items-center justify-center"><span
+                                        class="material-symbols-outlined text-[20px]">format_italic</span></button>
+                                <button
+                                    class="size-8 rounded hover:bg-gray-100 dark:hover:bg-[#283039] text-gray-600 dark:text-gray-300 flex items-center justify-center"><span
+                                        class="material-symbols-outlined text-[20px]">format_underlined</span></button>
+                            </div>
+                            <div class="flex items-center gap-0.5 px-2 border-r border-gray-200 dark:border-gray-700">
+                                <button
+                                    class="size-8 rounded hover:bg-gray-100 dark:hover:bg-[#283039] text-gray-600 dark:text-gray-300 flex items-center justify-center"><span
+                                        class="material-symbols-outlined text-[20px]">format_align_left</span></button>
+                                <button
+                                    class="size-8 rounded bg-gray-100 dark:bg-[#283039] text-primary flex items-center justify-center"><span
+                                        class="material-symbols-outlined text-[20px]">format_align_center</span></button>
+                                <button
+                                    class="size-8 rounded hover:bg-gray-100 dark:hover:bg-[#283039] text-gray-600 dark:text-gray-300 flex items-center justify-center"><span
+                                        class="material-symbols-outlined text-[20px]">format_align_right</span></button>
+                            </div>
+                            <div class="flex items-center gap-0.5 px-2">
+                                <button
+                                    class="size-8 rounded hover:bg-gray-100 dark:hover:bg-[#283039] text-gray-600 dark:text-gray-300 flex items-center justify-center"><span
+                                        class="material-symbols-outlined text-[20px]">format_list_bulleted</span></button>
+                                <button
+                                    class="size-8 rounded hover:bg-gray-100 dark:hover:bg-[#283039] text-gray-600 dark:text-gray-300 flex items-center justify-center"><span
+                                        class="material-symbols-outlined text-[20px]">format_list_numbered</span></button>
+                            </div>
+                            <div class="ml-auto flex items-center gap-2">
+                                <button
+                                    class="text-xs font-medium text-primary hover:text-blue-600 flex items-center gap-1 px-2">
+                                    <span class="material-symbols-outlined text-[16px]">history</span> History
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Paper -->
+                        <div
+                            class="flex-1 bg-gray-100 dark:bg-dark-bg rounded-xl border border-gray-200 dark:border-slate-700 p-8 overflow-y-auto flex justify-center">
+                            <div
+                                class="w-full max-w-[800px] bg-white text-slate-900 min-h-[800px] paper-shadow p-12 md:p-16 flex flex-col relative">
+                                <!-- Logo on Paper -->
+                                <div class="flex justify-between items-start mb-12">
+                                    <img alt="Adhirat Technologies Logo" class="h-10 object-contain filter invert"
+                                        data-alt="Company Logo on Document"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3Xm1YGk5UpeMrRyump16K7vOiO2XyXfVpticDGTFuCFUEHGUjjfuga5I5TtZ3qShyp0VSm1eYfR9_C3SPy6WYpJmwn7eViUeMsLw0RnaX0w1lU0_SxfF21Ym1OKSq1MgaqBsK_Fo6ajWAUZmBfxFiJd5yvquXBitE3gF_GCsImRygyIptvf1FBqqMm3rcuv9IaiimazBgokLO9ASnd8ez6zSguuQXSvNTvPjoG2ryUztieiFG30Wbsg2mC154iIvxX0jG07FpJys" />
+                                    <div class="text-right text-xs text-gray-500">
+                                        <p>Adhirat Technologies Pvt Ltd.</p>
+                                        <p>123 Tech Park, Innovation Way</p>
+                                        <p>Bangalore, KA 560001</p>
+                                    </div>
+                                </div>
+                                <!-- Content -->
+                                <div class="space-y-6 text-[15px] leading-relaxed font-serif text-gray-800">
+                                    <p class="font-bold">Date: <span
+                                            class="bg-blue-50 text-primary px-2 py-0.5 rounded border border-blue-100 inline-block text-sm font-sans mx-1 cursor-grab active:cursor-grabbing">{Current_Date}</span>
+                                    </p>
+                                    <p class="mt-8">
+                                        Dear <span
+                                            class="bg-blue-50 text-primary px-2 py-0.5 rounded border border-blue-100 inline-block text-sm font-sans mx-1 cursor-grab active:cursor-grabbing">{Candidate_Name}</span>,
+                                    </p>
+                                    <p>
+                                        We are pleased to offer you the position of <span
+                                            class="bg-blue-50 text-primary px-2 py-0.5 rounded border border-blue-100 inline-block text-sm font-sans mx-1 cursor-grab active:cursor-grabbing">{Job_Title}</span>
+                                        at Adhirat Technologies. We were impressed with your skills and experience and
+                                        believe you will be a valuable addition to our team.
+                                    </p>
+                                    <p>
+                                        Your annual Cost to Company (CTC) will be <span
+                                            class="bg-blue-50 text-primary px-2 py-0.5 rounded border border-blue-100 inline-block text-sm font-sans mx-1 cursor-grab active:cursor-grabbing">{Annual_CTC}</span>,
+                                        structured as per the attached annexure. You will report directly to <span
+                                            class="bg-blue-50 text-primary px-2 py-0.5 rounded border border-blue-100 inline-block text-sm font-sans mx-1 cursor-grab active:cursor-grabbing">{Reporting_Manager}</span>.
+                                    </p>
+                                    <p>
+                                        We look forward to welcoming you on <span
+                                            class="bg-blue-50 text-primary px-2 py-0.5 rounded border border-blue-100 inline-block text-sm font-sans mx-1 cursor-grab active:cursor-grabbing">{Joining_Date}</span>.
+                                        Please sign and return the duplicate copy of this letter as a token of your
+                                        acceptance.
+                                    </p>
+                                    <p class="mt-8">Sincerely,</p>
+                                    <!-- Signature Zone -->
+                                    <div
+                                        class="mt-4 mb-2 p-4 border-2 border-dashed border-gray-300 bg-gray-50 rounded-lg flex flex-col items-center justify-center h-32 gap-2 text-gray-400 hover:border-primary hover:bg-blue-50/50 hover:text-primary transition-all cursor-pointer group">
+                                        <span
+                                            class="material-symbols-outlined text-3xl group-hover:scale-110 transition-transform">ink_pen</span>
+                                        <span class="text-sm font-medium">Drag Digital Signature / Stamp Here</span>
+                                    </div>
+                                    <p class="font-bold">Authorized Signatory</p>
+                                </div>
+                                <!-- Footer -->
+                                <div
+                                    class="mt-auto pt-8 border-t border-gray-100 text-center text-[10px] text-gray-400">
+                                    <p>This is a system generated document. Adhirat Technologies Pvt Ltd. Confidential.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Variables Sidebar (Right) -->
+                    <div class="lg:col-span-4 xl:col-span-3 flex flex-col gap-6">
+                        <!-- Search Variables -->
+                        <div
+                            class="bg-white dark:bg-dark-card rounded-xl border border-gray-200 dark:border-slate-700 p-4 shadow-sm reveal reveal-left delay-100">
+                            <h3 class="text-sm font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary text-[20px]">data_object</span>
+                                Dynamic Fields
+                            </h3>
+                            <div class="relative">
+                                <span
+                                    class="material-symbols-outlined absolute left-3 top-2.5 text-gray-400 text-[18px]">search</span>
+                                <input
+                                    class="w-full bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 rounded-lg py-2 pl-9 pr-3 text-sm focus:border-primary focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-600"
+                                    placeholder="Find variable..." type="text" />
+                            </div>
+                        </div>
+                        <!-- Variable Categories -->
+                        <div
+                            class="bg-white dark:bg-dark-card rounded-xl border border-gray-200 dark:border-slate-700 p-1 shadow-sm flex-1 overflow-y-auto reveal reveal-left delay-200">
+                            <!-- Category: Candidate -->
+                            <div class="p-3">
+                                <p
+                                    class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 px-1">
+                                    Candidate Details</p>
+                                <div class="space-y-2">
+                                    <div
+                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors card-hover">
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-symbols-outlined text-gray-400 text-[18px]">person</span>
+                                            <span
+                                                class="text-sm font-medium text-gray-700 dark:text-gray-200">{Candidate_Name}</span>
+                                        </div>
+                                        <span
+                                            class="material-symbols-outlined text-gray-300 text-[16px] group-hover:text-primary">drag_indicator</span>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors card-hover">
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-symbols-outlined text-gray-400 text-[18px]">mail</span>
+                                            <span
+                                                class="text-sm font-medium text-gray-700 dark:text-gray-200">{Candidate_Email}</span>
+                                        </div>
+                                        <span
+                                            class="material-symbols-outlined text-gray-300 text-[16px] group-hover:text-primary">drag_indicator</span>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors">
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-symbols-outlined text-gray-400 text-[18px]">calendar_month</span>
+                                            <span
+                                                class="text-sm font-medium text-gray-700 dark:text-gray-200">{Joining_Date}</span>
+                                        </div>
+                                        <span
+                                            class="material-symbols-outlined text-gray-300 text-[16px] group-hover:text-primary">drag_indicator</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h-px bg-gray-100 dark:bg-slate-700 mx-3"></div>
+                            <!-- Category: Job -->
+                            <div class="p-3">
+                                <p
+                                    class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 px-1">
+                                    Job Profile</p>
+                                <div class="space-y-2">
+                                    <div
+                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors">
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-symbols-outlined text-gray-400 text-[18px]">work</span>
+                                            <span
+                                                class="text-sm font-medium text-gray-700 dark:text-gray-200">{Job_Title}</span>
+                                        </div>
+                                        <span
+                                            class="material-symbols-outlined text-gray-300 text-[16px] group-hover:text-primary">drag_indicator</span>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors">
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-symbols-outlined text-gray-400 text-[18px]">attach_money</span>
+                                            <span
+                                                class="text-sm font-medium text-gray-700 dark:text-gray-200">{Annual_CTC}</span>
+                                        </div>
+                                        <span
+                                            class="material-symbols-outlined text-gray-300 text-[16px] group-hover:text-primary">drag_indicator</span>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors">
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-symbols-outlined text-gray-400 text-[18px]">supervisor_account</span>
+                                            <span
+                                                class="text-sm font-medium text-gray-700 dark:text-gray-200">{Reporting_Manager}</span>
+                                        </div>
+                                        <span
+                                            class="material-symbols-outlined text-gray-300 text-[16px] group-hover:text-primary">drag_indicator</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="h-px bg-gray-100 dark:bg-slate-700 mx-3"></div>
+                            <!-- Category: System -->
+                            <div class="p-3">
+                                <p
+                                    class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3 px-1">
+                                    System</p>
+                                <div class="space-y-2">
+                                    <div
+                                        class="flex items-center justify-between p-2 rounded-lg bg-gray-50 dark:bg-dark-card border border-gray-200 dark:border-slate-700 hover:border-primary/50 cursor-grab group transition-colors">
+                                        <div class="flex items-center gap-2">
+                                            <span
+                                                class="material-symbols-outlined text-gray-400 text-[18px]">schedule</span>
+                                            <span
+                                                class="text-sm font-medium text-gray-700 dark:text-gray-200">{Current_Date}</span>
+                                        </div>
+                                        <span
+                                            class="material-symbols-outlined text-gray-300 text-[16px] group-hover:text-primary">drag_indicator</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+<script type="module">
+    import { initAuthObserver } from "../assets/js/firebase-modules.js";
+    initAuthObserver(true);
+</script>
+</body>
+
+</html>

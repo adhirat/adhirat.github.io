@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Candidate Job Application - Adhirat Technologies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Global Assets -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/app.js"></script>
+</head>
+
+<body
+    class="pt-0 bg-background-light dark:bg-dark-bg font-display antialiased text-[#111418] dark:text-white transition-colors duration-200">
+    <!-- Main Container -->
+    <div class="flex h-screen w-full overflow-hidden">
+        <!-- Global Sidebar -->
+        <div id="portal-sidebar" class="contents"></div>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col h-full overflow-hidden bg-background-light dark:bg-dark-bg relative">
+            <!-- Global Header -->
+            <div id="portal-header" class="contents"></div>
+
+            <!-- Scrollable Content -->
+            <div class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 animate-fade-in-up">
+                <div class="flex flex-col items-center pb-8">
+                    <div class="flex flex-col max-w-[800px] w-full gap-8">
+                        <!-- Job Summary Card -->
+                        <div
+                            class="flex flex-col gap-2 p-6 bg-white dark:bg-[#1a2632] rounded-xl border border-[#e5e7eb] dark:border-[#2a3642] shadow-sm reveal reveal-up">
+                            <div class="flex flex-wrap justify-between items-start gap-4">
+                                <div class="flex flex-col gap-2">
+                                    <h1 class="text-3xl md:text-4xl font-black leading-tight tracking-[-0.033em]">
+                                        Product
+                                        Designer</h1>
+                                    <div
+                                        class="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#617589] dark:text-[#94a3b8] text-sm md:text-base font-normal">
+                                        <span class="flex items-center gap-1"><span
+                                                class="material-symbols-outlined text-[18px]">location_on</span> San
+                                            Francisco,
+                                            CA</span>
+                                        <span class="hidden sm:inline">•</span>
+                                        <span class="flex items-center gap-1"><span
+                                                class="material-symbols-outlined text-[18px]">schedule</span>
+                                            Full-time</span>
+                                        <span class="hidden sm:inline">•</span>
+                                        <span class="flex items-center gap-1"><span
+                                                class="material-symbols-outlined text-[18px]">wifi</span> Remote
+                                            Friendly</span>
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-blue-50 dark:bg-blue-900/30 text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
+                                    Design Dept
+                                </div>
+                            </div>
+                            <hr class="my-4 border-[#f0f2f4] dark:border-[#2a3642]" />
+                            <p class="text-base font-normal leading-relaxed text-[#111418] dark:text-[#cbd5e1]">
+                                Join our team and help shape the future of HR tech. We are looking for a creative mind
+                                to lead
+                                our design system, collaborate with engineering, and define the user experience for our
+                                next-gen
+                                payroll platform.
+                            </p>
+                        </div>
+                        <!-- Application Form -->
+                        <form class="flex flex-col gap-6 reveal reveal-up delay-100"
+                            onsubmit="event.preventDefault(); document.getElementById('success-modal').classList.remove('hidden');">
+                            <!-- LinkedIn Import -->
+                            <div class="flex justify-start">
+                                <button
+                                    class="group relative flex w-full sm:w-auto min-w-[240px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-[#0077b5] hover:bg-[#006097] text-white gap-3 transition-all duration-200 shadow-sm"
+                                    type="button">
+                                    <span
+                                        class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                                    <span class="material-symbols-outlined text-[22px]">link</span>
+                                    <span class="text-sm font-bold leading-normal tracking-[0.015em]">Apply with
+                                        LinkedIn</span>
+                                </button>
+                            </div>
+                            <div class="h-px bg-[#e5e7eb] dark:bg-[#2a3642] w-full"></div>
+                            <!-- Personal Details Section -->
+                            <div class="flex flex-col gap-4">
+                                <h3 class="text-lg font-bold leading-tight tracking-[-0.015em] flex items-center gap-2">
+                                    <span
+                                        class="bg-primary/10 text-primary size-6 flex items-center justify-center rounded-full text-xs">1</span>
+                                    Personal Details
+                                </h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-sm font-medium text-[#111418] dark:text-[#cbd5e1]"
+                                            for="first-name">First Name <span class="text-red-500">*</span></label>
+                                        <input
+                                            class="h-11 rounded-lg border border-[#d1d5db] dark:border-[#4b5563] bg-white dark:bg-[#1a2632] px-4 text-sm text-[#111418] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                            id="first-name" placeholder="Jane" required="" type="text" />
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-sm font-medium text-[#111418] dark:text-[#cbd5e1]"
+                                            for="last-name">Last Name <span class="text-red-500">*</span></label>
+                                        <input
+                                            class="h-11 rounded-lg border border-[#d1d5db] dark:border-[#4b5563] bg-white dark:bg-[#1a2632] px-4 text-sm text-[#111418] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                            id="last-name" placeholder="Doe" required="" type="text" />
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-sm font-medium text-[#111418] dark:text-[#cbd5e1]"
+                                            for="email">Email
+                                            Address <span class="text-red-500">*</span></label>
+                                        <input
+                                            class="h-11 rounded-lg border border-[#d1d5db] dark:border-[#4b5563] bg-white dark:bg-[#1a2632] px-4 text-sm text-[#111418] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                            id="email" placeholder="jane@example.com" required="" type="email" />
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-sm font-medium text-[#111418] dark:text-[#cbd5e1]"
+                                            for="phone">Phone
+                                            Number</label>
+                                        <input
+                                            class="h-11 rounded-lg border border-[#d1d5db] dark:border-[#4b5563] bg-white dark:bg-[#1a2632] px-4 text-sm text-[#111418] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                            id="phone" placeholder="+1 (555) 000-0000" type="tel" />
+                                    </div>
+                                    <div class="flex flex-col gap-1.5 md:col-span-2">
+                                        <label class="text-sm font-medium text-[#111418] dark:text-[#cbd5e1]"
+                                            for="portfolio">Portfolio / Website</label>
+                                        <div class="relative">
+                                            <span
+                                                class="absolute left-4 top-1/2 -translate-y-1/2 text-[#9ca3af] material-symbols-outlined text-[20px]">language</span>
+                                            <input
+                                                class="h-11 w-full rounded-lg border border-[#d1d5db] dark:border-[#4b5563] bg-white dark:bg-[#1a2632] pl-11 pr-4 text-sm text-[#111418] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                                id="portfolio" placeholder="https://dribbble.com/janedoe" type="url" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Resume Upload Section -->
+                            <div class="flex flex-col gap-4 mt-2">
+                                <h3 class="text-lg font-bold leading-tight tracking-[-0.015em] flex items-center gap-2">
+                                    <span
+                                        class="bg-primary/10 text-primary size-6 flex items-center justify-center rounded-full text-xs">2</span>
+                                    Resume / CV
+                                </h3>
+                                <div
+                                    class="group relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#d1d5db] dark:border-[#4b5563] bg-background-light dark:bg-[#1a2632] px-6 py-10 transition-colors hover:border-primary hover:bg-primary/5 cursor-pointer">
+                                    <div
+                                        class="mb-4 rounded-full bg-[#e5e7eb] dark:bg-[#2a3642] p-3 transition-colors group-hover:bg-primary/10 group-hover:text-primary">
+                                        <span
+                                            class="material-symbols-outlined text-[32px] text-[#617589] dark:text-[#94a3b8] group-hover:text-primary transition-colors">upload_file</span>
+                                    </div>
+                                    <p class="mb-1 text-sm font-semibold text-[#111418] dark:text-white">Click to upload
+                                        or drag
+                                        and drop</p>
+                                    <p class="text-xs text-[#617589] dark:text-[#94a3b8]">PDF, DOCX, TXT or RTF (Max
+                                        5MB)</p>
+                                    <input accept=".pdf,.docx,.txt,.rtf"
+                                        class="absolute inset-0 cursor-pointer opacity-0" type="file" />
+                                </div>
+                            </div>
+                            <!-- Additional Questions Section -->
+                            <div class="flex flex-col gap-4 mt-2">
+                                <h3 class="text-lg font-bold leading-tight tracking-[-0.015em] flex items-center gap-2">
+                                    <span
+                                        class="bg-primary/10 text-primary size-6 flex items-center justify-center rounded-full text-xs">3</span>
+                                    Additional Questions
+                                </h3>
+                                <div class="flex flex-col gap-5">
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-sm font-medium text-[#111418] dark:text-[#cbd5e1]"
+                                            for="question-1">Why do you want to join Adhirat Technologies?</label>
+                                        <textarea
+                                            class="rounded-lg border border-[#d1d5db] dark:border-[#4b5563] bg-white dark:bg-[#1a2632] p-4 text-sm text-[#111418] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+                                            id="question-1" placeholder="Tell us a bit about your motivation..."
+                                            rows="4"></textarea>
+                                    </div>
+                                    <div class="flex flex-col gap-1.5">
+                                        <label class="text-sm font-medium text-[#111418] dark:text-[#cbd5e1]"
+                                            for="question-2">What are your salary expectations?</label>
+                                        <div class="relative">
+                                            <span
+                                                class="absolute left-4 top-1/2 -translate-y-1/2 text-[#9ca3af] material-symbols-outlined text-[20px]">payments</span>
+                                            <input
+                                                class="h-11 w-full rounded-lg border border-[#d1d5db] dark:border-[#4b5563] bg-white dark:bg-[#1a2632] pl-11 pr-4 text-sm text-[#111418] dark:text-white placeholder:text-[#9ca3af] focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                                                id="question-2" placeholder="e.g. $120k - $140k" type="text" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Submit Action -->
+                            <div
+                                class="mt-4 pt-4 border-t border-[#e5e7eb] dark:border-[#2a3642] flex flex-col items-center gap-3">
+                                <button
+                                    class="w-full sm:w-auto min-w-[320px] rounded-lg bg-primary px-8 py-3.5 text-base font-bold text-white shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all duration-200 btn-primary"
+                                    type="submit">
+                                    Submit Application
+                                </button>
+                                <p class="text-xs text-[#617589] dark:text-[#94a3b8] text-center max-w-md">
+                                    By clicking submit, you agree to our <a class="text-primary hover:underline"
+                                        href="#">Terms
+                                        of Service</a> and <a class="text-primary hover:underline" href="#">Privacy
+                                        Policy</a>.
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Footer (moved inside scrollable area) -->
+                    <footer
+                        class="mt-auto border-t border-[#f0f2f4] dark:border-[#2a3642] bg-white dark:bg-[#1a2632] py-8 rounded-xl w-full mt-8">
+                        <div class="flex flex-col items-center justify-center gap-4 text-center">
+                            <div class="flex items-center gap-2 text-[#111418] dark:text-white opacity-60">
+                                <span class="text-sm font-medium">Adhirat Technologies</span>
+                            </div>
+                            <p class="text-xs text-[#617589] dark:text-[#94a3b8]">© 2024 Adhirat Technologies Inc. All
+                                rights
+                                reserved.</p>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+    </div>
+    </main>
+    <!-- Success Modal (Hidden by default, triggered by form submit for demo) -->
+    <div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-[#111418]/60 backdrop-blur-sm p-4"
+        id="success-modal">
+        <div
+            class="bg-white dark:bg-[#1a2632] rounded-2xl shadow-2xl w-full max-w-md p-8 flex flex-col items-center text-center animate-[fadeIn_0.3s_ease-out]">
+            <div
+                class="size-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-6 text-green-600 dark:text-green-400">
+                <span class="material-symbols-outlined text-[48px]">check_circle</span>
+            </div>
+            <h3 class="text-2xl font-black text-[#111418] dark:text-white mb-2">Application Received!</h3>
+            <p class="text-[#617589] dark:text-[#94a3b8] mb-8 leading-relaxed">
+                Thanks for applying to Adhirat Technologies. We have sent a confirmation email to <span
+                    class="font-bold text-[#111418] dark:text-white">jane@example.com</span>. We will review your
+                profile and get back to you within 5 business days.
+            </p>
+            <div class="w-full flex gap-3">
+                <a class="flex-1 rounded-lg bg-primary py-3 text-sm font-bold text-white hover:bg-blue-600 transition-colors"
+                    href="#" onclick="location.reload()">Back to Jobs</a>
+                <a class="flex-1 rounded-lg bg-[#f0f2f4] dark:bg-[#2a3642] py-3 text-sm font-bold text-[#111418] dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                    href="#">View Status</a>
+            </div>
+        </div>
+    </div>
+    </div>
+<script type="module">
+    import { initAuthObserver } from "../assets/js/firebase-modules.js";
+    initAuthObserver(true);
+</script>
+</body>
+
+</html>
