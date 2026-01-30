@@ -505,6 +505,7 @@
         import { db, auth, doc, getDoc, updateDoc, serverTimestamp, onAuthStateChanged } from '../assets/js/firebase-config.js';
         import { EmailAuthProvider, reauthenticateWithCredential, updatePassword } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
         import { getRole } from '../assets/js/rbac.js';
+        import { uploadProfilePhoto } from '../assets/js/firebase-modules.js';
 
         let currentUser = null;
         let userData = null;
@@ -825,9 +826,33 @@
                 const file = e.target.files[0];
                 if (!file) return;
 
-                // For now, show a message about photo upload
-                // In production, you would upload to Firebase Storage
-                showToast('Photo upload requires Firebase Storage setup', 'info');
+                // validate file type and size
+                if (!file.type.match('image.*')) {
+                    showToast('Please select an image file', 'error');
+                    return;
+                }
+                if (file.size > 5 * 1024 * 1024) {
+                    showToast('File size must be less than 5MB', 'error');
+                    return;
+                }
+
+                showToast('Uploading photo...', 'info');
+
+                try {
+                    const result = await uploadProfilePhoto(file);
+
+                    if (result.success) {
+                        const avatarEl = document.getElementById('user-avatar');
+                        avatarEl.style.backgroundImage = `url('${result.photoURL}')`;
+                        avatarEl.innerHTML = ''; // Remove initial
+                        showToast('Profile photo updated', 'success');
+                    } else {
+                        showToast('Error uploading photo: ' + result.error, 'error');
+                    }
+                } catch (error) {
+                    console.error(error);
+                    showToast('Error uploading photo', 'error');
+                }
             });
 
             removePhotoBtn.addEventListener('click', async () => {

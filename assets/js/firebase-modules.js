@@ -18,7 +18,8 @@ import {
     onAuthStateChanged,
     GoogleAuthProvider,
     OAuthProvider,
-    signInWithPopup
+    signInWithPopup,
+    updateDoc
 } from './firebase-config.js';
 import { sendContactNotification, sendNewsletterNotification } from './email-notifications.js';
 
@@ -232,6 +233,39 @@ export async function signInWithGoogle() {
             errorMessage = 'An account already exists with this email using a different sign-in method.';
         }
         return { success: false, error: errorMessage };
+    }
+}
+
+/**
+ * Upload Profile Photo
+ * Used in portal/profile.html
+ * Uploads photo to Storage and updates user profile in Firestore
+ */
+export async function uploadProfilePhoto(file) {
+    try {
+        const user = auth.currentUser;
+        if (!user) throw new Error('User not authenticated');
+
+        // Create storage reference
+        const fileExt = file.name.split('.').pop();
+        const fileName = `profile_${Date.now()}.${fileExt}`;
+        const storageRef = ref(storage, `users/${user.uid}/profile/${fileName}`);
+
+        // Upload file
+        const snapshot = await uploadBytes(storageRef, file);
+        const photoURL = await getDownloadURL(snapshot.ref);
+
+        // Update user profile in Firestore
+        const userDocRef = doc(db, "users", user.uid);
+        await updateDoc(userDocRef, {
+            photoURL: photoURL,
+            updatedAt: serverTimestamp()
+        });
+
+        return { success: true, photoURL: photoURL };
+    } catch (error) {
+        console.error('Error uploading profile photo:', error);
+        return { success: false, error: error.message };
     }
 }
 
