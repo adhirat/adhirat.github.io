@@ -324,7 +324,7 @@ export async function getRole(roleId) {
 // ============================================
 
 /**
- * Assign a role to a user
+ * Assign a role to a user (single role - legacy support)
  * @param {string} userId - User ID
  * @param {string} roleId - Role ID to assign
  */
@@ -336,16 +336,51 @@ export async function assignRoleToUser(userId, roleId) {
             return { success: false, error: 'Role not found' };
         }
 
-        // Update user's role
+        // Update user's role (both single and array for compatibility)
         const userDocRef = doc(db, 'users', userId);
         await updateDoc(userDocRef, {
             role: roleId,
+            roles: [roleId],
             roleUpdatedAt: serverTimestamp()
         });
 
         return { success: true };
     } catch (error) {
         console.error('Error assigning role:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Assign multiple roles to a user
+ * @param {string} userId - User ID
+ * @param {string[]} roleIds - Array of Role IDs to assign
+ */
+export async function assignRolesToUser(userId, roleIds) {
+    try {
+        if (!Array.isArray(roleIds) || roleIds.length === 0) {
+            return { success: false, error: 'At least one role is required' };
+        }
+
+        // Verify all roles exist
+        for (const roleId of roleIds) {
+            const roleDoc = await getDoc(doc(db, 'roles', roleId));
+            if (!roleDoc.exists()) {
+                return { success: false, error: `Role '${roleId}' not found` };
+            }
+        }
+
+        // Update user's roles
+        const userDocRef = doc(db, 'users', userId);
+        await updateDoc(userDocRef, {
+            role: roleIds[0], // Primary role for backward compatibility
+            roles: roleIds,
+            roleUpdatedAt: serverTimestamp()
+        });
+
+        return { success: true };
+    } catch (error) {
+        console.error('Error assigning roles:', error);
         return { success: false, error: error.message };
     }
 }
@@ -385,6 +420,7 @@ export async function getAllUsersWithRoles() {
 
 /**
  * Check if current user has a specific permission
+ * Checks across all assigned roles (permissions are combined)
  * @param {string} permission - Permission to check
  */
 export async function hasPermission(permission) {
@@ -396,13 +432,23 @@ export async function hasPermission(permission) {
         if (!userDoc.exists()) return false;
 
         const userData = userDoc.data();
-        const roleId = userData.role || 'guest';
 
-        const roleDoc = await getDoc(doc(db, 'roles', roleId));
-        if (!roleDoc.exists()) return false;
+        // Support both single role and multiple roles
+        const roleIds = Array.isArray(userData.roles) ? userData.roles :
+            userData.role ? [userData.role] : ['guest'];
 
-        const roleData = roleDoc.data();
-        return roleData.permissions.includes(permission);
+        // Check if any of the user's roles have the permission
+        for (const roleId of roleIds) {
+            const roleDoc = await getDoc(doc(db, 'roles', roleId));
+            if (roleDoc.exists()) {
+                const roleData = roleDoc.data();
+                if (roleData.permissions && roleData.permissions.includes(permission)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     } catch (error) {
         console.error('Error checking permission:', error);
         return false;
@@ -410,36 +456,50 @@ export async function hasPermission(permission) {
 }
 
 /**
- * Get current user's permissions
+ * Get current user's permissions (combined from all roles)
  */
 export async function getCurrentUserPermissions() {
     try {
         const user = auth.currentUser;
-        if (!user) return { success: false, permissions: [], role: null };
+        if (!user) return { success: false, permissions: [], roles: [] };
 
         const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (!userDoc.exists()) return { success: false, permissions: [], role: null };
+        if (!userDoc.exists()) return { success: false, permissions: [], roles: [] };
 
         const userData = userDoc.data();
-        const roleId = userData.role || 'guest';
 
-        const roleDoc = await getDoc(doc(db, 'roles', roleId));
-        if (!roleDoc.exists()) return { success: false, permissions: [], role: null };
+        // Support both single role and multiple roles
+        const roleIds = Array.isArray(userData.roles) ? userData.roles :
+            userData.role ? [userData.role] : ['guest'];
 
-        const roleData = roleDoc.data();
+        const allPermissions = new Set();
+        const roles = [];
+
+        for (const roleId of roleIds) {
+            const roleDoc = await getDoc(doc(db, 'roles', roleId));
+            if (roleDoc.exists()) {
+                const roleData = roleDoc.data();
+                roles.push({ id: roleId, ...roleData });
+                if (roleData.permissions) {
+                    roleData.permissions.forEach(p => allPermissions.add(p));
+                }
+            }
+        }
+
         return {
             success: true,
-            permissions: roleData.permissions,
-            role: { id: roleId, ...roleData }
+            permissions: Array.from(allPermissions),
+            roles: roles,
+            role: roles[0] || null // Primary role for backward compatibility
         };
     } catch (error) {
         console.error('Error getting permissions:', error);
-        return { success: false, permissions: [], role: null, error: error.message };
+        return { success: false, permissions: [], roles: [], role: null, error: error.message };
     }
 }
 
 /**
- * Check if user is admin
+ * Check if user is admin (has admin role in any of their roles)
  */
 export async function isAdmin() {
     try {
@@ -449,7 +509,13 @@ export async function isAdmin() {
         const userDoc = await getDoc(doc(db, 'users', user.uid));
         if (!userDoc.exists()) return false;
 
-        return userDoc.data().role === 'admin';
+        const userData = userDoc.data();
+
+        // Support both single role and multiple roles
+        const roleIds = Array.isArray(userData.roles) ? userData.roles :
+            userData.role ? [userData.role] : [];
+
+        return roleIds.includes('admin');
     } catch (error) {
         console.error('Error checking admin status:', error);
         return false;

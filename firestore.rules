@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is admin
+    // Supports both single role (role field) and multiple roles (roles array)
+    function isAdmin() {
+      return isAuthenticated() && 
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        (
+          get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+          ('roles' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data &&
+           'admin' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles)
+        );
+    }
+    
+    // Helper function to check if user is the admin email (for initial setup)
+    function isAdminEmail() {
+      return isAuthenticated() && request.auth.token.email == 'admin@adhirat.com';
+    }
+    
+    // Users collection
+    match /users/{userId} {
+      // Any authenticated user can read their own data
+      allow read: if isAuthenticated() && request.auth.uid == userId;
+      // Any authenticated user can create their own profile during registration
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      // Admin email can create any user (for setup scenarios)
+      allow create: if isAdminEmail();
+      // Admins can create users (for adding new users via admin panel)
+      allow create: if isAdmin();
+      // Users can update their own non-role fields
+      allow update: if isAuthenticated() && request.auth.uid == userId && 
+        (!request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'roles']));
+      // Admins or admin email (for setup) can read all users
+      allow read: if isAdmin() || isAdminEmail();
+      // Admins or admin email can update any user (including role)
+      allow update: if isAdmin() || isAdminEmail();
+      // Admins or admin email can delete users
+      allow delete: if isAdmin() || isAdminEmail();
+    }
+    
+    // Roles collection
+    match /roles/{roleId} {
+      // Any authenticated user can read roles
+      allow read: if isAuthenticated();
+      // Allow creation if role doesn't exist (for initial setup) by admin email
+      allow create: if isAdminEmail();
+      // Only admins can update or delete roles
+      allow update, delete: if isAdmin();
+    }
+    
+    // Messages collection (contact form submissions)
+    match /messages/{messageId} {
+      // Anyone can create a message (public contact form)
+      allow create: if true;
+      // Only authenticated users can read messages
+      allow read: if isAuthenticated();
+      // Only admins can update or delete
+      allow update, delete: if isAdmin() || isAdminEmail();
+    }
+    
+    // Newsletter subscriptions
+    match /newsletter/{subscriptionId} {
+      // Anyone can subscribe (create)
+      allow create: if true;
+      // Authenticated users can read
+      allow read: if isAuthenticated();
+      // Admins can update/delete
+      allow update, delete: if isAdmin() || isAdminEmail();
+    }
+    
+    // Default deny for any other collection
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

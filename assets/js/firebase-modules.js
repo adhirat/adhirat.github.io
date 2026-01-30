@@ -119,20 +119,23 @@ export async function loginUser(email, password) {
 /**
  * Register User
  * Used in portal/signup.html
+ * Self-registered users get 'guest' role by default
  */
 export async function registerUser(email, password, fullName) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Create user profile in Firestore
+        // Create user profile in Firestore with guest role (self-registered)
         await setDoc(doc(db, "users", user.uid), {
             uid: user.uid,
             email: email,
             fullName: fullName,
-            role: 'employee', // Default role
+            role: 'guest', // Primary role for backward compatibility
+            roles: ['guest'], // Support for multiple roles
+            provider: 'email',
             createdAt: serverTimestamp(),
-            lastLogin: serverTimestamp()
+            lastLoginAt: serverTimestamp()
         });
 
         return { success: true, user: user };
