@@ -2,7 +2,7 @@
     class="hidden lg:flex flex-col w-72 bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl border-r border-neon-violet/10 dark:border-neon-cyan/20 h-full flex-shrink-0 transition-colors duration-300">
     <!-- Header/Logo -->
     <div class="flex items-center gap-3 px-6 py-6 border-b border-neon-violet/10 dark:border-neon-cyan/20">
-        <a href="dashboard.html" class="flex items-center gap-3 group hover-tilt">
+        <a href="index.html" class="flex items-center gap-3 group hover-tilt">
             <div class="size-9 relative">
                 <img src="../assets/images/logo.svg" alt="Adhirat Logo"
                     class="w-full h-full transform rotate-180 dark:brightness-0 dark:invert transition-all duration-300 group-hover:scale-110">
@@ -22,18 +22,47 @@
 
     <!-- Scrollable Nav Links -->
     <nav class="flex-1 overflow-y-auto px-4 py-4 space-y-1">
-        <!-- Dashboard -->
+        <!-- Home -->
         <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-neon-violet/10 dark:hover:bg-neon-cyan/10 hover:text-neon-violet dark:hover:text-neon-cyan transition-all group"
-            href="dashboard.html">
+            href="index.html">
             <span
-                class="material-symbols-outlined group-hover:text-neon-violet dark:group-hover:text-neon-cyan transition-colors">dashboard</span>
-            <span class="text-sm font-display font-medium">Dashboard</span>
+                class="material-symbols-outlined group-hover:text-neon-violet dark:group-hover:text-neon-cyan transition-colors">home</span>
+            <span class="text-sm font-display font-medium">Home</span>
         </a>
         <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-neon-violet/10 dark:hover:bg-neon-cyan/10 hover:text-neon-violet dark:hover:text-neon-cyan transition-all group"
             href="admin_dashboard.html">
             <span
                 class="material-symbols-outlined group-hover:text-neon-violet dark:group-hover:text-neon-cyan transition-colors">admin_panel_settings</span>
             <span class="text-sm font-display font-medium">Admin Overview</span>
+        </a>
+
+        <!-- Admin Section -->
+        <p class="px-3 text-xs font-display font-bold text-neon-violet/60 dark:text-neon-cyan/60 uppercase tracking-wider mb-2 mt-6"
+            data-permission="view_users">
+            Administration</p>
+        <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-neon-violet/10 dark:hover:bg-neon-cyan/10 hover:text-neon-violet dark:hover:text-neon-cyan transition-all group"
+            href="users.html" data-permission="view_users">
+            <span
+                class="material-symbols-outlined group-hover:text-neon-violet dark:group-hover:text-neon-cyan transition-colors">group</span>
+            <span class="text-sm font-display font-medium">Users</span>
+        </a>
+        <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-neon-violet/10 dark:hover:bg-neon-cyan/10 hover:text-neon-violet dark:hover:text-neon-cyan transition-all group"
+            href="roles.html" data-permission="view_roles">
+            <span
+                class="material-symbols-outlined group-hover:text-neon-violet dark:group-hover:text-neon-cyan transition-colors">shield</span>
+            <span class="text-sm font-display font-medium">Roles & Permissions</span>
+        </a>
+        <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-neon-violet/10 dark:hover:bg-neon-cyan/10 hover:text-neon-violet dark:hover:text-neon-cyan transition-all group"
+            href="subscriptions.html" data-permission="view_subscriptions">
+            <span
+                class="material-symbols-outlined group-hover:text-neon-violet dark:group-hover:text-neon-cyan transition-colors">mail</span>
+            <span class="text-sm font-display font-medium">Subscriptions</span>
+        </a>
+        <a class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-neon-violet/10 dark:hover:bg-neon-cyan/10 hover:text-neon-violet dark:hover:text-neon-cyan transition-all group"
+            href="submissions.html" data-permission="view_submissions">
+            <span
+                class="material-symbols-outlined group-hover:text-neon-violet dark:group-hover:text-neon-cyan transition-colors">inbox</span>
+            <span class="text-sm font-display font-medium">Form Submissions</span>
         </a>
 
         <!-- HR Management -->

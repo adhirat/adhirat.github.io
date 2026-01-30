@@ -275,7 +275,7 @@
                 // Show success toast
                 showToast('Login successful! Redirecting...', 'success');
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = 'index.html';
                 }, 1000);
             } else {
                 showToast(result.error || 'Login failed', 'error');
@@ -297,7 +297,7 @@
             if (result.success) {
                 showToast('Signed in with Google! Redirecting...', 'success');
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = 'index.html';
                 }, 1000);
             } else {
                 showToast(result.error || 'Google sign-in failed', 'error');
@@ -318,7 +318,7 @@
             if (result.success) {
                 showToast('Signed in with Apple! Redirecting...', 'success');
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html';
+                    window.location.href = 'index.html';
                 }, 1000);
             } else {
                 showToast(result.error || 'Apple sign-in failed', 'error');
