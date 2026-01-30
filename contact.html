@@ -285,28 +285,46 @@
                                             </div>
                                             <span class="error-message">Please enter a valid email address.</span>
                                         </div>
-                                    </div>
-                                    <div class="space-y-2 group">
-                                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
-                                            for="service">Service Interest</label>
-                                        <div class="relative">
-                                            <select
-                                                class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10 appearance-none"
-                                                id="service" name="service" required>
-                                                <option value="" disabled selected>Select a Service</option>
-                                                <option value="Web Development">Web Development</option>
-                                                <option value="UI/UX Design">UI/UX Design</option>
-                                                <option value="Mobile App Development">Mobile App Development</option>
-                                                <option value="AI Solutions">AI Solutions</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                            <div
-                                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
-                                                <span
-                                                    class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">expand_more</span>
+                                        <div class="space-y-2 group">
+                                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
+                                                for="company">Company / Brand / Project</label>
+                                            <div class="relative">
+                                                <input
+                                                    class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
+                                                    id="company" name="company" placeholder="Acme Corp" type="text"
+                                                    required />
+                                                <div
+                                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                                    <span
+                                                        class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">business</span>
+                                                </div>
                                             </div>
+                                            <span class="error-message">Please enter your company or project
+                                                name.</span>
                                         </div>
-                                        <span class="error-message">Please select a service interest.</span>
+                                        <div class="space-y-2 group">
+                                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
+                                                for="service">Service Interest</label>
+                                            <div class="relative">
+                                                <select
+                                                    class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10 appearance-none"
+                                                    id="service" name="service" required>
+                                                    <option value="" disabled selected>Select a Service</option>
+                                                    <option value="Web Development">Web Development</option>
+                                                    <option value="UI/UX Design">UI/UX Design</option>
+                                                    <option value="Mobile App Development">Mobile App Development
+                                                    </option>
+                                                    <option value="AI Solutions">AI Solutions</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                                <div
+                                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                                    <span
+                                                        class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">expand_more</span>
+                                                </div>
+                                            </div>
+                                            <span class="error-message">Please select a service interest.</span>
+                                        </div>
                                     </div>
                                     <div class="space-y-2 group">
                                         <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
@@ -481,6 +499,7 @@
             const formData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
                 service: document.getElementById('service').value,
                 message: document.getElementById('message').value
             };
