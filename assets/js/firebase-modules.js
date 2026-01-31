@@ -28,20 +28,31 @@ import { sendContactNotification, sendNewsletterNotification } from './email-not
  * Used in contact.html for the contact form submission
  * Stores in Firebase and sends email notification to admin
  */
-export async function submitContactForm(data, file = null) {
+export async function submitContactForm(data, files = []) {
     try {
-        let attachmentUrl = null;
+        let attachments = [];
 
-        if (file) {
-            const storageRef = ref(storage, `contact-attachments/${Date.now()}_${file.name}`);
-            const snapshot = await uploadBytes(storageRef, file);
-            attachmentUrl = await getDownloadURL(snapshot.ref);
+        // Handle multiple file uploads
+        if (files && files.length > 0) {
+            for (const file of files) {
+                const storageRef = ref(storage, `contact-attachments/${Date.now()}_${file.name}`);
+                const snapshot = await uploadBytes(storageRef, file);
+                const downloadUrl = await getDownloadURL(snapshot.ref);
+                attachments.push({
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    url: downloadUrl
+                });
+            }
         }
 
         // Store in Firebase
         await addDoc(collection(db, "messages"), {
             ...data,
-            attachmentUrl: attachmentUrl,
+            attachments: attachments,
+            // Keep legacy field for backward compatibility
+            attachmentUrl: attachments.length > 0 ? attachments[0].url : null,
             createdAt: serverTimestamp(),
             status: "new"
         });
@@ -49,7 +60,8 @@ export async function submitContactForm(data, file = null) {
         // Send email notification to admin (non-blocking)
         sendContactNotification({
             ...data,
-            attachmentUrl: attachmentUrl
+            attachments: attachments,
+            attachmentUrl: attachments.length > 0 ? attachments[0].url : null
         }).catch(err => console.warn('Email notification failed:', err));
 
         return { success: true };

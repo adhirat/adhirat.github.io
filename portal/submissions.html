@@ -340,6 +340,22 @@
                         required></textarea>
                 </div>
                 <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Attachments
+                        <span class="text-slate-400 font-normal">(optional)</span></label>
+                    <div id="portal-attachment-dropzone"
+                        class="relative border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-lg p-4 text-center hover:border-primary hover:bg-primary/5 transition-all cursor-pointer">
+                        <input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" id="new-attachments"
+                            name="attachments" type="file" multiple
+                            accept="image/*, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .zip" />
+                        <div class="flex flex-col items-center gap-1">
+                            <span class="material-symbols-outlined text-2xl text-slate-400">cloud_upload</span>
+                            <p class="text-xs text-slate-500">Drag files here or <span
+                                    class="text-primary font-semibold">browse</span></p>
+                        </div>
+                    </div>
+                    <div id="portal-attachment-preview" class="hidden mt-2 space-y-2"></div>
+                </div>
+                <div class="space-y-2">
                     <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="new-status">Initial
                         Status</label>
                     <div class="flex gap-3">
@@ -384,12 +400,93 @@
             exportToCSV,
             PERMISSIONS
         } from '../assets/js/rbac.js';
+        import {
+            getFirestore, doc, collection, addDoc, updateDoc, serverTimestamp,
+            getStorage, ref, uploadBytes, getDownloadURL
+        } from '../assets/js/firebase-config.js';
+        import {
+            getAuth, createUserWithEmailAndPassword, sendPasswordResetEmail
+        } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+
+        const db = getFirestore();
+        const storage = getStorage();
 
         initRBACGuard([PERMISSIONS.VIEW_SUBMISSIONS]);
 
         let allSubmissions = [];
         let currentFilter = '';
         let selectedMessage = null;
+        let portalSelectedFiles = [];
+
+        // Setup portal file attachment handling
+        function setupPortalFileHandling() {
+            const fileInput = document.getElementById('new-attachments');
+            const dropzone = document.getElementById('portal-attachment-dropzone');
+            const previewContainer = document.getElementById('portal-attachment-preview');
+
+            function updatePreview() {
+                if (portalSelectedFiles.length === 0) {
+                    previewContainer.classList.add('hidden');
+                    return;
+                }
+
+                previewContainer.classList.remove('hidden');
+                previewContainer.innerHTML = portalSelectedFiles.map((file, index) => {
+                    const icon = file.type.startsWith('image/') ? 'image' :
+                        file.type.includes('pdf') ? 'picture_as_pdf' : 'description';
+                    const size = (file.size / 1024 / 1024).toFixed(2);
+                    return `
+                        <div class="flex items-center justify-between gap-2 p-2 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                            <div class="flex items-center gap-2 min-w-0">
+                                <span class="material-symbols-outlined text-primary text-lg">${icon}</span>
+                                <div class="min-w-0">
+                                    <p class="text-xs font-medium text-slate-900 dark:text-white truncate">${file.name}</p>
+                                    <p class="text-xs text-slate-500">${size} MB</p>
+                                </div>
+                            </div>
+                            <button type="button" onclick="removePortalFile(${index})" class="p-1 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition-colors">
+                                <span class="material-symbols-outlined text-red-500 text-sm">close</span>
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            window.removePortalFile = function (index) {
+                portalSelectedFiles.splice(index, 1);
+                updatePreview();
+            };
+
+            fileInput?.addEventListener('change', (e) => {
+                const newFiles = Array.from(e.target.files).filter(file => file.size <= 10 * 1024 * 1024);
+                portalSelectedFiles = [...portalSelectedFiles, ...newFiles];
+                updatePreview();
+                e.target.value = '';
+            });
+
+            ['dragenter', 'dragover'].forEach(evt => {
+                dropzone?.addEventListener(evt, (e) => {
+                    e.preventDefault();
+                    dropzone.classList.add('border-primary', 'bg-primary/5');
+                });
+            });
+
+            ['dragleave', 'drop'].forEach(evt => {
+                dropzone?.addEventListener(evt, (e) => {
+                    e.preventDefault();
+                    dropzone.classList.remove('border-primary', 'bg-primary/5');
+                });
+            });
+
+            dropzone?.addEventListener('drop', (e) => {
+                const newFiles = Array.from(e.dataTransfer.files).filter(file => file.size <= 10 * 1024 * 1024);
+                portalSelectedFiles = [...portalSelectedFiles, ...newFiles];
+                updatePreview();
+            });
+        }
+
+        // Initialize after DOM ready
+        setTimeout(setupPortalFileHandling, 100);
 
         async function loadSubmissions() {
             const result = await getAllSubmissions();
@@ -527,15 +624,7 @@
                                 </div>
                             </div>
 
-                            ${msg.attachmentUrl ? `
-                            <div>
-                                <h4 class="text-sm font-semibold text-slate-900 dark:text-white mb-2">Attachment</h4>
-                                <a href="${msg.attachmentUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-                                    <span class="material-symbols-outlined text-lg">attach_file</span>
-                                    <span class="text-sm font-medium">View Attachment</span>
-                                </a>
-                            </div>
-                            ` : ''}
+                            ${renderAttachments(msg)}
 
                             ${msg.response ? `
                             <div>
@@ -549,10 +638,86 @@
                                 </div>
                             </div>
                             ` : ''}
+
+                            <!-- Admin Actions -->
+                            ${!msg.clientCreated ? `
+                            <div class="pt-4 border-t border-slate-200 dark:border-slate-700">
+                                <h4 class="text-sm font-semibold text-slate-900 dark:text-white mb-3">Quick Actions</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    <button onclick="createClientFromSubmission('${msg.id}')" 
+                                        class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary to-blue-600 text-white rounded-lg hover:shadow-lg transition-all text-sm font-semibold"
+                                        data-permission="manage_clients">
+                                        <span class="material-symbols-outlined text-lg">person_add</span>
+                                        Create Client & Project
+                                    </button>
+                                    <button onclick="createClientOnlyFromSubmission('${msg.id}')" 
+                                        class="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-all text-sm font-semibold"
+                                        data-permission="manage_clients">
+                                        <span class="material-symbols-outlined text-lg">person_add</span>
+                                        Create Client Only
+                                    </button>
+                                </div>
+                            </div>
+                            ` : `
+                            <div class="pt-4 border-t border-slate-200 dark:border-slate-700">
+                                <div class="flex items-center gap-2 text-emerald-600">
+                                    <span class="material-symbols-outlined">check_circle</span>
+                                    <span class="text-sm font-medium">Client created: ${msg.clientName || 'N/A'}</span>
+                                </div>
+                                ${msg.projectCreated ? `
+                                <div class="flex items-center gap-2 text-emerald-600 mt-1">
+                                    <span class="material-symbols-outlined">check_circle</span>
+                                    <span class="text-sm font-medium">Project created: ${msg.projectName || 'N/A'}</span>
+                                </div>
+                                ` : ''}
+                            </div>
+                            `}
                         </div>
                     </div>
                 </div>
             `;
+        }
+
+        function renderAttachments(msg) {
+            // Handle new attachments array format
+            if (msg.attachments && msg.attachments.length > 0) {
+                return `
+                <div>
+                    <h4 class="text-sm font-semibold text-slate-900 dark:text-white mb-2">Attachments (${msg.attachments.length})</h4>
+                    <div class="space-y-2">
+                        ${msg.attachments.map(att => {
+                    const icon = att.type?.startsWith('image/') ? 'image' :
+                        att.type?.includes('pdf') ? 'picture_as_pdf' : 'description';
+                    const size = att.size ? (att.size / 1024 / 1024).toFixed(2) + ' MB' : '';
+                    return `
+                                <a href="${att.url}" target="_blank" 
+                                   class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors border border-slate-200 dark:border-slate-700">
+                                    <span class="material-symbols-outlined text-primary">${icon}</span>
+                                    <div class="min-w-0 flex-1">
+                                        <p class="text-sm font-medium text-slate-900 dark:text-white truncate">${att.name || 'Attachment'}</p>
+                                        ${size ? `<p class="text-xs text-slate-500">${size}</p>` : ''}
+                                    </div>
+                                    <span class="material-symbols-outlined text-slate-400">open_in_new</span>
+                                </a>
+                            `;
+                }).join('')}
+                    </div>
+                </div>
+                `;
+            }
+            // Fallback for legacy single attachment
+            else if (msg.attachmentUrl) {
+                return `
+                <div>
+                    <h4 class="text-sm font-semibold text-slate-900 dark:text-white mb-2">Attachment</h4>
+                    <a href="${msg.attachmentUrl}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                        <span class="material-symbols-outlined text-lg">attach_file</span>
+                        <span class="text-sm font-medium">View Attachment</span>
+                    </a>
+                </div>
+                `;
+            }
+            return '';
         }
 
         function updateStats() {
@@ -738,30 +903,175 @@
             const btn = document.getElementById('submit-new-btn');
             const originalContent = btn.innerHTML;
             btn.disabled = true;
-            btn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">progress_activity</span> Creating...';
+            btn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">progress_activity</span> Uploading...';
 
-            const submissionData = {
-                name,
-                email,
-                phone,
-                company,
-                service,
-                message,
-                status
-            };
+            try {
+                // Upload files if any
+                let attachments = [];
+                if (portalSelectedFiles.length > 0) {
+                    for (const file of portalSelectedFiles) {
+                        const storageRef = ref(storage, `contact-attachments/${Date.now()}_${file.name}`);
+                        const snapshot = await uploadBytes(storageRef, file);
+                        const downloadUrl = await getDownloadURL(snapshot.ref);
+                        attachments.push({
+                            name: file.name,
+                            type: file.type,
+                            size: file.size,
+                            url: downloadUrl
+                        });
+                    }
+                }
 
-            const result = await createSubmission(submissionData);
+                btn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">progress_activity</span> Creating...';
 
-            if (result.success) {
-                showToast('Submission created successfully', 'success');
-                closeNewSubmissionModal();
-                loadSubmissions();
-            } else {
-                showToast(result.error || 'Failed to create submission', 'error');
+                const submissionData = {
+                    name,
+                    email,
+                    phone,
+                    company,
+                    service,
+                    message,
+                    status,
+                    attachments,
+                    attachmentUrl: attachments.length > 0 ? attachments[0].url : null
+                };
+
+                const result = await createSubmission(submissionData);
+
+                if (result.success) {
+                    showToast('Submission created successfully', 'success');
+                    portalSelectedFiles = [];
+                    closeNewSubmissionModal();
+                    loadSubmissions();
+                } else {
+                    showToast(result.error || 'Failed to create submission', 'error');
+                }
+            } catch (error) {
+                console.error('Error creating submission:', error);
+                showToast('Error: ' + error.message, 'error');
             }
 
             btn.disabled = false;
             btn.innerHTML = originalContent;
+        };
+
+        // Create client and project from submission
+        window.createClientFromSubmission = async function (submissionId) {
+            const msg = allSubmissions.find(s => s.id === submissionId);
+            if (!msg) return;
+
+            if (!confirm(`Create a new client and project from this submission?\n\nClient: ${msg.name}\nCompany: ${msg.company || 'N/A'}\nEmail: ${msg.email}`)) {
+                return;
+            }
+
+            showToast('Creating client and project...', 'success');
+
+            try {
+                // 1. Create client record
+                const clientRef = await addDoc(collection(db, 'clients'), {
+                    name: msg.name,
+                    email: msg.email,
+                    phone: msg.phone || '',
+                    company: msg.company || '',
+                    address: '',
+                    status: 'active',
+                    notes: `Created from contact form submission.\nService Interest: ${msg.service || 'N/A'}\nOriginal Message: ${msg.message || ''}`,
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp(),
+                    sourceSubmissionId: submissionId
+                });
+
+                // 2. Create project record with attachments
+                const projectRef = await addDoc(collection(db, 'projects'), {
+                    name: `${msg.company || msg.name} - ${msg.service || 'New Project'}`,
+                    description: msg.message || '',
+                    clientId: clientRef.id,
+                    clientName: msg.name,
+                    status: 'planning',
+                    priority: 'medium',
+                    startDate: new Date().toISOString().split('T')[0],
+                    dueDate: '',
+                    budget: 0,
+                    attachments: msg.attachments || (msg.attachmentUrl ? [{ url: msg.attachmentUrl, name: 'Original Attachment' }] : []),
+                    notes: `Service Interest: ${msg.service || 'N/A'}`,
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp(),
+                    sourceSubmissionId: submissionId
+                });
+
+                // 3. Update submission with created records
+                await updateDoc(doc(db, 'messages', submissionId), {
+                    clientCreated: true,
+                    clientId: clientRef.id,
+                    clientName: msg.name,
+                    projectCreated: true,
+                    projectId: projectRef.id,
+                    projectName: `${msg.company || msg.name} - ${msg.service || 'New Project'}`,
+                    updatedAt: serverTimestamp()
+                });
+
+                // Update local data
+                msg.clientCreated = true;
+                msg.clientName = msg.name;
+                msg.projectCreated = true;
+                msg.projectName = `${msg.company || msg.name} - ${msg.service || 'New Project'}`;
+
+                // Refresh display
+                renderMessageDetail(msg);
+
+                showToast('Client and project created successfully!', 'success');
+            } catch (error) {
+                console.error('Error creating client/project:', error);
+                showToast('Error: ' + error.message, 'error');
+            }
+        };
+
+        // Create client only (no project)
+        window.createClientOnlyFromSubmission = async function (submissionId) {
+            const msg = allSubmissions.find(s => s.id === submissionId);
+            if (!msg) return;
+
+            if (!confirm(`Create a new client from this submission?\n\nClient: ${msg.name}\nCompany: ${msg.company || 'N/A'}\nEmail: ${msg.email}`)) {
+                return;
+            }
+
+            showToast('Creating client...', 'success');
+
+            try {
+                // Create client record
+                const clientRef = await addDoc(collection(db, 'clients'), {
+                    name: msg.name,
+                    email: msg.email,
+                    phone: msg.phone || '',
+                    company: msg.company || '',
+                    address: '',
+                    status: 'active',
+                    notes: `Created from contact form submission.\nService Interest: ${msg.service || 'N/A'}\nOriginal Message: ${msg.message || ''}`,
+                    createdAt: serverTimestamp(),
+                    updatedAt: serverTimestamp(),
+                    sourceSubmissionId: submissionId
+                });
+
+                // Update submission with created client
+                await updateDoc(doc(db, 'messages', submissionId), {
+                    clientCreated: true,
+                    clientId: clientRef.id,
+                    clientName: msg.name,
+                    updatedAt: serverTimestamp()
+                });
+
+                // Update local data
+                msg.clientCreated = true;
+                msg.clientName = msg.name;
+
+                // Refresh display
+                renderMessageDetail(msg);
+
+                showToast('Client created successfully!', 'success');
+            } catch (error) {
+                console.error('Error creating client:', error);
+                showToast('Error: ' + error.message, 'error');
+            }
         };
 
         loadSubmissions();
