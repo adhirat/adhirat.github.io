@@ -368,9 +368,8 @@
 
     <script type="module">
         import { initAuthObserver } from "../assets/js/firebase-modules.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from '../assets/js/firebase-config.js';
+        import { db, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, serverTimestamp, query, orderBy } from '../assets/js/firebase-config.js';
 
-        const db = getFirestore();
         initAuthObserver(true);
 
         let invoices = [];
