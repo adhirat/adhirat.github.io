@@ -638,6 +638,402 @@ function generateNewsletterTemplate(name, email, subject, content, previewText) 
 }
 
 // ============================================
+// CONTRACT EMAIL NOTIFICATIONS
+// ============================================
+
+/**
+ * Send email when a contract is sent to client for signature
+ * @param {Object} data - Contract data
+ */
+function sendContractSentEmail(data) {
+    const subject = `📝 Contract Ready for Signature: ${data.contractTitle}`;
+    
+    const htmlBody = generateContractEmailTemplate({
+        type: 'sent',
+        badge: '📝 Action Required',
+        badgeColor: 'rgba(245, 158, 11, 0.2)',
+        badgeBorderColor: 'rgba(245, 158, 11, 0.4)',
+        badgeTextColor: '#fbbf24',
+        title: 'Contract Ready for Signature',
+        subtitle: 'Please review and sign your contract',
+        contractTitle: data.contractTitle,
+        clientName: data.clientName,
+        projectName: data.projectName,
+        value: data.value,
+        expiryDate: data.expiryDate,
+        portalUrl: data.portalUrl || 'https://adhirat.com/portal/contracts.html',
+        buttonText: 'Review & Sign Contract',
+        buttonColor: 'linear-gradient(90deg, #f59e0b, #d97706)',
+        message: `A new contract has been prepared for you by ${COMPANY_NAME}. Please review the terms and conditions, then sign the contract at your earliest convenience.`
+    });
+    
+    GmailApp.sendEmail(data.clientEmail, subject, 
+        `Contract Ready for Signature\n\nHi ${data.clientName},\n\nA new contract "${data.contractTitle}" is ready for your signature.\n\nPlease visit ${data.portalUrl || 'https://adhirat.com/portal'} to review and sign.\n\n${COMPANY_NAME}`,
+        { htmlBody: htmlBody, name: COMPANY_NAME }
+    );
+    
+    // Also notify admin
+    GmailApp.sendEmail(ADMIN_EMAIL, `📤 Contract Sent: ${data.contractTitle}`,
+        `Contract sent to client\n\nContract: ${data.contractTitle}\nClient: ${data.clientName}\nEmail: ${data.clientEmail}`,
+        { name: COMPANY_NAME }
+    );
+}
+
+/**
+ * Send email when a contract is signed by client
+ * @param {Object} data - Contract data with signature info
+ */
+function sendContractSignedEmail(data) {
+    const subject = `✍️ Contract Signed: ${data.contractTitle}`;
+    
+    // Notify admin
+    const adminHtmlBody = generateContractEmailTemplate({
+        type: 'signed',
+        badge: '✍️ Signed',
+        badgeColor: 'rgba(59, 130, 246, 0.2)',
+        badgeBorderColor: 'rgba(59, 130, 246, 0.4)',
+        badgeTextColor: '#60a5fa',
+        title: 'Contract Has Been Signed',
+        subtitle: 'Awaiting your approval',
+        contractTitle: data.contractTitle,
+        clientName: data.clientName,
+        projectName: data.projectName,
+        value: data.value,
+        signedBy: data.signerName,
+        signedAt: data.signedAt,
+        portalUrl: data.portalUrl || 'https://adhirat.com/portal/contracts.html',
+        buttonText: 'Review & Approve',
+        buttonColor: 'linear-gradient(90deg, #3b82f6, #2563eb)',
+        message: `The contract has been signed by ${data.clientName}. Please review and approve or reject the contract.`
+    });
+    
+    GmailApp.sendEmail(ADMIN_EMAIL, subject, 
+        `Contract Signed\n\nContract: ${data.contractTitle}\nSigned by: ${data.signerName}\nClient: ${data.clientName}\n\nPlease review and approve in the portal.`,
+        { htmlBody: adminHtmlBody, name: COMPANY_NAME }
+    );
+    
+    // Confirm to client
+    const clientHtmlBody = generateContractEmailTemplate({
+        type: 'signed_confirmation',
+        badge: '✅ Signature Received',
+        badgeColor: 'rgba(16, 185, 129, 0.2)',
+        badgeBorderColor: 'rgba(16, 185, 129, 0.4)',
+        badgeTextColor: '#34d399',
+        title: 'Thank You for Signing',
+        subtitle: 'Your signature has been recorded',
+        contractTitle: data.contractTitle,
+        clientName: data.clientName,
+        projectName: data.projectName,
+        value: data.value,
+        signedBy: data.signerName,
+        signedAt: data.signedAt,
+        buttonText: 'View Contract',
+        buttonColor: 'linear-gradient(90deg, #10b981, #059669)',
+        message: `Thank you for signing the contract. Your signature has been recorded and the contract is now pending approval by ${COMPANY_NAME}. You will receive a confirmation email once approved.`
+    });
+    
+    GmailApp.sendEmail(data.clientEmail, `✅ Signature Confirmed: ${data.contractTitle}`,
+        `Signature Confirmed\n\nThank you for signing "${data.contractTitle}".\n\nYour signature has been recorded and is pending approval.\n\n${COMPANY_NAME}`,
+        { htmlBody: clientHtmlBody, name: COMPANY_NAME }
+    );
+}
+
+/**
+ * Send email when a contract is approved by admin
+ * @param {Object} data - Contract data with approval info
+ */
+function sendContractApprovedEmail(data) {
+    const subject = `🎉 Contract Approved: ${data.contractTitle}`;
+    
+    const htmlBody = generateContractEmailTemplate({
+        type: 'approved',
+        badge: '🎉 Approved',
+        badgeColor: 'rgba(16, 185, 129, 0.2)',
+        badgeBorderColor: 'rgba(16, 185, 129, 0.4)',
+        badgeTextColor: '#34d399',
+        title: 'Contract Approved!',
+        subtitle: 'Your contract is now active',
+        contractTitle: data.contractTitle,
+        clientName: data.clientName,
+        projectName: data.projectName,
+        value: data.value,
+        approvedAt: data.approvedAt,
+        buttonText: 'View Contract',
+        buttonColor: 'linear-gradient(90deg, #10b981, #059669)',
+        message: `Great news! Your contract has been approved by ${COMPANY_NAME}. The contract is now active and work can begin. Thank you for your trust in us!`
+    });
+    
+    // Notify client
+    GmailApp.sendEmail(data.clientEmail, subject, 
+        `Contract Approved!\n\nHi ${data.clientName},\n\nYour contract "${data.contractTitle}" has been approved!\n\nThank you for your trust in ${COMPANY_NAME}.`,
+        { htmlBody: htmlBody, name: COMPANY_NAME }
+    );
+    
+    // Notify admin
+    GmailApp.sendEmail(ADMIN_EMAIL, `✅ Contract Approved: ${data.contractTitle}`,
+        `Contract approved and notifications sent\n\nContract: ${data.contractTitle}\nClient: ${data.clientName}\nValue: $${data.value || 0}`,
+        { name: COMPANY_NAME }
+    );
+}
+
+/**
+ * Generate beautiful glassmorphism contract email template
+ */
+function generateContractEmailTemplate(options) {
+    const {
+        type, badge, badgeColor, badgeBorderColor, badgeTextColor,
+        title, subtitle, contractTitle, clientName, projectName,
+        value, expiryDate, signedBy, signedAt, approvedAt,
+        portalUrl, buttonText, buttonColor, message
+    } = options;
+    
+    return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${title}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    </head>
+    <body style="margin: 0; padding: 0; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%); min-height: 100vh; font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="min-height: 100vh;">
+            <tr>
+                <td align="center" style="padding: 40px 20px;">
+                    
+                    <!-- Glass Card -->
+                    <table cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px;">
+                        <tr>
+                            <td style="background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%); backdrop-filter: blur(20px); border-radius: 24px; border: 1px solid rgba(139, 92, 246, 0.3); box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);">
+                                
+                                <!-- Header -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding: 40px 40px 0 40px;">
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <tr>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="font-size: 28px; font-weight: 700; color: white; letter-spacing: -0.5px;">
+                                                            Adhirat<span style="background: linear-gradient(90deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">.Tech</span>
+                                                        </div>
+                                                    </td>
+                                                    <td align="right" style="vertical-align: middle;">
+                                                        <span style="background: ${badgeColor}; border: 1px solid ${badgeBorderColor}; border-radius: 999px; padding: 8px 16px; font-size: 12px; font-weight: 600; color: ${badgeTextColor}; text-transform: uppercase; letter-spacing: 1px;">
+                                                            ${badge}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- Title Section -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding: 40px;">
+                                            <h1 style="margin: 0 0 12px 0; font-size: 32px; font-weight: 700; color: white; line-height: 1.2;">
+                                                ${title.split(' ')[0]} <span style="background: linear-gradient(90deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">${title.split(' ').slice(1).join(' ')}</span>
+                                            </h1>
+                                            <p style="margin: 0; color: rgba(148, 163, 184, 1); font-size: 16px; line-height: 1.6;">
+                                                ${subtitle}
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- Divider -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding: 0 40px;">
+                                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), rgba(6, 182, 212, 0.5), transparent);"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- Contract Details -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding: 32px 40px;">
+                                            
+                                            <!-- Contract Title Card -->
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                                                <tr>
+                                                    <td style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.2); border-radius: 16px; padding: 20px;">
+                                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                            <tr>
+                                                                <td width="50" style="vertical-align: top;">
+                                                                    <div style="width: 44px; height: 44px; background: linear-gradient(135deg, #8b5cf6, #06b6d4); border-radius: 12px; text-align: center; line-height: 44px;">
+                                                                        <span style="font-size: 20px;">📄</span>
+                                                                    </div>
+                                                                </td>
+                                                                <td style="padding-left: 16px; vertical-align: top;">
+                                                                    <div style="font-size: 11px; font-weight: 600; color: #a78bfa; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px;">CONTRACT</div>
+                                                                    <div style="font-size: 18px; font-weight: 600; color: white;">${contractTitle}</div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            
+                                            <!-- Info Grid -->
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                                                <tr>
+                                                    <td width="50%" style="padding-right: 10px; vertical-align: top;">
+                                                        <div style="background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 12px; padding: 16px;">
+                                                            <div style="font-size: 10px; font-weight: 600; color: #22d3ee; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px;">CLIENT</div>
+                                                            <div style="font-size: 15px; font-weight: 600; color: white;">${clientName}</div>
+                                                        </div>
+                                                    </td>
+                                                    <td width="50%" style="padding-left: 10px; vertical-align: top;">
+                                                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 12px; padding: 16px;">
+                                                            <div style="font-size: 10px; font-weight: 600; color: #34d399; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px;">VALUE</div>
+                                                            <div style="font-size: 15px; font-weight: 600; color: white;">$${value ? value.toLocaleString() : '0'}</div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            
+                                            ${projectName ? `
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                                                <tr>
+                                                    <td style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px;">
+                                                        <div style="font-size: 10px; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px;">PROJECT</div>
+                                                        <div style="font-size: 15px; font-weight: 500; color: white;">${projectName}</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            ` : ''}
+                                            
+                                            ${signedBy ? `
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="margin-bottom: 20px;">
+                                                <tr>
+                                                    <td style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); border-radius: 12px; padding: 16px;">
+                                                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <div style="font-size: 10px; font-weight: 600; color: #60a5fa; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px;">SIGNED BY</div>
+                                                                    <div style="font-size: 15px; font-weight: 600; color: white;">${signedBy}</div>
+                                                                </td>
+                                                                <td align="right">
+                                                                    <div style="font-size: 12px; color: #94a3b8;">${signedAt ? new Date(signedAt).toLocaleDateString('en-AU', { dateStyle: 'medium', timeStyle: 'short' }) : ''}</div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            ` : ''}
+                                            
+                                            <!-- Message -->
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <tr>
+                                                    <td style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px;">
+                                                        <div style="font-size: 15px; color: rgba(226, 232, 240, 0.9); line-height: 1.8;">${message}</div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- Divider -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding: 0 40px;">
+                                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), rgba(6, 182, 212, 0.5), transparent);"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- CTA Button -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td align="center" style="padding: 32px 40px;">
+                                            <a href="${portalUrl || 'https://adhirat.com/portal/contracts.html'}" style="display: inline-block; background: ${buttonColor}; color: white; padding: 14px 32px; border-radius: 12px; font-size: 15px; font-weight: 600; text-decoration: none; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+                                                ${buttonText} →
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <!-- Footer -->
+                    <table cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px;">
+                        <tr>
+                            <td align="center" style="padding: 32px 20px;">
+                                <p style="margin: 0; font-size: 12px; color: rgba(148, 163, 184, 0.5);">
+                                    This notification was sent by <strong style="color: rgba(148, 163, 184, 0.7);">${COMPANY_NAME}</strong><br>
+                                    © ${new Date().getFullYear()} All rights reserved • <a href="https://adhirat.com" style="color: #8b5cf6; text-decoration: none;">adhirat.com</a>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </td>
+            </tr>
+        </table>
+        
+    </body>
+    </html>
+    `;
+}
+
+/**
+ * Test contract sent email
+ */
+function testContractSentEmail() {
+    sendContractSentEmail({
+        contractTitle: 'Service Agreement - Test Project',
+        clientName: 'John Doe',
+        clientEmail: 'admin@adhirat.com',
+        projectName: 'Website Redesign',
+        value: 15000,
+        expiryDate: '2026-03-01',
+        portalUrl: 'https://adhirat.com/portal/contracts.html'
+    });
+    Logger.log('Contract sent email test completed');
+}
+
+/**
+ * Test contract signed email
+ */
+function testContractSignedEmail() {
+    sendContractSignedEmail({
+        contractTitle: 'Service Agreement - Test Project',
+        clientName: 'John Doe',
+        clientEmail: 'admin@adhirat.com',
+        signerName: 'John Doe',
+        signedAt: new Date().toISOString(),
+        projectName: 'Website Redesign',
+        value: 15000,
+        portalUrl: 'https://adhirat.com/portal/contracts.html'
+    });
+    Logger.log('Contract signed email test completed');
+}
+
+/**
+ * Test contract approved email
+ */
+function testContractApprovedEmail() {
+    sendContractApprovedEmail({
+        contractTitle: 'Service Agreement - Test Project',
+        clientName: 'John Doe',
+        clientEmail: 'admin@adhirat.com',
+        projectName: 'Website Redesign',
+        value: 15000,
+        approvedAt: new Date().toISOString()
+    });
+    Logger.log('Contract approved email test completed');
+}
+
+// ============================================
 // TEST FUNCTIONS
 // ============================================
 

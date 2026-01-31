@@ -14,6 +14,7 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <script src="../assets/js/app.js"></script>
     <style>
@@ -357,6 +358,23 @@
         let signatureCanvas, signatureCtx;
         let isDrawing = false;
 
+        // Google Apps Script URL for email notifications
+        const EMAIL_API_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
+        // Helper function to send email notifications
+        async function sendEmailNotification(type, data) {
+            try {
+                await fetch(EMAIL_API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type, ...data })
+                });
+            } catch (error) {
+                console.error('Error sending email notification:', error);
+            }
+        }
+
         // Status configuration
         const STATUS_CONFIG = {
             draft: { label: 'Draft', class: 'bg-slate-100 text-slate-600' },
@@ -425,13 +443,7 @@
         async function loadContracts() {
             try {
                 const contractsRef = collection(db, 'contracts');
-                let q;
-
-                if (currentUserIsAdmin) {
-                    q = query(contractsRef, orderBy('createdAt', 'desc'));
-                } else {
-                    q = query(contractsRef, orderBy('createdAt', 'desc'));
-                }
+                const q = query(contractsRef, orderBy('createdAt', 'desc'));
 
                 const snapshot = await getDocs(q);
                 allContracts = snapshot.docs.map(doc => ({
@@ -439,11 +451,18 @@
                     ...doc.data()
                 }));
 
-                // Filter for non-admin users (only see contracts assigned to them)
+                // Filter for non-admin users (only see contracts for their linked client)
                 if (!currentUserIsAdmin) {
-                    allContracts = allContracts.filter(c =>
-                        c.clientUserId === currentUserId || c.createdBy === currentUserId
-                    );
+                    // Find the client record linked to the current user
+                    const linkedClient = allClients.find(c => c.linkedUserId === currentUserId);
+                    if (linkedClient) {
+                        allContracts = allContracts.filter(c => c.clientId === linkedClient.id);
+                    } else {
+                        // No linked client, show contracts created by this user or with clientUserId
+                        allContracts = allContracts.filter(c =>
+                            c.clientUserId === currentUserId || c.createdBy === currentUserId
+                        );
+                    }
                 }
 
                 renderContracts(allContracts);
@@ -706,8 +725,21 @@
                     await setDoc(docRef, contractData);
 
                     if (status === 'pending') {
+                        // Send email notification to client
+                        const client = allClients.find(c => c.id === clientId);
+                        const project = allProjects.find(p => p.id === contractData.projectId);
+                        if (client?.email) {
+                            await sendEmailNotification('contract_sent', {
+                                contractTitle: title,
+                                clientName: client.name,
+                                clientEmail: client.email,
+                                projectName: project?.name || null,
+                                value: contractData.value,
+                                expiryDate: contractData.expiryDate,
+                                portalUrl: window.location.origin + '/portal/contracts.html'
+                            });
+                        }
                         showToast('Contract created and sent to client', 'success');
-                        // TODO: Send email notification
                     } else {
                         showToast('Contract saved as draft', 'success');
                     }
@@ -836,16 +868,35 @@
             }
 
             try {
+                const contract = allContracts.find(c => c.id === contractId);
+                const signedAt = new Date().toISOString();
+
                 await updateDoc(doc(db, 'contracts', contractId), {
                     status: 'signed',
                     signature: {
                         name: signerName,
                         image: signatureData,
-                        signedAt: new Date().toISOString(),
+                        signedAt: signedAt,
                         signedBy: currentUserId
                     },
                     signedAt: serverTimestamp()
                 });
+
+                // Send email notification for signed contract
+                const client = allClients.find(c => c.id === contract?.clientId);
+                const project = allProjects.find(p => p.id === contract?.projectId);
+                if (client?.email) {
+                    await sendEmailNotification('contract_signed', {
+                        contractTitle: contract.title,
+                        clientName: client.name,
+                        clientEmail: client.email,
+                        signerName: signerName,
+                        signedAt: signedAt,
+                        projectName: project?.name || null,
+                        value: contract.value,
+                        portalUrl: window.location.origin + '/portal/contracts.html'
+                    });
+                }
 
                 showToast('Contract signed successfully!', 'success');
                 closeSignModal();
@@ -858,10 +909,28 @@
 
         window.sendContract = async function (contractId) {
             try {
+                const contract = allContracts.find(c => c.id === contractId);
+
                 await updateDoc(doc(db, 'contracts', contractId), {
                     status: 'pending',
                     sentAt: serverTimestamp()
                 });
+
+                // Send email notification to client
+                const client = allClients.find(c => c.id === contract?.clientId);
+                const project = allProjects.find(p => p.id === contract?.projectId);
+                if (client?.email) {
+                    await sendEmailNotification('contract_sent', {
+                        contractTitle: contract.title,
+                        clientName: client.name,
+                        clientEmail: client.email,
+                        projectName: project?.name || null,
+                        value: contract.value,
+                        expiryDate: contract.expiryDate,
+                        portalUrl: window.location.origin + '/portal/contracts.html'
+                    });
+                }
+
                 showToast('Contract sent to client', 'success');
                 loadContracts();
             } catch (error) {
@@ -888,6 +957,7 @@
         window.approveContract = async function (contractId) {
             try {
                 const contract = allContracts.find(c => c.id === contractId);
+                const approvedAt = new Date().toISOString();
 
                 await updateDoc(doc(db, 'contracts', contractId), {
                     status: 'approved',
@@ -895,7 +965,20 @@
                     approvedBy: currentUserId
                 });
 
-                // TODO: Send email to client and admin
+                // Send email notification for approved contract
+                const client = allClients.find(c => c.id === contract?.clientId);
+                const project = allProjects.find(p => p.id === contract?.projectId);
+                if (client?.email) {
+                    await sendEmailNotification('contract_approved', {
+                        contractTitle: contract.title,
+                        clientName: client.name,
+                        clientEmail: client.email,
+                        projectName: project?.name || null,
+                        value: contract.value,
+                        approvedAt: approvedAt
+                    });
+                }
+
                 showToast('Contract approved! Email notifications sent.', 'success');
                 loadContracts();
             } catch (error) {
@@ -924,42 +1007,143 @@
             }
         };
 
-        window.downloadContract = function (contractId) {
+        window.downloadContract = async function (contractId) {
             const contract = allContracts.find(c => c.id === contractId);
             if (!contract) return;
 
             const client = allClients.find(c => c.id === contract.clientId);
+            const project = allProjects.find(p => p.id === contract.projectId);
+            const statusLabel = STATUS_CONFIG[contract.status]?.label || contract.status;
 
-            // Create printable content
-            const content = `
-                CONTRACT
-                ========
-                
-                Title: ${contract.title}
-                Client: ${client?.name || 'Unknown'}
-                Value: $${(contract.value || 0).toLocaleString()}
-                Status: ${STATUS_CONFIG[contract.status]?.label || contract.status}
-                
-                TERMS & CONDITIONS
-                ==================
-                ${contract.terms}
-                
-                ${contract.signature ? `
-                SIGNATURE
-                =========
-                Signed by: ${contract.signature.name}
-                Date: ${new Date(contract.signature.signedAt).toLocaleString()}
-                ` : 'Not yet signed'}
-            `;
+            // Generate PDF using jsPDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 20;
+            let y = 20;
 
-            // Download as text file
-            const blob = new Blob([content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${contract.title.replace(/[^a-z0-9]/gi, '_')}.txt`;
-            a.click();
-            URL.revokeObjectURL(url);
+            // Header
+            doc.setFillColor(15, 23, 42);
+            doc.rect(0, 0, pageWidth, 40, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(24);
+            doc.text('Adhirat Technologies', margin, 25);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.text('www.adhirat.com', margin, 33);
+
+            // Contract badge
+            doc.setFillColor(139, 92, 246);
+            doc.roundedRect(pageWidth - 60, 15, 45, 12, 3, 3, 'F');
+            doc.setFontSize(8);
+            doc.text(statusLabel.toUpperCase(), pageWidth - 55, 23);
+
+            y = 55;
+
+            // Title
+            doc.setTextColor(15, 23, 42);
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(20);
+            doc.text(contract.title, margin, y);
+            y += 15;
+
+            // Info Section
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(100, 116, 139);
+
+            const infoItems = [
+                ['Client:', client?.name || 'Unknown'],
+                ['Project:', project?.name || '-'],
+                ['Value:', '$' + (contract.value || 0).toLocaleString()],
+                ['Created:', contract.createdAt?.toDate ? contract.createdAt.toDate().toLocaleDateString() : 'N/A']
+            ];
+            if (contract.expiryDate) {
+                infoItems.push(['Expires:', new Date(contract.expiryDate).toLocaleDateString()]);
+            }
+
+            infoItems.forEach(([label, value]) => {
+                doc.setFont('helvetica', 'bold');
+                doc.text(label, margin, y);
+                doc.setFont('helvetica', 'normal');
+                doc.text(value, margin + 30, y);
+                y += 7;
+            });
+
+            y += 10;
+
+            // Divider
+            doc.setDrawColor(226, 232, 240);
+            doc.line(margin, y, pageWidth - margin, y);
+            y += 10;
+
+            // Terms & Conditions
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(14);
+            doc.setTextColor(15, 23, 42);
+            doc.text('Terms & Conditions', margin, y);
+            y += 10;
+
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(10);
+            doc.setTextColor(71, 85, 105);
+
+            const termsLines = doc.splitTextToSize(contract.terms, pageWidth - (margin * 2));
+            termsLines.forEach(line => {
+                if (y > 270) {
+                    doc.addPage();
+                    y = 20;
+                }
+                doc.text(line, margin, y);
+                y += 5;
+            });
+
+            // Signature Section
+            if (contract.signature) {
+                y += 15;
+                if (y > 220) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                doc.setDrawColor(226, 232, 240);
+                doc.line(margin, y, pageWidth - margin, y);
+                y += 15;
+
+                doc.setFont('helvetica', 'bold');
+                doc.setFontSize(14);
+                doc.setTextColor(15, 23, 42);
+                doc.text('Signature', margin, y);
+                y += 10;
+
+                // Add signature image
+                try {
+                    doc.addImage(contract.signature.image, 'PNG', margin, y, 60, 30);
+                    y += 35;
+                } catch (e) {
+                    console.log('Could not add signature image');
+                }
+
+                doc.setFont('helvetica', 'normal');
+                doc.setFontSize(10);
+                doc.text(`Signed by: ${contract.signature.name}`, margin, y);
+                y += 6;
+                doc.text(`Date: ${new Date(contract.signature.signedAt).toLocaleString()}`, margin, y);
+            }
+
+            // Footer on each page
+            const totalPages = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.setTextColor(148, 163, 184);
+                doc.text(`Page ${i} of ${totalPages}`, pageWidth / 2, 290, { align: 'center' });
+                doc.text(`© ${new Date().getFullYear()} Adhirat Technologies`, pageWidth / 2, 295, { align: 'center' });
+            }
+
+            // Save PDF
+            doc.save(`${contract.title.replace(/[^a-z0-9]/gi, '_')}.pdf`);
         };
 
         // Event listeners

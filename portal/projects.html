@@ -350,7 +350,7 @@
         async function init() {
             currentUserIsAdmin = await isAdmin();
             currentUserId = auth.currentUser?.uid;
-            
+
             await Promise.all([loadClients(), loadProjects()]);
         }
 
@@ -360,16 +360,16 @@
                 const clientsRef = collection(db, 'clients');
                 const q = query(clientsRef, where('status', '==', 'active'));
                 const snapshot = await getDocs(q);
-                
+
                 allClients = snapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
                 }));
-                
+
                 // Populate client dropdowns
                 const clientSelect = document.getElementById('project-client');
                 const clientFilter = document.getElementById('client-filter');
-                
+
                 allClients.forEach(client => {
                     clientSelect.innerHTML += `<option value="${client.id}">${client.name}${client.company ? ' (' + client.company + ')' : ''}</option>`;
                     clientFilter.innerHTML += `<option value="${client.id}">${client.name}</option>`;
@@ -383,33 +383,28 @@
         async function loadProjects() {
             try {
                 const projectsRef = collection(db, 'projects');
-                let q;
-                
-                // Admin sees all, clients see only their projects
-                if (currentUserIsAdmin) {
-                    q = query(projectsRef, orderBy('createdAt', 'desc'));
-                } else {
-                    // Get current user's client profile
-                    const userDoc = await getDoc(doc(db, 'users', currentUserId));
-                    const userData = userDoc.data();
-                    
-                    // Find projects linked to this user's client ID or created by them
-                    q = query(projectsRef, orderBy('createdAt', 'desc'));
-                }
-                
+                const q = query(projectsRef, orderBy('createdAt', 'desc'));
+
                 const snapshot = await getDocs(q);
                 allProjects = snapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()
                 }));
-                
-                // Filter for non-admin users
+
+                // Filter for non-admin users (only see projects for their linked client)
                 if (!currentUserIsAdmin) {
-                    allProjects = allProjects.filter(p => 
-                        p.createdBy === currentUserId || p.clientUserId === currentUserId
-                    );
+                    // Find the client record linked to the current user
+                    const linkedClient = allClients.find(c => c.linkedUserId === currentUserId);
+                    if (linkedClient) {
+                        allProjects = allProjects.filter(p => p.clientId === linkedClient.id);
+                    } else {
+                        // No linked client, show projects created by this user or with clientUserId
+                        allProjects = allProjects.filter(p =>
+                            p.createdBy === currentUserId || p.clientUserId === currentUserId
+                        );
+                    }
                 }
-                
+
                 renderProjects(allProjects);
                 updateStats();
             } catch (error) {
@@ -421,7 +416,7 @@
         // Render projects table
         function renderProjects(projects) {
             const tbody = document.getElementById('projects-table-body');
-            
+
             if (projects.length === 0) {
                 tbody.innerHTML = `
                     <tr>
@@ -493,29 +488,29 @@
             const search = document.getElementById('search-projects').value.toLowerCase();
             const status = document.getElementById('status-filter').value;
             const clientId = document.getElementById('client-filter').value;
-            
+
             let filtered = allProjects;
-            
+
             if (search) {
-                filtered = filtered.filter(p => 
+                filtered = filtered.filter(p =>
                     p.name?.toLowerCase().includes(search) ||
                     p.description?.toLowerCase().includes(search)
                 );
             }
-            
+
             if (status) {
                 filtered = filtered.filter(p => p.status === status);
             }
-            
+
             if (clientId) {
                 filtered = filtered.filter(p => p.clientId === clientId);
             }
-            
+
             renderProjects(filtered);
         }
 
         // File handling
-        window.handleFileSelect = function(event) {
+        window.handleFileSelect = function (event) {
             const files = Array.from(event.target.files);
             selectedFiles = [...selectedFiles, ...files];
             renderFileList();
@@ -537,7 +532,7 @@
             `).join('');
         }
 
-        window.removeFile = function(index) {
+        window.removeFile = function (index) {
             selectedFiles.splice(index, 1);
             renderFileList();
         };
@@ -559,7 +554,7 @@
         }
 
         // Modal functions
-        window.openProjectModal = function() {
+        window.openProjectModal = function () {
             document.getElementById('project-form').reset();
             document.getElementById('project-id').value = '';
             document.getElementById('project-modal-title').textContent = 'Create New Project';
@@ -569,11 +564,11 @@
             document.getElementById('project-modal').classList.remove('hidden');
         };
 
-        window.closeProjectModal = function() {
+        window.closeProjectModal = function () {
             document.getElementById('project-modal').classList.add('hidden');
         };
 
-        window.editProject = function(projectId) {
+        window.editProject = function (projectId) {
             const project = allProjects.find(p => p.id === projectId);
             if (!project) return;
 
@@ -585,7 +580,7 @@
             document.getElementById('project-deadline').value = project.deadline || '';
             document.getElementById('project-status').value = project.status || 'planning';
             document.getElementById('project-budget').value = project.budget || '';
-            
+
             document.getElementById('project-modal-title').textContent = 'Edit Project';
             document.getElementById('save-project-text').textContent = 'Update Project';
             selectedFiles = [];
@@ -593,7 +588,7 @@
             document.getElementById('project-modal').classList.remove('hidden');
         };
 
-        window.saveProject = async function() {
+        window.saveProject = async function () {
             const projectId = document.getElementById('project-id').value;
             const name = document.getElementById('project-name').value.trim();
             const clientId = document.getElementById('project-client').value;
@@ -646,7 +641,7 @@
                     projectData.attachments = attachments;
                     const docRef = doc(collection(db, 'projects'));
                     await setDoc(docRef, projectData);
-                    
+
                     // Update client's project count
                     const clientRef = doc(db, 'clients', clientId);
                     const clientDoc = await getDoc(clientRef);
@@ -655,7 +650,7 @@
                             projectCount: (clientDoc.data().projectCount || 0) + 1
                         });
                     }
-                    
+
                     showToast('Project created successfully', 'success');
                 }
 
@@ -670,7 +665,7 @@
             }
         };
 
-        window.viewProject = function(projectId) {
+        window.viewProject = function (projectId) {
             const project = allProjects.find(p => p.id === projectId);
             if (!project) return;
 
@@ -737,11 +732,11 @@
             document.getElementById('view-project-modal').classList.remove('hidden');
         };
 
-        window.closeViewProjectModal = function() {
+        window.closeViewProjectModal = function () {
             document.getElementById('view-project-modal').classList.add('hidden');
         };
 
-        window.deleteAttachment = async function(projectId, index) {
+        window.deleteAttachment = async function (projectId, index) {
             if (!currentUserIsAdmin) {
                 showToast('Only admins can delete attachments', 'error');
                 return;
@@ -753,7 +748,7 @@
             try {
                 const attachments = [...project.attachments];
                 const removed = attachments.splice(index, 1)[0];
-                
+
                 // Delete from storage
                 try {
                     const storageRef = ref(storage, removed.url);
@@ -761,10 +756,10 @@
                 } catch (e) {
                     console.log('Could not delete from storage:', e);
                 }
-                
+
                 // Update document
                 await updateDoc(doc(db, 'projects', projectId), { attachments });
-                
+
                 showToast('Attachment deleted', 'success');
                 loadProjects();
                 closeViewProjectModal();
@@ -774,7 +769,7 @@
             }
         };
 
-        window.openDeleteModal = function(projectId) {
+        window.openDeleteModal = function (projectId) {
             const project = allProjects.find(p => p.id === projectId);
             if (!project) return;
 
@@ -783,11 +778,11 @@
             document.getElementById('delete-modal').classList.remove('hidden');
         };
 
-        window.closeDeleteModal = function() {
+        window.closeDeleteModal = function () {
             document.getElementById('delete-modal').classList.add('hidden');
         };
 
-        window.confirmDelete = async function() {
+        window.confirmDelete = async function () {
             if (!currentUserIsAdmin) {
                 showToast('Only admins can delete projects', 'error');
                 return;
@@ -798,7 +793,7 @@
 
             try {
                 const project = allProjects.find(p => p.id === projectId);
-                
+
                 // Delete attachments from storage
                 if (project?.attachments) {
                     for (const att of project.attachments) {
@@ -810,7 +805,7 @@
                         }
                     }
                 }
-                
+
                 // Update client's project count
                 if (project?.clientId) {
                     const clientRef = doc(db, 'clients', project.clientId);
@@ -821,7 +816,7 @@
                         });
                     }
                 }
-                
+
                 await deleteDoc(doc(db, 'projects', projectId));
                 showToast('Project deleted successfully', 'success');
                 closeDeleteModal();
