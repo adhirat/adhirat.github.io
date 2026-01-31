@@ -787,6 +787,33 @@ export async function deleteSubmission(submissionId) {
     }
 }
 
+/**
+ * Create a new submission manually
+ * @param {Object} submissionData - Submission data (name, email, phone, company, service, message, status)
+ */
+export async function createSubmission(submissionData) {
+    try {
+        const newSubmission = {
+            name: submissionData.name || '',
+            email: submissionData.email || '',
+            phone: submissionData.phone || '',
+            company: submissionData.company || '',
+            service: submissionData.service || '',
+            message: submissionData.message || '',
+            status: submissionData.status || 'new',
+            createdAt: serverTimestamp(),
+            createdBy: auth.currentUser?.uid,
+            source: 'portal' // Mark as manually created from portal
+        };
+
+        const docRef = await addDoc(collection(db, 'messages'), newSubmission);
+        return { success: true, id: docRef.id };
+    } catch (error) {
+        console.error('Error creating submission:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 // ============================================
 // EXPORT FUNCTIONS
 // ============================================

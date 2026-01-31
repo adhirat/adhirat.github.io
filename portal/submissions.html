@@ -59,9 +59,16 @@
                             <p class="text-slate-500 dark:text-slate-400">View and respond to contact form inquiries.
                             </p>
                         </div>
-                        <div class="flex gap-3" data-permission="export_submissions">
+                        <div class="flex gap-3">
+                            <button onclick="openNewSubmissionModal()"
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-blue-600 transition-colors shadow-sm"
+                                data-permission="respond_submissions">
+                                <span class="material-symbols-outlined text-[18px]">add</span>
+                                New Submission
+                            </button>
                             <button onclick="exportSubmissions()"
-                                class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-dark-card border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm">
+                                class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white dark:bg-dark-card border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-white text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors shadow-sm"
+                                data-permission="export_submissions">
                                 <span class="material-symbols-outlined text-[18px]">download</span>
                                 Export CSV
                             </button>
@@ -235,6 +242,137 @@
         </div>
     </div>
 
+    <!-- New Submission Modal -->
+    <div id="new-submission-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="modal-backdrop absolute inset-0" onclick="closeNewSubmissionModal()"></div>
+        <div
+            class="relative bg-white dark:bg-dark-card rounded-2xl shadow-2xl max-w-2xl w-full border border-slate-200 dark:border-slate-700 animate-fade-in-up max-h-[90vh] overflow-y-auto">
+            <div
+                class="p-6 border-b border-slate-200 dark:border-slate-700 sticky top-0 bg-white dark:bg-dark-card z-10">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">New Contact Submission</h3>
+                        <p class="text-sm text-slate-500">Add a new contact record manually</p>
+                    </div>
+                    <button onclick="closeNewSubmissionModal()"
+                        class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <form id="new-submission-form" class="p-6 space-y-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="new-name">Full Name
+                            *</label>
+                        <div class="relative">
+                            <input
+                                class="block w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                                id="new-name" name="name" placeholder="John Doe" type="text" required />
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span class="material-symbols-outlined text-slate-400 text-lg">person</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="new-email">Email
+                            Address *</label>
+                        <div class="relative">
+                            <input
+                                class="block w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                                id="new-email" name="email" placeholder="john@company.com" type="email" required />
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span class="material-symbols-outlined text-slate-400 text-lg">alternate_email</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="new-phone">Phone
+                            <span class="text-slate-400 font-normal">(optional)</span></label>
+                        <div class="relative">
+                            <input
+                                class="block w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                                id="new-phone" name="phone" placeholder="+61 400 000 000" type="tel" />
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span class="material-symbols-outlined text-slate-400 text-lg">call</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300"
+                            for="new-company">Company / Brand / Project *</label>
+                        <div class="relative">
+                            <input
+                                class="block w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                                id="new-company" name="company" placeholder="Acme Corp" type="text" required />
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <span class="material-symbols-outlined text-slate-400 text-lg">business</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="new-service">Service
+                        Interest *</label>
+                    <div class="relative">
+                        <select
+                            class="block w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-900 dark:text-white focus:border-primary focus:ring-2 focus:ring-primary/20 appearance-none"
+                            id="new-service" name="service" required>
+                            <option value="" disabled selected>Select a Service</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Mobile App Development">Mobile App Development</option>
+                            <option value="AI Solutions">AI Solutions</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                            <span class="material-symbols-outlined text-slate-400 text-lg">expand_more</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="new-message">Message /
+                        Project Details *</label>
+                    <textarea
+                        class="block w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none"
+                        id="new-message" name="message"
+                        placeholder="Tell us about the project goals, timeline, and budget..." rows="4"
+                        required></textarea>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-sm font-semibold text-slate-700 dark:text-slate-300" for="new-status">Initial
+                        Status</label>
+                    <div class="flex gap-3">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="status" value="new" checked
+                                class="text-primary focus:ring-primary" />
+                            <span class="text-sm text-slate-600 dark:text-slate-400">New</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="status" value="read" class="text-primary focus:ring-primary" />
+                            <span class="text-sm text-slate-600 dark:text-slate-400">Read</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="status" value="responded"
+                                class="text-primary focus:ring-primary" />
+                            <span class="text-sm text-slate-600 dark:text-slate-400">Responded</span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+            <div
+                class="p-6 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 flex justify-end gap-3 sticky bottom-0">
+                <button onclick="closeNewSubmissionModal()"
+                    class="px-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium">Cancel</button>
+                <button onclick="submitNewSubmission()" id="submit-new-btn"
+                    class="px-6 py-2.5 rounded-lg bg-primary text-white hover:bg-blue-600 font-semibold flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">add</span>
+                    Create Submission
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import {
             initRBACGuard,
@@ -242,6 +380,7 @@
             updateSubmissionStatus,
             addResponseToSubmission,
             deleteSubmission,
+            createSubmission,
             exportToCSV,
             PERMISSIONS
         } from '../assets/js/rbac.js';
@@ -561,6 +700,69 @@
             document.body.appendChild(toast);
             setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
         }
+
+        // New Submission Modal
+        window.openNewSubmissionModal = function () {
+            document.getElementById('new-submission-modal').classList.remove('hidden');
+            document.getElementById('new-submission-form').reset();
+        };
+
+        window.closeNewSubmissionModal = function () {
+            document.getElementById('new-submission-modal').classList.add('hidden');
+        };
+
+        window.submitNewSubmission = async function () {
+            const form = document.getElementById('new-submission-form');
+
+            // Basic validation
+            const name = document.getElementById('new-name').value.trim();
+            const email = document.getElementById('new-email').value.trim();
+            const company = document.getElementById('new-company').value.trim();
+            const service = document.getElementById('new-service').value;
+            const message = document.getElementById('new-message').value.trim();
+            const phone = document.getElementById('new-phone').value.trim();
+            const status = form.querySelector('input[name="status"]:checked')?.value || 'new';
+
+            if (!name || !email || !company || !service || !message) {
+                showToast('Please fill in all required fields', 'error');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('submit-new-btn');
+            const originalContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">progress_activity</span> Creating...';
+
+            const submissionData = {
+                name,
+                email,
+                phone,
+                company,
+                service,
+                message,
+                status
+            };
+
+            const result = await createSubmission(submissionData);
+
+            if (result.success) {
+                showToast('Submission created successfully', 'success');
+                closeNewSubmissionModal();
+                loadSubmissions();
+            } else {
+                showToast(result.error || 'Failed to create submission', 'error');
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = originalContent;
+        };
 
         loadSubmissions();
     </script>

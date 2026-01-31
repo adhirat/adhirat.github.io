@@ -143,7 +143,7 @@
 
     <script type="module">
         import { initAuthObserver } from '../assets/js/firebase-modules.js';
-        initAuthObserver();
+        initAuthObserver(true);
 
         window.openContractModal = function () {
             document.getElementById('contract-modal').classList.remove('hidden');
