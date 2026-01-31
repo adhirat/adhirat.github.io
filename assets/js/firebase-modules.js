@@ -360,7 +360,7 @@ export function initAuthObserver(isProtected = false) {
 
             // Redirect away from auth pages if already logged in
             if (isAuthPage) {
-                window.location.href = 'dashboard.html';
+                window.location.href = 'index.html';
             }
         } else {
             // User is signed out
