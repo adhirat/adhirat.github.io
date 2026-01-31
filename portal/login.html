@@ -76,36 +76,25 @@
     <!-- Grid Pattern -->
     <div class="fixed inset-0 bg-grid-pattern opacity-30 pointer-events-none z-0"></div>
 
-    <!-- Top Navigation -->
-    <header
-        class="relative z-20 w-full border-b border-neon-violet/10 dark:border-neon-cyan/20 bg-white/50 dark:bg-dark-card/50 backdrop-blur-xl">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <a href="../index.html" class="flex items-center gap-3 group hover-tilt">
-                    <div class="size-8 text-primary">
-                        <img src="../assets/images/logo.svg" alt="Logo"
-                            class="w-full h-full transform rotate-180 dark:brightness-0 dark:invert transition-all duration-300">
-                    </div>
-                    <h2 class="text-lg font-display font-bold tracking-tight text-slate-900 dark:text-white">
-                        Adhirat<span class="text-gradient-animated">.Portal</span></h2>
-                </a>
-                <!-- Theme Toggle -->
-                <button onclick="toggleTheme()"
-                    class="flex items-center justify-center w-10 h-10 rounded-lg glass-card border border-neon-violet/10 dark:border-neon-cyan/20 hover:shadow-neon text-slate-500 dark:text-slate-400 transition-all">
-                    <span class="material-symbols-outlined dark:hidden">dark_mode</span>
-                    <span class="material-symbols-outlined hidden dark:block text-neon-cyan">light_mode</span>
-                </button>
-            </div>
-        </div>
-    </header>
-
     <!-- Main Content -->
     <main class="flex-grow flex items-center justify-center relative z-10 px-4 py-12 sm:px-6 lg:px-8">
-        <div class="w-full max-w-md space-y-8">
+        <div class="w-full max-w-md space-y-6">
             <!-- Login Card -->
             <div
                 class="portal-glass-card rounded-2xl shadow-neon-lg p-8 sm:p-10 transition-all duration-300 reveal reveal-up gradient-border-animated">
+
+                <!-- Logo -->
+                <div class="flex justify-center mb-6">
+                    <a href="../index.html" class="flex items-center gap-3 group hover-tilt">
+                        <div class="size-10 text-primary">
+                            <img src="../assets/images/logo.svg" alt="Logo"
+                                class="w-full h-full transform rotate-180 dark:brightness-0 dark:invert transition-all duration-300">
+                        </div>
+                        <h2 class="text-xl font-display font-bold tracking-tight text-slate-900 dark:text-white">
+                            Adhirat<span class="text-gradient-animated">.Portal</span></h2>
+                    </a>
+                </div>
+
                 <!-- Heading -->
                 <div class="text-center mb-8 relative z-10">
                     <h1 class="text-3xl font-display font-bold tracking-tight text-slate-900 dark:text-white mb-2">
@@ -234,6 +223,18 @@
                 </p>
             </div>
 
+            <!-- Theme Toggle (Centered Below) -->
+            <div class="flex justify-center">
+                <button onclick="toggleTheme()"
+                    class="flex items-center justify-center gap-2 px-4 py-2 rounded-full glass-card border border-neon-violet/10 dark:border-neon-cyan/20 hover:shadow-neon text-slate-500 dark:text-slate-400 transition-all text-sm font-medium">
+                    <span class="material-symbols-outlined dark:hidden text-[18px]">dark_mode</span>
+                    <span
+                        class="material-symbols-outlined hidden dark:block text-neon-cyan text-[18px]">light_mode</span>
+                    <span class="dark:hidden">Dark Mode</span>
+                    <span class="hidden dark:block">Light Mode</span>
+                </button>
+            </div>
+
             <!-- Footer Links -->
             <p class="text-center text-xs leading-5 text-slate-500 dark:text-slate-400 font-body">
                 © 2024 Adhirat Technologies.
@@ -290,49 +291,6 @@
                 btn.innerHTML = originalHTML;
             }
         });
-
-        // Google Sign-In Handler (Disabled - Coming Soon)
-        // document.getElementById('google-signin-btn').addEventListener('click', async () => {
-        //     const btn = document.getElementById('google-signin-btn');
-        //     const originalHTML = btn.innerHTML;
-        //     btn.disabled = true;
-        //     btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-sm">progress_activity</span> Connecting...';
-        //
-        //     const result = await signInWithGoogle();
-        //
-        //     if (result.success) {
-        //         showToast('Signed in with Google! Redirecting...', 'success');
-        //         setTimeout(() => {
-        //             window.location.href = 'index.html';
-        //         }, 1000);
-        //     } else {
-        //         showToast(result.error || 'Google sign-in failed', 'error');
-        //         btn.disabled = false;
-        //         btn.innerHTML = originalHTML;
-        //     }
-        // });
-
-        // Apple Sign-In Handler (Disabled - Coming Soon)
-        // document.getElementById('apple-signin-btn').addEventListener('click', async () => {
-        //     const btn = document.getElementById('apple-signin-btn');
-        //     const originalHTML = btn.innerHTML;
-        //     btn.disabled = true;
-        //     btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-sm">progress_activity</span> Connecting...';
-        //
-        //     const result = await signInWithApple();
-        //
-        //     if (result.success) {
-        //         showToast('Signed in with Apple! Redirecting...', 'success');
-        //         setTimeout(() => {
-        //             window.location.href = 'index.html';
-        //         }, 1000);
-        //     } else {
-        //         showToast(result.error || 'Apple sign-in failed', 'error');
-        //         btn.disabled = false;
-        //         btn.innerHTML = originalHTML;
-        //     }
-        // });
-
 
         // Toast function
         function showToast(message, type = 'success') {
