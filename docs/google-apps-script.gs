@@ -37,6 +37,16 @@ function doPost(e) {
             sendContactEmail(data);
         } else if (data.type === 'newsletter') {
             sendNewsletterEmail(data);
+        } else if (data.type === 'bulk_newsletter') {
+            const result = sendBulkNewsletter(data);
+            return ContentService.createTextOutput(JSON.stringify(result))
+                .setMimeType(ContentService.MimeType.JSON);
+        } else if (data.type === 'contract_sent') {
+            sendContractSentEmail(data);
+        } else if (data.type === 'contract_signed') {
+            sendContractSignedEmail(data);
+        } else if (data.type === 'contract_approved') {
+            sendContractApprovedEmail(data);
         }
         
         return ContentService.createTextOutput(JSON.stringify({ success: true }))
@@ -429,4 +439,299 @@ function testNewsletterEmail() {
         email: 'test@example.com',
         timestamp: new Date().toISOString()
     });
+}
+
+/**
+ * Send bulk newsletter emails to multiple recipients
+ * @param {Object} data - Contains recipients array, subject, and content
+ * @param {Array} data.recipients - Array of {email, name} objects
+ * @param {string} data.subject - Email subject line
+ * @param {string} data.content - Newsletter HTML content
+ * @param {string} data.previewText - Optional preview text
+ */
+function sendBulkNewsletter(data) {
+    const results = { 
+        success: true, 
+        sent: 0, 
+        failed: 0, 
+        errors: [],
+        timestamp: new Date().toISOString()
+    };
+    
+    if (!data.recipients || !Array.isArray(data.recipients) || data.recipients.length === 0) {
+        return { success: false, error: 'No recipients provided' };
+    }
+    
+    const subject = data.subject || '📬 Newsletter from Adhirat Technologies';
+    const content = data.content || 'Thank you for subscribing to our newsletter!';
+    const previewText = data.previewText || 'Latest updates from Adhirat Technologies';
+    
+    for (const recipient of data.recipients) {
+        try {
+            const email = recipient.email;
+            const name = recipient.name || email.split('@')[0];
+            
+            if (!email || !isValidEmail(email)) {
+                results.failed++;
+                results.errors.push({ email: email, error: 'Invalid email address' });
+                continue;
+            }
+            
+            const htmlBody = generateNewsletterTemplate(name, email, subject, content, previewText);
+            const plainText = `${subject}\n\nHi ${name},\n\n${stripHtml(content)}\n\n---\nAdhirat Technologies\nhttps://adhirat.com`;
+            
+            GmailApp.sendEmail(email, subject, plainText, { 
+                htmlBody: htmlBody,
+                name: COMPANY_NAME
+            });
+            
+            results.sent++;
+            Logger.log(`Email sent to: ${email}`);
+            
+            // Small delay to avoid rate limiting
+            Utilities.sleep(100);
+            
+        } catch (error) {
+            results.failed++;
+            results.errors.push({ email: recipient.email, error: error.message });
+            Logger.log(`Failed to send to ${recipient.email}: ${error.message}`);
+        }
+    }
+    
+    results.success = results.failed === 0;
+    return results;
+}
+
+/**
+ * Validate email format
+ */
+function isValidEmail(email) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+}
+
+/**
+ * Strip HTML tags for plain text version
+ */
+function stripHtml(html) {
+    return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * Generate newsletter HTML template
+ */
+function generateNewsletterTemplate(name, email, subject, content, previewText) {
+    return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${subject}</title>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <!--[if !mso]><!-->
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        </style>
+        <!--<![endif]-->
+    </head>
+    <body style="margin: 0; padding: 0; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%); min-height: 100vh; font-family: 'Space Grotesk', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <!-- Preview Text -->
+        <div style="display: none; max-height: 0; overflow: hidden;">${previewText}</div>
+        
+        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="min-height: 100vh;">
+            <tr>
+                <td align="center" style="padding: 40px 20px;">
+                    <!-- Glass Card -->
+                    <table cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px;">
+                        <tr>
+                            <td style="background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%); backdrop-filter: blur(20px); border-radius: 24px; border: 1px solid rgba(139, 92, 246, 0.3); box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
+                                
+                                <!-- Header -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding: 40px 40px 0 40px;">
+                                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                <tr>
+                                                    <td>
+                                                        <div style="font-size: 28px; font-weight: 700; color: white;">
+                                                            Adhirat<span style="background: linear-gradient(90deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">.Tech</span>
+                                                        </div>
+                                                    </td>
+                                                    <td align="right">
+                                                        <span style="background: linear-gradient(90deg, rgba(139, 92, 246, 0.2), rgba(6, 182, 212, 0.2)); border: 1px solid rgba(139, 92, 246, 0.4); border-radius: 999px; padding: 8px 16px; font-size: 11px; font-weight: 600; color: #a78bfa; text-transform: uppercase;">
+                                                            📬 Newsletter
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- Greeting -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding: 40px;">
+                                            <h1 style="margin: 0 0 16px 0; font-size: 28px; font-weight: 700; color: white;">
+                                                Hi <span style="background: linear-gradient(90deg, #8b5cf6, #06b6d4); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${name}</span>! 👋
+                                            </h1>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- Content -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding: 0 40px 40px 40px;">
+                                            <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 28px;">
+                                                <div style="font-size: 15px; color: rgba(226, 232, 240, 0.9); line-height: 1.8;">
+                                                    ${content}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- Divider -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td style="padding: 0 40px;">
+                                            <div style="height: 1px; background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.5), rgba(6, 182, 212, 0.5), transparent);"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                                <!-- Footer -->
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td align="center" style="padding: 28px 40px;">
+                                            <a href="https://adhirat.com" style="display: inline-block; background: linear-gradient(90deg, #8b5cf6, #06b6d4); color: white; padding: 12px 32px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none;">
+                                                Visit Our Website →
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <!-- Unsubscribe -->
+                    <table cellpadding="0" cellspacing="0" border="0" width="600" style="max-width: 600px;">
+                        <tr>
+                            <td align="center" style="padding: 24px 20px;">
+                                <p style="margin: 0; font-size: 11px; color: rgba(148, 163, 184, 0.5);">
+                                    © ${new Date().getFullYear()} ${COMPANY_NAME} • <a href="https://adhirat.com" style="color: #8b5cf6; text-decoration: none;">adhirat.com</a><br>
+                                    <a href="https://adhirat.com/unsubscribe?email=${encodeURIComponent(email)}" style="color: rgba(148, 163, 184, 0.5); text-decoration: underline;">Unsubscribe</a>
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>
+    `;
+}
+
+// ============================================
+// TEST FUNCTIONS
+// ============================================
+
+/**
+ * Test bulk newsletter with multiple recipients
+ */
+function testBulkNewsletter() {
+    const result = sendBulkNewsletter({
+        recipients: [
+            { email: 'admin@adhirat.com', name: 'Admin' },
+            { email: 'test@adhirat.com', name: 'Test User' }
+        ],
+        subject: '🚀 Test Newsletter - Adhirat Technologies',
+        content: '<p>This is a <strong>test newsletter</strong> to verify the bulk email functionality is working correctly.</p><p>Features tested:</p><ul><li>Personalized greeting</li><li>HTML content rendering</li><li>Multiple recipients</li></ul>',
+        previewText: 'Testing the bulk newsletter feature'
+    });
+    
+    Logger.log('Bulk Newsletter Test Results:');
+    Logger.log(JSON.stringify(result, null, 2));
+    return result;
+}
+
+/**
+ * Test with single recipient
+ */
+function testSingleRecipient() {
+    const result = sendBulkNewsletter({
+        recipients: [
+            { email: 'admin@adhirat.com', name: 'Adhirat Admin' }
+        ],
+        subject: '✨ Single Recipient Test',
+        content: '<p>This email was sent to a single recipient to test the newsletter functionality.</p>',
+        previewText: 'Single recipient test'
+    });
+    
+    Logger.log('Single Recipient Test Results:');
+    Logger.log(JSON.stringify(result, null, 2));
+    return result;
+}
+
+/**
+ * Test email validation
+ */
+function testEmailValidation() {
+    const testCases = [
+        { email: 'valid@example.com', expected: true },
+        { email: 'invalid-email', expected: false },
+        { email: 'test@domain', expected: false },
+        { email: 'user@sub.domain.com', expected: true },
+        { email: '', expected: false },
+        { email: 'spaces @email.com', expected: false }
+    ];
+    
+    Logger.log('Email Validation Test Results:');
+    testCases.forEach(tc => {
+        const result = isValidEmail(tc.email);
+        const status = result === tc.expected ? '✅ PASS' : '❌ FAIL';
+        Logger.log(`${status}: "${tc.email}" - Expected: ${tc.expected}, Got: ${result}`);
+    });
+}
+
+/**
+ * Test with invalid recipients (should handle gracefully)
+ */
+function testInvalidRecipients() {
+    const result = sendBulkNewsletter({
+        recipients: [
+            { email: 'invalid-email', name: 'Invalid' },
+            { email: '', name: 'Empty' },
+            { email: 'admin@adhirat.com', name: 'Valid Admin' }
+        ],
+        subject: '🧪 Invalid Recipients Test',
+        content: '<p>Testing how the system handles invalid email addresses.</p>',
+        previewText: 'Invalid recipients test'
+    });
+    
+    Logger.log('Invalid Recipients Test Results:');
+    Logger.log(JSON.stringify(result, null, 2));
+    Logger.log(`Expected: 1 sent, 2 failed`);
+    return result;
+}
+
+/**
+ * Test empty recipients array
+ */
+function testEmptyRecipients() {
+    const result = sendBulkNewsletter({
+        recipients: [],
+        subject: 'Empty Test',
+        content: 'This should not send'
+    });
+    
+    Logger.log('Empty Recipients Test Results:');
+    Logger.log(JSON.stringify(result, null, 2));
+    Logger.log(`Expected: success: false, error about no recipients`);
+    return result;
 }
