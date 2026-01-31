@@ -118,6 +118,20 @@ function toggleMobileMenu() {
     }
 }
 
+// Global logout handler for portal pages
+// Uses dynamic import to load Firebase signOut
+async function handleLogout() {
+    try {
+        const { signOut } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js');
+        const { auth } = await import('./firebase-config.js');
+        await signOut(auth);
+        window.location.href = 'login.html';
+    } catch (error) {
+        console.error('Logout error:', error);
+        alert('Logout failed. Please try again.');
+    }
+}
+
 // Check for saved theme preference - default to system preference
 if ('theme' in localStorage) {
     // Use saved user preference
