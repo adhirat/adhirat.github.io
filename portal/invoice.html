@@ -378,13 +378,7 @@
         let lineItems = [];
         let logoDataUrl = null;
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            loadInvoices();
-            setDefaultDates();
-            // Wire up new invoice button
-            document.getElementById('new-invoice-btn')?.addEventListener('click', () => openComposer());
-        });
+        // Functions will be defined below, initialization at end of script
 
         async function loadInvoices() {
             try {
@@ -741,6 +735,12 @@
             document.body.appendChild(t);
             setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 300); }, 3000);
         }
+
+        // Initialize - runs when module loads (after DOM is ready for type=module)
+        // Wire up new invoice button - must be after openComposer is defined
+        document.getElementById('new-invoice-btn')?.addEventListener('click', () => openComposer());
+        loadInvoices();
+        setDefaultDates();
     </script>
 </body>
 
