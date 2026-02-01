@@ -1796,35 +1796,17 @@ html {
   width: 100% !important;
   height: 100% !important;
   z-index: 60 !important;
-  transform: translateX(100%) !important;
+  transform: translateX(100%);
   transition: transform 0.5s ease !important;
-  pointer-events: none !important;
-}
-
-#mobile-menu:not(.translate-x-full) {
-  transform: translateX(0) !important;
-  pointer-events: auto !important;
-}
-
-/* Force menu to be hidden on page load */
-html body #mobile-menu {
-  transform: translateX(100%) !important;
-  pointer-events: none !important;
-}
-
-/* Prevent body scroll when menu is open */
-body.overflow-hidden {
-  overflow: hidden !important;
-}
-
-/* Remove any potential conflicts with mobile menu visibility */
-#mobile-menu-container #mobile-menu {
-  position: fixed !important;
-  transform: translateX(100%) !important;
-  pointer-events: none !important;
+  pointer-events: none;
 }
 
 #mobile-menu.show {
   transform: translateX(0) !important;
   pointer-events: auto !important;
+}
+
+/* Prevent body scroll when menu is open */
+body.overflow-hidden {
+  overflow: hidden !important;
 }
