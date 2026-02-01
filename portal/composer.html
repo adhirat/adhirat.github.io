@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Visual Composer - Adhirat Portal</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../assets/js/app.js"></script>
+  <style>
+    :root {
+      --canvas-width: 800px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #3b4754;
+      border-radius: 3px;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* Block Library */
+    .block-item {
+      transition: all 0.2s;
+    }
+
+    .block-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .block-item.dragging {
+      opacity: 0.5;
+    }
+
+    /* Canvas */
+    .canvas-block {
+      position: relative;
+      transition: all 0.15s;
+    }
+
+    .canvas-block:hover {
+      outline: 2px solid rgba(99, 102, 241, 0.5);
+      outline-offset: 2px;
+    }
+
+    .canvas-block.selected {
+      outline: 2px solid #6366f1;
+      outline-offset: 2px;
+    }
+
+    .canvas-block .drag-handle {
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .canvas-block:hover .drag-handle {
+      opacity: 1;
+    }
+
+    /* Drop Zone */
+    .drop-zone {
+      height: 4px;
+      margin: 2px 0;
+      transition: all 0.2s;
+      border-radius: 2px;
+    }
+
+    .drop-zone.active {
+      height: 40px;
+      background: rgba(99, 102, 241, 0.2);
+      border: 2px dashed #6366f1;
+    }
+
+    /* Device Preview */
+    .canvas-container {
+      transition: width 0.3s ease;
+    }
+
+    .canvas-container[data-device="desktop"] {
+      --canvas-width: 800px;
+    }
+
+    .canvas-container[data-device="tablet"] {
+      --canvas-width: 768px;
+    }
+
+    .canvas-container[data-device="mobile"] {
+      --canvas-width: 375px;
+    }
+
+    /* Floating Toolbar */
+    .block-toolbar {
+      position: absolute;
+      top: -44px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+    }
+  </style>
+</head>
+
+<body
+  class="pt-0 bg-background-light dark:bg-dark-bg text-slate-900 dark:text-white font-display antialiased overflow-hidden">
+  <div class="flex h-screen w-full overflow-hidden">
+    <div id="portal-sidebar" class="contents"></div>
+    <main class="flex-1 flex flex-col min-w-0">
+      <div id="portal-header" class="contents"></div>
+
+      <!-- Composer Content -->
+      <div class="flex-1 overflow-hidden flex flex-col">
+        <!-- Top Toolbar -->
+        <header
+          class="h-14 bg-white dark:bg-dark-card border-b border-slate-200 dark:border-slate-700 flex items-center px-4 gap-4 shrink-0 z-50">
+          <!-- Document Title -->
+          <div class="flex-1 flex items-center gap-2">
+            <input type="text" id="doc-title" value="Untitled Document"
+              class="bg-transparent text-lg font-semibold text-slate-900 dark:text-white border-none focus:ring-0 focus:outline-none w-64 truncate" />
+            <span class="text-xs px-2 py-1 rounded bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400"
+              id="save-status">Draft</span>
+          </div>
+
+          <!-- Undo/Redo -->
+          <div class="flex items-center gap-1 border-r border-slate-200 dark:border-slate-700 pr-4 mr-2">
+            <button onclick="composer.undo()"
+              class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg disabled:opacity-30" id="undo-btn"
+              disabled>
+              <span class="material-symbols-outlined text-xl">undo</span>
+            </button>
+            <button onclick="composer.redo()"
+              class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg disabled:opacity-30" id="redo-btn"
+              disabled>
+              <span class="material-symbols-outlined text-xl">redo</span>
+            </button>
+          </div>
+
+          <!-- Device Preview Toggle -->
+          <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1 gap-1">
+            <button onclick="composer.setDevice('desktop')"
+              class="device-btn p-2 rounded-lg bg-white dark:bg-slate-700 shadow-sm" data-device="desktop">
+              <span class="material-symbols-outlined text-xl">computer</span>
+            </button>
+            <button onclick="composer.setDevice('tablet')"
+              class="device-btn p-2 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50" data-device="tablet">
+              <span class="material-symbols-outlined text-xl">tablet</span>
+            </button>
+            <button onclick="composer.setDevice('mobile')"
+              class="device-btn p-2 rounded-lg hover:bg-white/50 dark:hover:bg-slate-700/50" data-device="mobile">
+              <span class="material-symbols-outlined text-xl">smartphone</span>
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2 ml-4">
+            <button onclick="composer.toggleSidebar()"
+              class="p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500"
+              title="Toggle Insert Panel">
+              <span class="material-symbols-outlined text-lg">dock_to_left</span>
+            </button>
+            <button onclick="composer.preview()"
+              class="px-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium flex items-center gap-2">
+              <span class="material-symbols-outlined text-lg">visibility</span>
+              Preview
+            </button>
+            <button onclick="composer.save()"
+              class="px-4 py-2 rounded-lg bg-primary text-white hover:bg-blue-600 font-semibold flex items-center gap-2 shadow-lg shadow-primary/25">
+              <span class="material-symbols-outlined text-lg">save</span>
+              Save
+            </button>
+          </div>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="flex flex-1 overflow-hidden relative">
+
+          <!-- Main Canvas (Left/Center) -->
+          <main class="flex-1 overflow-auto bg-white dark:bg-dark-bg flex flex-col" id="canvas-wrapper">
+            <div class="canvas-container bg-white dark:bg-dark-card min-h-full flex flex-col relative"
+              data-device="desktop" style="width: 100%; margin: 0 auto;" id="canvas">
+
+              <!-- Site Header -->
+              <header
+                class="group relative px-8 py-6 border-b border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-colors"
+                id="site-header">
+                <div class="absolute top-2 left-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                  <span
+                    class="text-xs bg-slate-200 dark:bg-slate-700 px-2 py-1 rounded text-slate-600 dark:text-slate-300">Header</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <h1 class="text-2xl font-bold text-slate-900 dark:text-white outline-none" contenteditable="true">Site
+                    Name</h1>
+                  <nav class="hidden md:block">
+                    <ul class="flex gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+                      <li>Home</li>
+                      <li>About</li>
+                      <li>Contact</li>
+                    </ul>
+                  </nav>
+                </div>
+              </header>
+
+              <!-- Canvas Content - Blocks render here -->
+              <div class="flex-1 p-8" id="canvas-content">
+                <!-- Empty state -->
+                <div id="empty-state" class="flex flex-col items-center justify-center py-20 text-center">
+                  <div
+                    class="size-20 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4">
+                    <span class="material-symbols-outlined text-4xl text-slate-400">add_circle</span>
+                  </div>
+                  <h3 class="text-lg font-semibold text-slate-900 dark:text-white mb-2">Add Content</h3>
+                  <p class="text-slate-500 max-w-xs">Use the <strong>Insert</strong> tab on the right to add blocks to
+                    your
+                    page.</p>
+                </div>
+              </div>
+
+              <!-- Site Footer -->
+              <footer
+                class="group relative px-8 py-6 border-t border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-colors mt-auto"
+                id="site-footer">
+                <div class="absolute bottom-full left-2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                  <button
+                    class="text-xs bg-slate-200 dark:bg-slate-700 px-2 py-1 rounded text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-600">Edit
+                    Footer</button>
+                </div>
+                <div class="text-center text-sm text-slate-500" contenteditable="true">
+                  &copy; 2026 Company Name. All rights reserved.
+                </div>
+              </footer>
+
+            </div>
+          </main>
+
+          <!-- Right Sidebar - Tools & Properties -->
+          <aside
+            class="w-80 bg-white dark:bg-dark-card border-l border-slate-200 dark:border-slate-700 flex flex-col shrink-0 z-20">
+
+            <!-- Sidebar Tabs -->
+            <div class="flex border-b border-slate-200 dark:border-slate-700">
+              <button class="flex-1 py-3 text-sm font-medium text-primary border-b-2 border-primary"
+                data-tab="insert">Insert</button>
+              <button
+                class="flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+                data-tab="pages">Pages</button>
+              <button
+                class="flex-1 py-3 text-sm font-medium text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
+                data-tab="themes">Themes</button>
+            </div>
+
+            <!-- Tab Content: Insert -->
+            <div id="tab-insert-content" class="flex-1 overflow-y-auto p-4 custom-scrollbar">
+
+              <!-- Properties Panel (Contextual) -->
+              <div id="properties-panel" class="mb-6 hidden border border-primary/20 bg-primary/5 rounded-lg p-4">
+                <div class="flex items-center justify-between mb-3">
+                  <h3 class="text-xs font-bold text-primary uppercase tracking-wider">Edit Block</h3>
+                  <button onclick="composer.deselectAll()" class="text-slate-400 hover:text-slate-600"><span
+                      class="material-symbols-outlined text-sm">close</span></button>
+                </div>
+                <div id="prop-fields" class="space-y-3"></div>
+                <div class="flex gap-2 mt-4">
+                  <button onclick="composer.deleteSelected()"
+                    class="flex-1 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-xs font-medium text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20">Delete</button>
+                  <button onclick="composer.duplicateBlock(composer.selectedBlockId)"
+                    class="flex-1 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700">Duplicate</button>
+                </div>
+              </div>
+
+              <!-- Content Blocks -->
+              <div class="space-y-6">
+
+                <!-- Basic Elements -->
+                <div>
+                  <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Basics</p>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div
+                      class="block-item p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 cursor-grab hover:border-primary/50 flex flex-col items-center gap-2 transition-all"
+                      draggable="true" data-block-type="paragraph">
+                      <span class="material-symbols-outlined text-2xl text-slate-600 dark:text-slate-400">notes</span>
+                      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Text Box</span>
+                    </div>
+                    <div
+                      class="block-item p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 cursor-grab hover:border-primary/50 flex flex-col items-center gap-2 transition-all"
+                      draggable="true" data-block-type="image">
+                      <span class="material-symbols-outlined text-2xl text-slate-600 dark:text-slate-400">image</span>
+                      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Images</span>
+                    </div>
+                    <div
+                      class="block-item p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 cursor-grab hover:border-primary/50 flex flex-col items-center gap-2 transition-all"
+                      draggable="true" data-block-type="code">
+                      <span class="material-symbols-outlined text-2xl text-slate-600 dark:text-slate-400">code</span>
+                      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Embed</span>
+                    </div>
+                    <div
+                      class="block-item p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 cursor-grab hover:border-primary/50 flex flex-col items-center gap-2 transition-all"
+                      draggable="true" data-block-type="docs">
+                      <span
+                        class="material-symbols-outlined text-2xl text-slate-600 dark:text-slate-400">description</span>
+                      <span class="text-xs font-medium text-slate-600 dark:text-slate-400">Drive</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Content Blocks -->
+                <div>
+                  <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Content Blocks</p>
+                  <div class="grid grid-cols-2 gap-3">
+                    <div
+                      class="block-item p-2 bg-slate-50 dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 cursor-grab flex items-center gap-2"
+                      draggable="true" data-block-type="section">
+                      <span class="material-symbols-outlined text-slate-400">view_agenda</span>
+                      <span class="text-xs text-slate-600 dark:text-slate-400">Content Section</span>
+                    </div>
+                    <div
+                      class="block-item p-2 bg-slate-50 dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-700 cursor-grab flex items-center gap-2"
+                      draggable="true" data-block-type="columns">
+                      <span class="material-symbols-outlined text-slate-400">view_column</span>
+                      <span class="text-xs text-slate-600 dark:text-slate-400">2 Columns</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Components -->
+                <div>
+                  <p class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Components</p>
+                  <div class="space-y-2">
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="collapsible">
+                      <span class="material-symbols-outlined text-slate-400">unfold_more</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Collapsible group</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="toc">
+                      <span class="material-symbols-outlined text-slate-400">toc</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Table of contents</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="carousel">
+                      <span class="material-symbols-outlined text-slate-400">view_carousel</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Image carousel</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="button">
+                      <span class="material-symbols-outlined text-slate-400">smart_button</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Button</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="divider">
+                      <span class="material-symbols-outlined text-slate-400">horizontal_rule</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Divider</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="spacer">
+                      <span class="material-symbols-outlined text-slate-400">height</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Spacer</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="social">
+                      <span class="material-symbols-outlined text-slate-400">groups</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Social links</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="placeholder">
+                      <span class="material-symbols-outlined text-slate-400">add_box</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Placeholder</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="youtube">
+                      <span class="material-symbols-outlined text-slate-400">smart_display</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">YouTube</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="calendar">
+                      <span class="material-symbols-outlined text-slate-400">calendar_month</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Calendar</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="map">
+                      <span class="material-symbols-outlined text-slate-400">location_on</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Map</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="docs">
+                      <span class="material-symbols-outlined text-slate-400">description</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Docs</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="slides">
+                      <span class="material-symbols-outlined text-slate-400">slideshow</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Slides</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="sheets">
+                      <span class="material-symbols-outlined text-slate-400">table_chart</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Sheets</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="forms">
+                      <span class="material-symbols-outlined text-slate-400">assignment</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Forms</span>
+                    </div>
+                    <div
+                      class="block-item p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded cursor-grab flex items-center gap-3"
+                      draggable="true" data-block-type="charts">
+                      <span class="material-symbols-outlined text-slate-400">bar_chart</span>
+                      <span class="text-sm text-slate-600 dark:text-slate-300">Charts</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Tab Content: Pages -->
+            <div id="tab-pages-content" class="hidden p-4">
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="font-bold text-slate-700 dark:text-slate-300">Pages</h3>
+                <button
+                  class="size-8 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 flex items-center justify-center"><span
+                    class="material-symbols-outlined text-slate-500">add</span></button>
+              </div>
+              <div
+                class="bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 p-3 rounded-lg text-sm border border-blue-100 dark:border-blue-800">
+                <div class="flex items-center gap-2 font-medium mb-1">
+                  <span class="material-symbols-outlined text-lg">home</span>
+                  Home
+                </div>
+                <div class="ml-6 text-xs text-blue-500">/index.html</div>
+              </div>
+            </div>
+
+            <!-- Tab Content: Themes -->
+            <div id="tab-themes-content" class="hidden p-4">
+              <h3 class="font-bold text-slate-700 dark:text-slate-300 mb-4">Themes</h3>
+              <div class="space-y-3">
+                <div class="p-3 border-2 border-primary rounded-lg cursor-pointer">
+                  <div class="text-sm font-bold text-slate-900 dark:text-white">Simple</div>
+                  <div class="flex gap-1 mt-2">
+                    <div class="size-4 rounded-full bg-blue-600"></div>
+                    <div class="size-4 rounded-full bg-red-600"></div>
+                    <div class="size-4 rounded-full bg-green-600"></div>
+                    <div class="size-4 rounded-full bg-slate-900"></div>
+                  </div>
+                </div>
+                <div
+                  class="p-3 border border-slate-200 dark:border-slate-700 rounded-lg cursor-pointer hover:border-slate-300 dark:hover:border-slate-600">
+                  <div class="text-sm font-bold text-slate-900 dark:text-white">Aristotle</div>
+                  <div class="flex gap-1 mt-2">
+                    <div class="size-4 rounded-full bg-amber-600"></div>
+                    <div class="size-4 rounded-full bg-slate-600"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-8 right-8 transform translate-y-20 opacity-0 transition-all duration-300 z-[100]">
+    <div
+      class="flex items-center gap-3 px-5 py-4 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-2xl">
+      <span id="toast-icon" class="material-symbols-outlined"></span>
+      <span id="toast-message" class="font-medium"></span>
+    </div>
+  </div>
+
+  <script type="module" src="../assets/js/composer.js"></script>
+</body>
+
+</html>

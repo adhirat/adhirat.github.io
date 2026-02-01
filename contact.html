@@ -285,28 +285,46 @@
                                             </div>
                                             <span class="error-message">Please enter a valid email address.</span>
                                         </div>
-                                    </div>
-                                    <div class="space-y-2 group">
-                                        <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
-                                            for="service">Service Interest</label>
-                                        <div class="relative">
-                                            <select
-                                                class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10 appearance-none"
-                                                id="service" name="service" required>
-                                                <option value="" disabled selected>Select a Service</option>
-                                                <option value="Web Development">Web Development</option>
-                                                <option value="UI/UX Design">UI/UX Design</option>
-                                                <option value="Mobile App Development">Mobile App Development</option>
-                                                <option value="AI Solutions">AI Solutions</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                            <div
-                                                class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
-                                                <span
-                                                    class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">expand_more</span>
+                                        <div class="space-y-2 group">
+                                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
+                                                for="company">Company / Brand / Project</label>
+                                            <div class="relative">
+                                                <input
+                                                    class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input placeholder-slate-400 dark:placeholder-slate-500 focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10"
+                                                    id="company" name="company" placeholder="Acme Corp" type="text"
+                                                    required />
+                                                <div
+                                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                                    <span
+                                                        class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">business</span>
+                                                </div>
                                             </div>
+                                            <span class="error-message">Please enter your company or project
+                                                name.</span>
                                         </div>
-                                        <span class="error-message">Please select a service interest.</span>
+                                        <div class="space-y-2 group">
+                                            <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
+                                                for="service">Service Interest</label>
+                                            <div class="relative">
+                                                <select
+                                                    class="input-transition block w-full rounded-xl border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-3.5 text-sm text-slate-900 dark:text-white shadow-input focus:border-primary focus:bg-white dark:focus:bg-slate-900 focus:ring-4 focus:ring-primary/10 appearance-none"
+                                                    id="service" name="service" required>
+                                                    <option value="" disabled selected>Select a Service</option>
+                                                    <option value="Web Development">Web Development</option>
+                                                    <option value="UI/UX Design">UI/UX Design</option>
+                                                    <option value="Mobile App Development">Mobile App Development
+                                                    </option>
+                                                    <option value="AI Solutions">AI Solutions</option>
+                                                    <option value="Other">Other</option>
+                                                </select>
+                                                <div
+                                                    class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4">
+                                                    <span
+                                                        class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">expand_more</span>
+                                                </div>
+                                            </div>
+                                            <span class="error-message">Please select a service interest.</span>
+                                        </div>
                                     </div>
                                     <div class="space-y-2 group">
                                         <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
@@ -321,14 +339,24 @@
                                     </div>
                                     <div class="space-y-2 group">
                                         <label class="text-sm font-semibold text-slate-700 dark:text-slate-300 ml-1"
-                                            for="attachment">Attachment <span
+                                            for="attachments">Attachments <span
                                                 class="text-slate-400 font-normal">(optional)</span></label>
-                                        <input
-                                            class="block w-full text-sm text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all cursor-pointer"
-                                            id="attachment" name="attachment" type="file"
-                                            accept="image/*, .pdf, .doc, .docx" />
-                                        <p class="text-xs text-slate-400 ml-1">Max 10MB. Supported: PDF, DOC, DOCX, PNG,
-                                            JPG</p>
+                                        <div id="attachment-dropzone"
+                                            class="relative border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl p-6 text-center hover:border-primary hover:bg-primary/5 transition-all cursor-pointer">
+                                            <input class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                                id="attachments" name="attachments" type="file" multiple
+                                                accept="image/*, .pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, .zip" />
+                                            <div class="flex flex-col items-center gap-2">
+                                                <span
+                                                    class="material-symbols-outlined text-3xl text-slate-400">cloud_upload</span>
+                                                <p class="text-sm text-slate-600 dark:text-slate-400">Drag files here or
+                                                    <span class="text-primary font-semibold">browse</span>
+                                                </p>
+                                                <p class="text-xs text-slate-400">Max 10MB per file. PDF, DOC, DOCX,
+                                                    Images, ZIP supported</p>
+                                            </div>
+                                        </div>
+                                        <div id="attachment-preview" class="hidden mt-3 space-y-2"></div>
                                     </div>
 
                                     <div class="flex flex-col gap-2 py-2">
@@ -395,6 +423,86 @@
         // Validation Logic
         const form = document.getElementById('contact-form');
         const inputs = form.querySelectorAll('input, select, textarea');
+        let selectedFiles = [];
+
+        // File attachment handling
+        const fileInput = document.getElementById('attachments');
+        const dropzone = document.getElementById('attachment-dropzone');
+        const previewContainer = document.getElementById('attachment-preview');
+
+        function updateFilePreview() {
+            if (selectedFiles.length === 0) {
+                previewContainer.classList.add('hidden');
+                return;
+            }
+
+            previewContainer.classList.remove('hidden');
+            previewContainer.innerHTML = selectedFiles.map((file, index) => {
+                const icon = file.type.startsWith('image/') ? 'image' :
+                    file.type.includes('pdf') ? 'picture_as_pdf' : 'description';
+                const size = (file.size / 1024 / 1024).toFixed(2);
+                return `
+                    <div class="flex items-center justify-between gap-3 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <span class="material-symbols-outlined text-primary">${icon}</span>
+                            <div class="min-w-0">
+                                <p class="text-sm font-medium text-slate-900 dark:text-white truncate">${file.name}</p>
+                                <p class="text-xs text-slate-500">${size} MB</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="removeFile(${index})" class="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-red-500 text-lg">close</span>
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.removeFile = function (index) {
+            selectedFiles.splice(index, 1);
+            updateFilePreview();
+        };
+
+        fileInput.addEventListener('change', (e) => {
+            const newFiles = Array.from(e.target.files).filter(file => {
+                // Check file size (10MB limit)
+                if (file.size > 10 * 1024 * 1024) {
+                    if (window.showToast) window.showToast(`${file.name} exceeds 10MB limit`, 'error');
+                    return false;
+                }
+                return true;
+            });
+            selectedFiles = [...selectedFiles, ...newFiles];
+            updateFilePreview();
+            e.target.value = ''; // Reset input to allow re-selecting same file
+        });
+
+        // Drag and drop
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropzone.addEventListener(evt, (e) => {
+                e.preventDefault();
+                dropzone.classList.add('border-primary', 'bg-primary/5');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(evt => {
+            dropzone.addEventListener(evt, (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('border-primary', 'bg-primary/5');
+            });
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            const newFiles = Array.from(e.dataTransfer.files).filter(file => {
+                if (file.size > 10 * 1024 * 1024) {
+                    if (window.showToast) window.showToast(`${file.name} exceeds 10MB limit`, 'error');
+                    return false;
+                }
+                return true;
+            });
+            selectedFiles = [...selectedFiles, ...newFiles];
+            updateFilePreview();
+        });
 
         function showError(input) {
             // Remove default border colors
@@ -481,18 +589,17 @@
             const formData = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
+                company: document.getElementById('company').value,
                 service: document.getElementById('service').value,
                 message: document.getElementById('message').value
             };
-            const fileInput = document.getElementById('attachment');
-            const file = fileInput.files.length > 0 ? fileInput.files[0] : null;
 
             // Loading state
             btn.disabled = true;
             btn.innerHTML = '<span class="animate-spin material-symbols-outlined text-sm mr-2">progress_activity</span> Sending...';
 
             // Submit
-            const result = await submitContactForm(formData, file);
+            const result = await submitContactForm(formData, selectedFiles);
 
             if (result.success) {
                 localStorage.setItem(HAS_SUBMITTED_KEY, 'true');

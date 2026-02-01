@@ -56,7 +56,7 @@ body {
   padding-top: 5rem;
   font-family: var(--font-body);
   background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f5f3ff 100%);
-  transition: background 0.5s ease;
+  transition: background 0.5s ease, padding-top 0.3s ease-in-out;
 }
 
 .dark body,
@@ -389,6 +389,8 @@ html {
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   animation: gradientFlow 4s ease infinite;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .gradient-border-animated::after {
@@ -403,6 +405,7 @@ html {
   transition: opacity 0.4s ease;
   z-index: -1;
   animation: gradientFlow 4s ease infinite;
+  pointer-events: none;
 }
 
 .gradient-border-animated:hover::after {
@@ -1649,6 +1652,16 @@ html {
   color: var(--color-neon-cyan);
 }
 
+/* Header scroll hide/show functionality */
+.fixed.top-0 {
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  will-change: transform;
+}
+
+.header-hidden {
+  box-shadow: none;
+}
+
 /* ========================================
    CONTENT LAYOUT
    ======================================== */
@@ -1771,4 +1784,47 @@ html {
 
 .btn-primary:active {
   transform: translateY(-1px);
+}
+
+/* ========================================
+   MOBILE MENU - ENSURE PROPER HIDING
+   ======================================== */
+#mobile-menu {
+  position: fixed !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 60 !important;
+  transform: translateX(100%) !important;
+  transition: transform 0.5s ease !important;
+  pointer-events: none !important;
+}
+
+#mobile-menu:not(.translate-x-full) {
+  transform: translateX(0) !important;
+  pointer-events: auto !important;
+}
+
+/* Force menu to be hidden on page load */
+html body #mobile-menu {
+  transform: translateX(100%) !important;
+  pointer-events: none !important;
+}
+
+/* Prevent body scroll when menu is open */
+body.overflow-hidden {
+  overflow: hidden !important;
+}
+
+/* Remove any potential conflicts with mobile menu visibility */
+#mobile-menu-container #mobile-menu {
+  position: fixed !important;
+  transform: translateX(100%) !important;
+  pointer-events: none !important;
+}
+
+#mobile-menu.show {
+  transform: translateX(0) !important;
+  pointer-events: auto !important;
 }

@@ -105,16 +105,73 @@ function toggleTheme() {
     }
 }
 
+// Initialize mobile menu to ensure it's hidden by default
+function initMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    if (menu) {
+        // Force menu to be hidden initially with multiple methods
+        menu.classList.add('translate-x-full');
+        menu.classList.remove('show');
+        menu.style.transform = 'translateX(100%)';
+        document.body.classList.remove('overflow-hidden');
+        
+        // Also hide any potential backdrop overlay
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
+    }
+}
+
 // Script to handle mobile menu toggling
 function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     const body = document.body;
-    if (menu.classList.contains('translate-x-full')) {
-        menu.classList.remove('translate-x-full');
-        body.classList.add('overflow-hidden');
-    } else {
+    
+    if (!menu) return;
+    
+    const isOpen = !menu.classList.contains('translate-x-full');
+    
+    if (isOpen) {
+        // Close menu
         menu.classList.add('translate-x-full');
+        menu.classList.remove('show');
+        menu.style.transform = 'translateX(100%)';
         body.classList.remove('overflow-hidden');
+        
+        // Remove any backdrop
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
+    } else {
+        // Open menu
+        menu.classList.remove('translate-x-full');
+        menu.classList.add('show');
+        menu.style.transform = 'translateX(0)';
+        body.classList.add('overflow-hidden');
+        
+        // Create backdrop if needed
+        if (!document.querySelector('.mobile-menu-backdrop')) {
+            const backdrop = document.createElement('div');
+            backdrop.className = 'mobile-menu-backdrop fixed inset-0 bg-black/50 z-50';
+            backdrop.onclick = toggleMobileMenu;
+            document.body.appendChild(backdrop);
+        }
+    }
+}
+
+// Global logout handler for portal pages
+// Uses dynamic import to load Firebase signOut
+async function handleLogout() {
+    try {
+        const { signOut } = await import('https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js');
+        const { auth } = await import('./firebase-config.js');
+        await signOut(auth);
+        window.location.href = 'login.html';
+    } catch (error) {
+        console.error('Logout error:', error);
+        alert('Logout failed. Please try again.');
     }
 }
 
@@ -136,7 +193,7 @@ if ('theme' in localStorage) {
 }
 
 // Cache version - increment this when you update header/footer/mobile-menu
-const CACHE_VERSION = 'v9';
+const CACHE_VERSION = 'v10';
 
 function loadHTML(id, file) {
     const cacheKey = `${file}_${CACHE_VERSION}`;
@@ -171,10 +228,13 @@ function loadHTML(id, file) {
 }
 
 function afterLoad() {
+    // Re-initialize mobile menu to ensure it's hidden after loading
+    initMobileMenu();
     highlightActiveNav();
     initScrollAnimations();
     initTiltEffect();
     initSidebarToggle();
+    initHeaderScroll();
 }
 
 function highlightActiveNav() {
@@ -374,6 +434,14 @@ function initGridStagger() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Ensure mobile menu is hidden immediately and then after content loads
+    initMobileMenu();
+    
+    // Double-check after a short delay to catch any timing issues
+    setTimeout(() => {
+        initMobileMenu();
+    }, 100);
+
     // Initial load of global components
     const components = [
         { id: "header", file: "global/header.html" },
@@ -394,8 +462,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // Also initialize animations for static content
     initScrollAnimations();
 
+    // Ensure mobile menu is hidden after all content is loaded
+    setTimeout(() => {
+        initMobileMenu();
+    }, 200);
+
     // Cookie Consent Logic
     initCookieConsent();
+
+    // Ensure mobile menu is hidden on window load (for page refreshes/navigations)
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            initMobileMenu();
+        }, 50);
+    });
 
     // New Feature initializations
     initBackToTop();
@@ -404,6 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initContentFilters();
     initReviewsSlider();
     initTiltEffect();
+    initHeaderScroll();
 });
 
 // Tilt on hover effect
@@ -791,6 +872,47 @@ function initReviewsSlider() {
     // Pause on hover
     slider.addEventListener('mouseenter', stopAutoSlide);
     slider.addEventListener('mouseleave', startAutoSlide);
+}
+
+// Header Hide/Show on Scroll Logic
+function initHeaderScroll() {
+    const header = document.querySelector('.fixed.top-0');
+    if (!header) return;
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const headerHeight = header.offsetHeight;
+    const scrollThreshold = 100; // Minimum scroll before header starts hiding
+
+    function updateHeader() {
+        const currentScrollY = window.scrollY;
+        
+        // Don't hide header if at the top of the page
+        if (currentScrollY <= scrollThreshold) {
+            header.style.transform = 'translateY(0)';
+            header.classList.remove('header-hidden');
+        } else if (currentScrollY > lastScrollY) {
+            // Scrolling down - hide header
+            header.style.transform = `translateY(-${headerHeight}px)`;
+            header.classList.add('header-hidden');
+        } else {
+            // Scrolling up - show header
+            header.style.transform = 'translateY(0)';
+            header.classList.remove('header-hidden');
+        }
+
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateHeader);
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', requestTick, { passive: true });
 }
 
 // Sidebar Toggle Logic
