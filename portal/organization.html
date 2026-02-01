@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Organisation Profile - Adhirat Portal</title>
+    <meta name="robots" content="noindex, nofollow">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Material Symbols -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Global Assets -->
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script src="../assets/js/app.js"></script>
+    <style>
+        .tab-active {
+            background: linear-gradient(135deg, #8B5CF6, #6366F1);
+            color: white;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body
+    class="pt-0 font-display bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-white antialiased overflow-hidden h-screen flex">
+
+    <!-- Global Sidebar -->
+    <div id="portal-sidebar" class="contents"></div>
+
+    <!-- Main Wrapper -->
+    <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+        <!-- Global Header -->
+        <div id="portal-header" class="contents"></div>
+
+        <!-- Scrollable Page Content -->
+        <div class="flex-1 overflow-y-auto p-4 lg:p-8 animate-fade-in-up">
+            <div class="max-w-[1400px] mx-auto w-full">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Inner Settings Sidebar -->
+                    <aside class="hidden lg:flex flex-col w-64 shrink-0 gap-6">
+                        <div class="flex flex-col gap-1">
+                            <h1
+                                class="text-slate-900 dark:text-white text-2xl font-black leading-tight tracking-[-0.033em]">
+                                Organisation</h1>
+                            <p class="text-slate-500 dark:text-gray-400 text-base font-normal">Manage company profile
+                            </p>
+                        </div>
+                        <nav class="flex flex-col gap-2" id="settings-nav">
+                            <button
+                                class="settings-tab tab-active flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all"
+                                data-tab="general">
+                                <span class="material-symbols-outlined" style="font-size: 24px;">business</span>
+                                <span class="text-sm font-medium leading-normal">General Info</span>
+                            </button>
+                            <button
+                                class="settings-tab flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-dark-card transition-all"
+                                data-tab="contact">
+                                <span class="material-symbols-outlined" style="font-size: 24px;">contact_page</span>
+                                <span class="text-sm font-medium leading-normal">Contact Details</span>
+                            </button>
+                        </nav>
+                    </aside>
+
+                    <!-- Settings Content -->
+                    <div class="flex-1 min-w-0">
+                        <!-- Mobile Heading -->
+                        <div class="lg:hidden mb-6">
+                            <h1
+                                class="text-slate-900 dark:text-white text-3xl font-black leading-tight tracking-[-0.033em] mb-2">
+                                Organisation Profile</h1>
+                            <p class="text-slate-500 dark:text-gray-400 text-sm">Manage company details and branding.
+                            </p>
+                            <!-- Mobile Tabs -->
+                            <div
+                                class="flex overflow-x-auto gap-2 mt-4 pb-2 border-b border-slate-200 dark:border-slate-800 scrollbar-hide">
+                                <button
+                                    class="mobile-tab whitespace-nowrap px-4 py-2 rounded-full bg-primary text-white text-sm font-bold"
+                                    data-tab="general">General Info</button>
+                                <button
+                                    class="mobile-tab whitespace-nowrap px-4 py-2 rounded-full bg-slate-100 dark:bg-dark-card text-slate-600 dark:text-gray-400 text-sm font-medium"
+                                    data-tab="contact">Contact Details</button>
+                            </div>
+                        </div>
+
+                        <!-- General Info Tab -->
+                        <div id="tab-general" class="tab-content">
+                            <!-- Profile Header Card -->
+                            <div
+                                class="bg-white dark:bg-dark-card rounded-xl p-6 mb-6 shadow-sm border border-slate-200 dark:border-slate-700">
+                                <div
+                                    class="flex flex-col sm:flex-row gap-6 items-center sm:items-start justify-between">
+                                    <div class="flex flex-col sm:flex-row gap-6 items-center text-center sm:text-left">
+                                        <div class="relative group cursor-pointer" id="logo-container">
+                                            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-24 sm:size-32 ring-1 ring-slate-200 dark:ring-slate-700 shadow-lg flex items-center justify-center bg-slate-50 dark:bg-slate-800"
+                                                id="org-logo">
+                                                <span
+                                                    class="material-symbols-outlined text-4xl text-slate-300 dark:text-slate-600">domain</span>
+                                            </div>
+                                            <div
+                                                class="absolute inset-0 bg-black/50 rounded-xl opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                                                <span class="material-symbols-outlined text-white">upload</span>
+                                            </div>
+                                            <input type="file" id="logo-input" accept="image/*" class="hidden">
+                                        </div>
+                                        <div class="flex flex-col justify-center gap-1">
+                                            <h2 class="text-slate-900 dark:text-white text-2xl font-bold leading-tight"
+                                                id="display-name">Loading...</h2>
+                                            <p class="text-slate-500 dark:text-gray-400 text-base font-normal"
+                                                id="display-tagline">Loading...</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-3 w-full sm:w-auto">
+                                        <button type="button" id="change-logo-btn"
+                                            class="flex-1 sm:flex-none cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-slate-100 dark:bg-dark-bg hover:bg-slate-200 dark:hover:bg-[#323b46] text-slate-900 dark:text-white text-sm font-bold border border-slate-200 dark:border-transparent transition-all">
+                                            Change Logo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Forms Section -->
+                            <form id="org-form" class="flex flex-col gap-6">
+                                <!-- Basic Information -->
+                                <section
+                                    class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                                    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                                        <h3 class="text-slate-900 dark:text-white text-lg font-bold">Company Identity
+                                        </h3>
+                                    </div>
+                                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Company
+                                                Name *</span>
+                                            <input id="input-companyName"
+                                                class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                                placeholder="Adhirat Technologies" required />
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span
+                                                class="text-slate-600 dark:text-gray-400 text-sm font-medium">Tagline</span>
+                                            <input id="input-tagline"
+                                                class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                                placeholder="Innovating the future" />
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Founded
+                                                Year</span>
+                                            <input id="input-foundedYear" type="number"
+                                                class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                                placeholder="e.g. 2024" />
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Tax ID /
+                                                Registration No.</span>
+                                            <input id="input-taxId"
+                                                class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                                placeholder="e.g. US-123456789" />
+                                        </label>
+                                        <label class="flex flex-col gap-2 md:col-span-2">
+                                            <span
+                                                class="text-slate-600 dark:text-gray-400 text-sm font-medium">Description</span>
+                                            <textarea id="input-description"
+                                                class="form-textarea w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400 resize-none h-24"
+                                                placeholder="Describe your organisation..." maxlength="500"></textarea>
+                                        </label>
+                                    </div>
+                                </section>
+                            </form>
+                        </div>
+
+                        <!-- Contact Details Tab -->
+                        <div id="tab-contact" class="tab-content hidden">
+                            <form id="contact-form" class="flex flex-col gap-6">
+                                <section
+                                    class="bg-white dark:bg-dark-card rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+                                    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                                        <h3 class="text-slate-900 dark:text-white text-lg font-bold">Contact Information
+                                        </h3>
+                                    </div>
+                                    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Official
+                                                Email</span>
+                                            <input id="input-email" type="email"
+                                                class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                                placeholder="contact@company.com" />
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span class="text-slate-600 dark:text-gray-400 text-sm font-medium">Phone
+                                                Number</span>
+                                            <input id="input-phone" type="tel"
+                                                class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                                placeholder="+1 (555) 000-0000" />
+                                        </label>
+                                        <label class="flex flex-col gap-2">
+                                            <span
+                                                class="text-slate-600 dark:text-gray-400 text-sm font-medium">Website</span>
+                                            <input id="input-website" type="url"
+                                                class="form-input w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                                placeholder="https://company.com" />
+                                        </label>
+                                        <label class="flex flex-col gap-2 md:col-span-2">
+                                            <span
+                                                class="text-slate-600 dark:text-gray-400 text-sm font-medium">Headquarters
+                                                Address</span>
+                                            <textarea id="input-address"
+                                                class="form-textarea w-full rounded-lg bg-slate-50 dark:bg-dark-bg border-slate-200 dark:border-transparent text-slate-900 dark:text-white px-4 py-2.5 focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400 resize-none h-24"
+                                                placeholder="123 Business Blvd, Tech City, Country"></textarea>
+                                        </label>
+                                    </div>
+                                </section>
+                            </form>
+                        </div>
+
+                        <!-- Action Bar (Shared) -->
+                        <div
+                            class="sticky bottom-0 bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md p-4 -mx-4 -mb-10 mt-4 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-3 z-40 rounded-b-xl">
+                            <button type="button" id="cancel-btn"
+                                class="px-6 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-dark-card text-slate-700 dark:text-white font-bold text-sm hover:bg-slate-50 dark:hover:bg-[#323b46] transition-colors">
+                                Cancel
+                            </button>
+                            <button type="button" id="save-btn"
+                                class="px-6 py-2.5 rounded-lg bg-primary text-white font-bold text-sm hover:bg-blue-600 transition-colors shadow-lg shadow-primary/25 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-lg hidden" id="save-spinner">sync</span>
+                                Save Changes
+                            </button>
+                        </div>
+                        <div class="h-8"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2"></div>
+
+    <script type="module">
+        import { initAuthObserver, getOrganizationProfile, updateOrganizationProfile, uploadOrganizationLogo } from '../assets/js/firebase-modules.js';
+
+        // Initialize auth observer
+        initAuthObserver(true);
+
+        let orgData = {};
+
+        // Toast function
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            const colors = {
+                success: 'bg-emerald-500',
+                error: 'bg-red-500',
+                info: 'bg-blue-500'
+            };
+            toast.className = `${colors[type]} text-white px-6 py-3 rounded-xl shadow-lg flex items-center gap-3 animate-fade-in-up`;
+            toast.innerHTML = `
+                <span class="material-symbols-outlined">${type === 'success' ? 'check_circle' : type === 'error' ? 'error' : 'info'}</span>
+                <span>${message}</span>
+            `;
+            document.getElementById('toast-container').appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        // Tab switching
+        function initTabs() {
+            const handleTabClick = (tab) => {
+                const tabId = tab.dataset.tab;
+
+                // Update sidebar tabs
+                document.querySelectorAll('.settings-tab').forEach(t => {
+                    t.classList.remove('tab-active');
+                    t.classList.add('text-slate-600', 'dark:text-gray-400', 'hover:bg-slate-100', 'dark:hover:bg-dark-card');
+                });
+
+                // Update mobile tabs
+                document.querySelectorAll('.mobile-tab').forEach(t => {
+                    t.classList.remove('bg-primary', 'text-white');
+                    t.classList.add('bg-slate-100', 'dark:bg-dark-card', 'text-slate-600', 'dark:text-gray-400');
+                });
+
+                // Activate clicked tab
+                document.querySelectorAll(`[data-tab="${tabId}"]`).forEach(t => {
+                    if (t.classList.contains('settings-tab')) {
+                        t.classList.add('tab-active');
+                        t.classList.remove('text-slate-600', 'dark:text-gray-400', 'hover:bg-slate-100', 'dark:hover:bg-dark-card');
+                    } else {
+                        t.classList.add('bg-primary', 'text-white');
+                        t.classList.remove('bg-slate-100', 'dark:bg-dark-card', 'text-slate-600', 'dark:text-gray-400');
+                    }
+                });
+
+                // Show/hide content
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+                document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            };
+
+            document.querySelectorAll('.settings-tab, .mobile-tab').forEach(tab => {
+                tab.addEventListener('click', () => handleTabClick(tab));
+            });
+        }
+
+        // Load Organisation Data
+        async function loadData() {
+            try {
+                const data = await getOrganizationProfile();
+                if (data) {
+                    orgData = data;
+                    populateForm(orgData);
+                } else {
+                    orgData = {}; // Default empty
+                    populateForm({});
+                }
+            } catch (error) {
+                console.error('Error loading organisation data:', error);
+                showToast('Error loading profile data', 'error');
+            }
+        }
+
+        // Populate form
+        function populateForm(data) {
+            // Header display
+            document.getElementById('display-name').textContent = data.companyName || 'Adhirat Technologies';
+            document.getElementById('display-tagline').textContent = data.tagline || 'Manage your company identity';
+
+            // Logo
+            const logoEl = document.getElementById('org-logo');
+            if (data.logoURL) {
+                logoEl.style.backgroundImage = `url("${data.logoURL}")`;
+                logoEl.innerHTML = '';
+            } else {
+                logoEl.style.backgroundImage = '';
+                logoEl.innerHTML = '<span class="material-symbols-outlined text-4xl text-slate-300 dark:text-slate-600">domain</span>';
+            }
+
+            // General Info
+            document.getElementById('input-companyName').value = data.companyName || '';
+            document.getElementById('input-tagline').value = data.tagline || '';
+            document.getElementById('input-foundedYear').value = data.foundedYear || '';
+            document.getElementById('input-taxId').value = data.taxId || '';
+            document.getElementById('input-description').value = data.description || '';
+
+            // Contact Info
+            document.getElementById('input-email').value = data.email || '';
+            document.getElementById('input-phone').value = data.phone || '';
+            document.getElementById('input-website').value = data.website || '';
+            document.getElementById('input-address').value = data.address || '';
+        }
+
+        // Save Data
+        async function saveData() {
+            const saveBtn = document.getElementById('save-btn');
+            const spinner = document.getElementById('save-spinner');
+
+            saveBtn.disabled = true;
+            spinner.classList.remove('hidden');
+            spinner.classList.add('animate-spin');
+
+            try {
+                const newData = {
+                    companyName: document.getElementById('input-companyName').value.trim(),
+                    tagline: document.getElementById('input-tagline').value.trim(),
+                    foundedYear: document.getElementById('input-foundedYear').value,
+                    taxId: document.getElementById('input-taxId').value.trim(),
+                    description: document.getElementById('input-description').value.trim(),
+                    email: document.getElementById('input-email').value.trim(),
+                    phone: document.getElementById('input-phone').value.trim(),
+                    website: document.getElementById('input-website').value.trim(),
+                    address: document.getElementById('input-address').value.trim()
+                };
+
+                const result = await updateOrganizationProfile(newData);
+                if (result.success) {
+                    orgData = { ...orgData, ...newData };
+                    populateForm(orgData);
+                    showToast('Organisation profile updated!', 'success');
+                } else {
+                    throw new Error(result.error);
+                }
+            } catch (error) {
+                showToast('Error saving data: ' + error.message, 'error');
+            } finally {
+                saveBtn.disabled = false;
+                spinner.classList.add('hidden');
+                spinner.classList.remove('animate-spin');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initTabs();
+            loadData();
+
+            // Save Button
+            document.getElementById('save-btn').addEventListener('click', saveData);
+
+            // Cancel Button
+            document.getElementById('cancel-btn').addEventListener('click', () => {
+                populateForm(orgData);
+                showToast('Changes discarded', 'info');
+            });
+
+            // Logo Change
+            const logoContainer = document.getElementById('logo-container');
+            const logoBtn = document.getElementById('change-logo-btn');
+            const logoInput = document.getElementById('logo-input');
+
+            const triggerUpload = () => logoInput.click();
+            logoContainer.addEventListener('click', triggerUpload);
+            logoBtn.addEventListener('click', triggerUpload);
+
+            logoInput.addEventListener('change', async (e) => {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    showToast('Uploading logo...', 'info');
+
+                    const result = await uploadOrganizationLogo(file);
+                    if (result.success) {
+                        orgData.logoURL = result.logoURL;
+                        populateForm(orgData);
+                        showToast('Logo uploaded successfully!', 'success');
+                    } else {
+                        showToast('Upload failed: ' + result.error, 'error');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

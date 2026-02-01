@@ -105,16 +105,59 @@ function toggleTheme() {
     }
 }
 
+// Initialize mobile menu to ensure it's hidden by default
+function initMobileMenu() {
+    const menu = document.getElementById('mobile-menu');
+    if (menu) {
+        // Force menu to be hidden initially with multiple methods
+        menu.classList.add('translate-x-full');
+        menu.classList.remove('show');
+        menu.style.transform = 'translateX(100%)';
+        document.body.classList.remove('overflow-hidden');
+        
+        // Also hide any potential backdrop overlay
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
+    }
+}
+
 // Script to handle mobile menu toggling
 function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     const body = document.body;
-    if (menu.classList.contains('translate-x-full')) {
-        menu.classList.remove('translate-x-full');
-        body.classList.add('overflow-hidden');
-    } else {
+    
+    if (!menu) return;
+    
+    const isOpen = !menu.classList.contains('translate-x-full');
+    
+    if (isOpen) {
+        // Close menu
         menu.classList.add('translate-x-full');
+        menu.classList.remove('show');
+        menu.style.transform = 'translateX(100%)';
         body.classList.remove('overflow-hidden');
+        
+        // Remove any backdrop
+        const backdrop = document.querySelector('.mobile-menu-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
+    } else {
+        // Open menu
+        menu.classList.remove('translate-x-full');
+        menu.classList.add('show');
+        menu.style.transform = 'translateX(0)';
+        body.classList.add('overflow-hidden');
+        
+        // Create backdrop if needed
+        if (!document.querySelector('.mobile-menu-backdrop')) {
+            const backdrop = document.createElement('div');
+            backdrop.className = 'mobile-menu-backdrop fixed inset-0 bg-black/50 z-50';
+            backdrop.onclick = toggleMobileMenu;
+            document.body.appendChild(backdrop);
+        }
     }
 }
 
@@ -185,6 +228,8 @@ function loadHTML(id, file) {
 }
 
 function afterLoad() {
+    // Re-initialize mobile menu to ensure it's hidden after loading
+    initMobileMenu();
     highlightActiveNav();
     initScrollAnimations();
     initTiltEffect();
@@ -389,6 +434,14 @@ function initGridStagger() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Ensure mobile menu is hidden immediately and then after content loads
+    initMobileMenu();
+    
+    // Double-check after a short delay to catch any timing issues
+    setTimeout(() => {
+        initMobileMenu();
+    }, 100);
+
     // Initial load of global components
     const components = [
         { id: "header", file: "global/header.html" },
@@ -409,8 +462,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // Also initialize animations for static content
     initScrollAnimations();
 
+    // Ensure mobile menu is hidden after all content is loaded
+    setTimeout(() => {
+        initMobileMenu();
+    }, 200);
+
     // Cookie Consent Logic
     initCookieConsent();
+
+    // Ensure mobile menu is hidden on window load (for page refreshes/navigations)
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            initMobileMenu();
+        }, 50);
+    });
 
     // New Feature initializations
     initBackToTop();

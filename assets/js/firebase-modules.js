@@ -11,6 +11,12 @@ import {
     doc,
     setDoc,
     getDoc,
+    getDocs,
+    query,
+    where,
+    deleteDoc,
+    orderBy,
+    limit,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signOut,
@@ -184,14 +190,27 @@ export async function logoutUser() {
  */
 export async function resetPassword(email) {
     try {
+        // First check if user exists in our Firestore database
+        const usersRef = collection(db, "users");
+        const q = query(usersRef, where("email", "==", email.toLowerCase()));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            return {
+                success: false,
+                error: 'No account found with this email address. Please check your email or sign up for a new account.'
+            };
+        }
+
+        // User exists, now send password reset email
         await sendPasswordResetEmail(auth, email);
         return { success: true };
     } catch (error) {
         let errorMessage = error.message;
-        if (error.code === 'auth/user-not-found') {
-            errorMessage = 'No account found with this email.';
-        } else if (error.code === 'auth/invalid-email') {
+        if (error.code === 'auth/invalid-email') {
             errorMessage = 'Please enter a valid email address.';
+        } else if (error.code === 'auth/too-many-requests') {
+            errorMessage = 'Too many password reset attempts. Please try again later.';
         }
         return { success: false, error: errorMessage };
     }
@@ -416,3 +435,65 @@ window.handleLogout = async function () {
         alert('Logout failed: ' + result.error);
     }
 };
+
+/**
+ * Get Organization Profile
+ * Returns organization data from Firestore
+ */
+export async function getOrganizationProfile() {
+    try {
+        const docRef = doc(db, "settings", "organization");
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            return docSnap.data();
+        }
+        return null;
+    } catch (error) {
+        console.error("Error getting organization profile:", error);
+        return null;
+    }
+}
+
+/**
+ * Update Organization Profile
+ * Updates organization data in Firestore
+ */
+export async function updateOrganizationProfile(data) {
+    try {
+        const docRef = doc(db, "settings", "organization");
+        await setDoc(docRef, {
+            ...data,
+            updatedAt: serverTimestamp()
+        }, { merge: true });
+        return { success: true };
+    } catch (error) {
+        console.error("Error updating organization profile:", error);
+        return { success: false, error: error.message };
+    }
+}
+
+/**
+ * Upload Organization Logo
+ * Uploads logo to Storage and updates organization profile
+ */
+export async function uploadOrganizationLogo(file) {
+    try {
+        // Create storage reference
+        const fileExt = file.name.split('.').pop();
+        const fileName = `logo_${Date.now()}.${fileExt}`;
+        const storageRef = ref(storage, `organization/logo/${fileName}`);
+
+        // Upload file
+        const snapshot = await uploadBytes(storageRef, file);
+        const logoURL = await getDownloadURL(snapshot.ref);
+
+        // Update organization profile in Firestore
+        await updateOrganizationProfile({ logoURL: logoURL });
+
+        return { success: true, logoURL: logoURL };
+    } catch (error) {
+        console.error('Error uploading organization logo:', error);
+        return { success: false, error: error.message };
+    }
+}
