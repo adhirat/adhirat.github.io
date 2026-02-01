@@ -189,6 +189,7 @@ function afterLoad() {
     initScrollAnimations();
     initTiltEffect();
     initSidebarToggle();
+    initHeaderScroll();
 }
 
 function highlightActiveNav() {
@@ -418,6 +419,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initContentFilters();
     initReviewsSlider();
     initTiltEffect();
+    initHeaderScroll();
 });
 
 // Tilt on hover effect
@@ -805,6 +807,47 @@ function initReviewsSlider() {
     // Pause on hover
     slider.addEventListener('mouseenter', stopAutoSlide);
     slider.addEventListener('mouseleave', startAutoSlide);
+}
+
+// Header Hide/Show on Scroll Logic
+function initHeaderScroll() {
+    const header = document.querySelector('.fixed.top-0');
+    if (!header) return;
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    const headerHeight = header.offsetHeight;
+    const scrollThreshold = 100; // Minimum scroll before header starts hiding
+
+    function updateHeader() {
+        const currentScrollY = window.scrollY;
+        
+        // Don't hide header if at the top of the page
+        if (currentScrollY <= scrollThreshold) {
+            header.style.transform = 'translateY(0)';
+            header.classList.remove('header-hidden');
+        } else if (currentScrollY > lastScrollY) {
+            // Scrolling down - hide header
+            header.style.transform = `translateY(-${headerHeight}px)`;
+            header.classList.add('header-hidden');
+        } else {
+            // Scrolling up - show header
+            header.style.transform = 'translateY(0)';
+            header.classList.remove('header-hidden');
+        }
+
+        lastScrollY = currentScrollY;
+        ticking = false;
+    }
+
+    function requestTick() {
+        if (!ticking) {
+            requestAnimationFrame(updateHeader);
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', requestTick, { passive: true });
 }
 
 // Sidebar Toggle Logic
